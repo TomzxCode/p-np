@@ -36,7 +36,7 @@ this file should update the `correct-as-of` date per entry.
   kernel_structure.md (V(n,d)^rho = V(2d,d); parity-locking), thmB_stress.md
   (Lemma B.1 repair), chi_transfer.md (printed-(3) falsification; err-form route),
   chi_and_chain.py, chi_deg2_theory_check.py, chi_two_phase*.py, razborov_check.py,
-  kernel_structure.py, verify_corpus.py, theorem_map.md, open_problems.md,
+  kernel_structure.py, corpus_lint.py (linter, not verification), theorem_map.md, open_problems.md,
   goertzel_audit.md, edwards_audit.md, failure_modes.md, p_family.md, paper/
   (p2_results.tex/pdf, FINAL). All ASCII math; every number run-backed.
 

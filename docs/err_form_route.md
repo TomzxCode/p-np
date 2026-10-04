@@ -613,7 +613,9 @@ $e' = \Theta(d \log k) = \Theta(n^{\Theta(\delta \ell)} \cdot n^\delta)$, so
              \le k^{-C'} \ \text{for every fixed } C' \text{ and large } n,
 
 while $\mathrm{err}(T_0) = 1 - f \ge 1/2$. So the $\Omega(1)$ bound on (3) is
-unprovable as stated, for every $\delta > 0$ in the printed regime: the
+unprovable as stated [under the corpus's quantifier reading - INFERENCE; the
+printed (3) is a hypothesis about the paper's own constructed tree], for every
+$\delta > 0$ in the printed regime: the
 determined-query collapse puts $T_0$'s $(P_3)$-value at
 $2^{-\Theta(e')}$ while its $(P_2)$-value stays $\Omega(1)$.
 The hope overlooks exactly the uniform-path tax: a quantity can be

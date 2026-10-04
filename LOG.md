@@ -1851,3 +1851,17 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   design, not the game's optimum; optimum measures 0.126). Boundary e = 58 ->
   ~80 at (128,2). Residual: Conjecture E5.
 - Consolidated: proof_complexity.md ADDENDUM 9; GOAL.md section 6 GAP E status.
+- GUIDANCE residual items dispatched/fixed:
+  * FIXED NOW: err_form_route residual "unprovable as stated" marked INFERENCE;
+    clues.md position statement downgraded (93% removed; lint needle updated in
+    the same change); bibliography internal-deliverables name updated to
+    corpus_lint.py; README Lean caveat added (convenience model, true by
+    construction, silent on Krajicek's pipeline).
+  * DISPATCHED: channel-spec agent (freeze channel semantics in one current
+    statement, conformance checklist -> docs/channel_spec.md); regeneration+
+    hash-pinning agent (re-run every registered experiment, diff against quoted
+    numbers; SHA-256 pins for the four primary sources -> docs/
+    regeneration_2026-10-04.md + bibliography Source pins).
+  * REMAINING AFTER THOSE: single-current-statement consolidation (deferred
+    until mixture_cap lands); mechanical PROVED enforcement is recorded as
+    convention + lint-adjacent, not fully mechanical (honest gap).

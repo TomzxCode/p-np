@@ -9,8 +9,10 @@ P versus NP is open as of October 2026. I did not prove or disprove it.
 No one has: every claimed resolution found in this investigation was either refuted within days
 or has no community validation. What follows is the attempted proof log, the walls each attempt
 hits, fresh forensics on the 2025-2026 claims, two experiments, and the resulting evidence
-balance sheet. My position, stated up front: P != NP with about 93% confidence, where the
-confidence is empirical and not a proof.
+balance sheet. [Position statement DOWNGRADED per GUIDANCE.md 2026-10-04: no confidence in
+P != NP is claimed or implied by this corpus. The earlier "about 93%" figure
+was a subjective prior, not derived from this work, and has been removed. What
+follows is the study record.]
 
 ## 2. The frame everyone must work in (what is actually provable today)
 

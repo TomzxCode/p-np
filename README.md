@@ -12,7 +12,10 @@
       monitors/        dated monitoring screens (arXiv/ECCC/claim-wave)
     experiments/       all python scripts (standalone or same-dir imports)
     paper/             the LaTeX write-up (p2_results.tex/pdf) + CHANGES.md
-    lean_channel/      Lean 4 formalization project (CoreChannel.lean: zero sorry)
+    lean_channel/      Lean 4 formalization project (CoreChannel.lean: zero sorry.
+                       CAVEAT per GUIDANCE: these are facts about the modeled
+                       channel structure, true by construction; they say nothing
+                       about Krajicek's pipeline itself)
 
 References to files throughout the corpus are by basename; `corpus_lint.py`
 resolves them across the tree.
