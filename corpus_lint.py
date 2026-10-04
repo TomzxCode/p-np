@@ -28,6 +28,19 @@ Checks:
                     corresponding detail documents (whitespace-normalized
                     matching), including the arithmetic identity behind
                     q = 10/38 at (32,2).
+  8. proved registry - every entry in proved_registry.py (one tuple per PROVED
+                    claim in docs/current_results.md) has its proof anchor
+                    substring present in the named proof document and a
+                    corresponding line in current_results.md; conversely the
+                    section-2 entry headers of current_results.md are exactly
+                    the registry's REQUIRED_CLAIMS mirror, each backed by a
+                    registry claim.
+  9. label hygiene- HEURISTIC TRIPWIRE, not a proof of anything: a PROVED
+                    marker in docs/*.md (statement position; correction and
+                    retraction lines excluded) must be accompanied by
+                    proof-kind vocabulary (proof/enumerated/machine-checked/
+                    Theorem/Lemma) somewhere in its enclosing section, or
+                    cite a registry claim_id.
 
 The checker never writes to the corpus: compilation artifacts go to a temp dir.
 Exit status: 0 if the corpus is clean, 1 otherwise.
@@ -41,6 +54,11 @@ import sys
 import tempfile
 from collections import Counter
 from pathlib import Path
+
+# The PROVED registry is the data half of check 8 and lives beside this file
+# at the corpus root (script-dir import; the stdlib-only constraint is
+# unchanged for the lint's own logic).
+import proved_registry
 
 CORPUS = Path(__file__).resolve().parent
 
@@ -380,6 +398,146 @@ def check_numbers(doc_norm: dict[str, str], report: Report) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Check 8 (proved registry) and check 9 (label hygiene)
+# ---------------------------------------------------------------------------
+
+# Lines that DEFINE the marker vocabulary (file legends such as
+# "markers [PROVED], [MV]") are documentation of the label system, not
+# statement positions for check 9.
+LABEL_LEGEND_RE = re.compile(r"markers \[PROVED|Markers: PROVED|\[PROVED\], \[MEASURED\]")
+
+# Proof-kind vocabulary accepted by check 9: the base list is Proof/proof,
+# enumerated, machine-checked, Theorem, Lemma; "enumerat" is the stem covering
+# "enumerated"/"enumeration", the two forms the corpus uses for the enumerated
+# proof kind (docs/current_results.md section 1).
+PROOF_KIND_RE = re.compile(r"Proof|proof|enumerat|machine-checked|Theorem|Lemma")
+
+# current_results.md section-2 entry headers ("### 2.N Title").
+RESULTS_HEADER_RE = re.compile(r"^### (2\.\d+)\s+(.+)$")
+
+
+def _resolve_doc(name: str) -> Path | None:
+    for base in (CORPUS / "docs", CORPUS):
+        candidate = base / name
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def check_proved_registry(docs_raw: dict[str, str], report: Report) -> None:
+    """Check 8: the PROVED registry against docs/current_results.md.
+
+    Forward: every registry entry's anchor substring must appear in its proof
+    document, and the claim must have a corresponding line in
+    current_results.md (matched on claim_id, or on the statement's first 40
+    characters, whitespace-normalized). Converse: the section-2 entry headers
+    of current_results.md must be exactly the REQUIRED_CLAIMS mirror, and each
+    mirrored entry must have a registry claim.
+    """
+    failures: list[str] = []
+    cur_lines = docs_raw.get("current_results.md", "").splitlines()
+    cur_norm = [norm(ln) for ln in cur_lines]
+
+    registry = proved_registry.PROVED_CLAIMS
+    registry_ids = {claim[0] for claim in registry}
+
+    doc_text: dict[str, str] = {}
+    for claim_id, short, doc, anchor, kind in registry:
+        if kind not in proved_registry.VERIFICATION_KINDS:
+            failures.append(f"{claim_id}: unknown verification_kind {kind!r}")
+        if doc not in doc_text:
+            path = _resolve_doc(doc)
+            doc_text[doc] = read(path) if path else ""
+        if not doc_text[doc]:
+            failures.append(f"{claim_id}: proof document {doc} not found in the corpus")
+        elif norm(anchor) not in norm(doc_text[doc]):
+            failures.append(f"{claim_id}: proof anchor {anchor!r} not present in {doc}")
+        # The short statement is "<entry title> - <gloss>"; match on the
+        # title part (capped at 40 chars), which appears verbatim in the
+        # entry header line.
+        prefix = norm(short).split(" - ")[0][:40].strip()
+        if not any(claim_id in raw or prefix in nl
+                   for raw, nl in zip(cur_lines, cur_norm)):
+            failures.append(
+                f"{claim_id}: no corresponding line in current_results.md "
+                f"(matched on claim_id or statement prefix {prefix!r})"
+            )
+
+    parsed: dict[str, str] = {}
+    for ln in cur_lines:
+        match = RESULTS_HEADER_RE.match(ln)
+        if match:
+            parsed[match.group(1)] = norm(match.group(2))
+    required = {num: norm(title) for num, title in proved_registry.REQUIRED_CLAIMS}
+    for num, title in parsed.items():
+        if num not in required:
+            failures.append(
+                f"current_results.md: entry {num} ({title!r}) is not mirrored in "
+                f"REQUIRED_CLAIMS"
+            )
+        elif required[num] != title:
+            failures.append(
+                f"current_results.md: entry {num} title drifted from REQUIRED_CLAIMS: "
+                f"{title!r} != {required[num]!r}"
+            )
+    for num, title in required.items():
+        if num not in parsed:
+            failures.append(
+                f"current_results.md: REQUIRED_CLAIMS entry {num} ({title!r}) has "
+                f"no section-2 header"
+            )
+        if f"CR-{num}" not in registry_ids:
+            failures.append(f"REQUIRED_CLAIMS entry {num} has no registry claim CR-{num}")
+
+    items = 2 * len(registry) + len(required) + len(parsed)
+    report.add("8. proved registry", items, failures)
+
+
+def check_label_hygiene(docs: list[Path], docs_raw: dict[str, str], report: Report) -> None:
+    """Check 9: label-hygiene tripwire over docs/*.md.
+
+    HEURISTIC, not a proof: a PROVED marker in statement position must carry
+    proof-kind vocabulary somewhere in its enclosing section, or cite a
+    registry claim_id. Statement position excludes LOG.md, lines of the
+    correction/retraction machinery (RETRACT/DOWNGRADE), and marker-legend
+    lines. The corpus's one-sentence-per-line style splits labels from their
+    proof pointers, so the unit of inspection is the enclosing markdown
+    section, not the bare line.
+    """
+    claim_ids = [claim[0] for claim in proved_registry.PROVED_CLAIMS]
+    failures: list[str] = []
+    total = 0
+    docs_dir = CORPUS / "docs"
+    for doc in docs:
+        if doc.parent != docs_dir or doc.name == "LOG.md":
+            continue  # scope: docs/*.md top level
+        lines = docs_raw[doc.name].splitlines()
+        total_lines = len(lines)
+        headers = [i for i, ln in enumerate(lines) if ln.startswith("#")]
+        for i, ln in enumerate(lines):
+            if not re.search(r"\bPROVED\b", ln):
+                continue
+            if "RETRACT" in ln or "DOWNGRADE" in ln:
+                continue
+            total += 1
+            if LABEL_LEGEND_RE.search(ln):
+                continue
+            section_start = max((j for j in headers if j <= i), default=-1)
+            section_end = min((j for j in headers if j > i), default=total_lines)
+            context = norm("\n".join(lines[section_start:section_end])) \
+                if section_start >= 0 else norm(ln)
+            if PROOF_KIND_RE.search(context):
+                continue
+            if any(cid in ln for cid in claim_ids):
+                continue
+            failures.append(
+                f"{doc.name}:{i + 1}: PROVED statement with no proof pointer in "
+                f"its section (heuristic tripwire): {ln.strip()[:90]!r}"
+            )
+    report.add("9. label hygiene (heuristic tripwire)", total, failures)
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -400,6 +558,8 @@ def main() -> int:
     check_log_structure(log_text, report)
     check_orphan_scripts(scripts, docs, report)
     check_numbers(doc_norm, report)
+    check_proved_registry(docs_raw, report)
+    check_label_hygiene(docs, docs_raw, report)
 
     print(f"Corpus root: {CORPUS}")
     print(f"Documents: {len(docs)}   Scripts: {len(scripts)}")
