@@ -134,12 +134,13 @@ confirmation, everything here is a learning log and survey.
 
 ## 6. Current open core (what to attack next)
 
-- The all-degrees budgeted err-floor (O2): degrees 2, 3, and 4 are PROVED
-  (Theorem 3, Theorem 3', Theorem 3''; the SAME d^2 ~ n chi-boundary at every
-  degree, degree-independent through 4). Theorem A (deg4_theory.md: matching-k
-  columns vary at every d) is the general-d tool; the open quantifier is
-  degree >= 5, consuming the degree-4 template (star classes, alias identities,
-  mass monotonicity).
+- The all-degrees budgeted err-floor (O2): degrees 2, 3, 4, and 5 are PROVED
+  (Theorems 3, 3', 3'', 3'''; the SAME d^2 ~ n chi-boundary at every degree).
+  Theorem A (deg4_theory.md: matching-k columns vary at every d) plus mass
+  monotonicity close every induction step except one: the all-degrees
+  quantifier reduces to exactly ONE missing lemma - SPARSE-d (general-d
+  relation-inventory completeness, i.e. general-d CLS; open at degree >= 4).
+  The cls-cnt thread (docs/cls_cnt.md when it lands) works this lemma now.
 - Theorem 3's query-class coverage is a proper subset of the printed degree-2
   class (F_2 mixtures; likely shallow repair - GAP B').
 - Rigor gaps: Lemma M (O5 degree-2 transfer), de-modularizing the JDP steps,
