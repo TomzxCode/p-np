@@ -37,3 +37,7 @@ here whenever the owner issues a standing instruction.
   one agent per file, each with a verify-first commit-and-push)
 - 2026-10-04: "Move the instruction log from the GOAL.md file out of it."
   (created this file)
+- 2026-10-04: "Update the GOAL.md file so that it reads @GUIDANCE.md from time
+  to time." (adopted: new GOAL.md section 9 - read GUIDANCE.md at session start
+  and re-read it after every consolidated turn; GUIDANCE.md added to the header
+  reading order)

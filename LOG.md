@@ -1686,3 +1686,34 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   O2(i)); O2(iii) moot for the route; assembly lemmas proved, not hypotheses.
 - Consolidated: chi_transfer.md correction note; proof_complexity.md ADDENDUM 6;
   (GOAL.md section 6 route pointer next).
+- Owner: "Do more parallel work, don't just wait on conversions." Dispatched 4
+  research agents on the remaining open core:
+  1. odd-p-theory (O6): odd-p channel law, certificate inventory recompute,
+     per-hit posteriors, budgeted cap analogue + boundary -> docs/odd_p_theory.md
+  2. lemma-m (O5): precise statement + proof of the degree-2 pipeline-transfer
+     lemma (Lemma M via Lemma REL + row-incompleteness counting) -> docs/lemma_m.md
+  3. jdp-demod (GAP D): audit every NA/JDP citation in Theorem 3's proof;
+     discharge by instance-verification or elementary coupling proof ->
+     docs/jdp_demod.md
+  4. gap-e-constants (GAP E): tighten the budgeted-error bracket at (128,2) /
+     (96,3); leading-constant analysis of cap vs K_j witness ->
+     docs/gap_e_constants.md + experiments/chi_gap_e_check.py
+- In flight: 6 agents (deg4-theory, mixture-cap + these 4). Conversions complete
+  except none - the campaign is done.
+
+### 2026-10-04 (cont.) - standing self-review: GUIDANCE.md
+
+- Owner ran a full external review of the corpus and wrote GUIDANCE.md
+  (untracked at corpus root). Headline findings: the "P != NP ~93%" verdict is
+  a restated prior, not a result; verify_corpus.py is a documentation linter,
+  not a mathematical verifier; the "printed Theorem 6.1(3) is false as printed"
+  wording in bibliography.md states an INFERENCE as fact; repeated promotion of
+  measured constants to PROVED; activity is being mistaken for output;
+  hygiene drift (stale check and sorry counts; six dispatched deliverables
+  absent from docs/).
+- Owner instruction: "Update the GOAL.md file so that it reads @GUIDANCE.md
+  from time to time." Adopted as GOAL.md section 9; GUIDANCE.md added to the
+  header reading order; verbatim entry appended to instruction_log.md.
+- Status of the recommendations: NOT yet acted on. Section 9 requires future
+  sessions to read GUIDANCE.md and record adopt/reject decisions in LOG.md.
+- No corpus writes were made beyond GOAL.md, instruction_log.md, and this entry.

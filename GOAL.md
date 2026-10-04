@@ -1,10 +1,11 @@
 # GOAL.md - standing instructions for this session (compiled 2026-10-04)
 
 This file compiles every standing instruction the corpus owner has given. It is
-the resume-point for any future session: read it, then README.md, then LOG.md's
-tail. Maintenance: when the owner issues a new standing instruction, update the
-relevant section here, append the verbatim entry to instruction_log.md, and
-note the change in LOG.md.
+the resume-point for any future session: read it, then GUIDANCE.md, then
+README.md, then LOG.md's tail. Maintenance: when the owner issues a new standing
+instruction, update the relevant section here, append the verbatim entry to
+instruction_log.md, and note the change in LOG.md. GUIDANCE.md is re-read
+periodically per section 9.
 
 ## 1. The objective
 
@@ -143,3 +144,23 @@ Moved to instruction_log.md (corpus root) on 2026-10-04. That file holds the
 verbatim, dated history of every owner instruction; this file holds the
 compiled, normative version. New instructions: update the section above,
 append the verbatim entry there.
+
+## 9. Standing self-review: read GUIDANCE.md
+
+Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
+
+- GUIDANCE.md (corpus root) is the standing external review of this corpus,
+  written 2026-10-04 after a full read of the artifacts and the primary sources.
+- Read it at the start of every session (right after this file), and re-read it
+  at least after every consolidated turn, so its recommendations are in view
+  while the work is being framed and consolidated.
+- Treat it as advisory: the owner decides which recommendations to adopt. When
+  a recommendation is adopted, rejected, or already satisfied, say which and
+  why, and record the decision in LOG.md.
+- Where GUIDANCE.md and the current framing of this file or the corpus diverge,
+  surface the divergence in LOG.md rather than silently following one or the
+  other. In particular, its critique of the confidence verdict, of the verifier
+  labeling, and of the Theorem 6.1(3) wording is unresolved until the owner
+  rules on it.
+- Do not delete or rewrite GUIDANCE.md. Extend it in place with dated addenda
+  as recommendations are resolved, so the review stays a single living document.
