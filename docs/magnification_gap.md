@@ -6,41 +6,41 @@ from the full PDF text saved this session. All theorem numbers below are that pa
 ## The one-sentence situation
 
 The known unconditional lower bound for the relevant gap problem sits at exponent 2*eps - delta
-for every delta > 0, and the magnification theorem needs exponent 2*eps + o(1) for one fixed
-eps > 0: the entire open distance is the single step from "strictly below 2*eps" to "at 2*eps".
+for every $\delta > 0$, and the magnification theorem needs exponent 2*eps + o(1) for one fixed
+$\varepsilon > 0$: the entire open distance is the single step from "strictly below $2\varepsilon$" to "at $2\varepsilon$".
 
 ## The bookkeeping, precisely
 
-- Theorem 9 (the magnification engine): NP is not contained in FML[n^c] for every c if there
-  exist eps > 0 and a 2^{n^{o(1)}}-sparse problem Q in NP such that either
-  (a) n^{-eps}-Q is not in FML[n^{1 + 2 eps + o(1)}], or
-  (b) n^{-eps}-Q is not in PFML[n^{2 eps + o(1)}].
-  Here n^{-eps}-Q is the gap relaxation of Q with more NO instances (it equals Q when
-  eps(n) <= 1/n, and smaller eps means a harder problem).
-- Theorem 10 (what is currently known): for every pair 0 < eps, delta <= 1,
-  n^{-eps}-MCSP[2^sqrt(ell)] is NOT in PFML[n^{2 eps - delta}].
-  (Hirahara-Santhanam's n^{2-delta} bound for MCSP[2^sqrt(ell)], gap-refined by the same
+- Theorem 9 (the magnification engine): NP is not contained in $\mathrm{FML}[n^c]$ for every $c$ if there
+  exist $\varepsilon > 0$ and a $2^{n^{o(1)}}$-sparse problem $Q$ in NP such that either
+  (a) $n^{-\varepsilon}$-$Q$ is not in $\mathrm{FML}[n^{1+2\varepsilon+o(1)}]$, or
+  (b) $n^{-\varepsilon}$-$Q$ is not in $\mathrm{PFML}[n^{2\varepsilon+o(1)}]$.
+  Here $n^{-\varepsilon}$-$Q$ is the gap relaxation of $Q$ with more NO instances (it equals $Q$ when
+  $\varepsilon(n) \leq 1/n$, and smaller $\varepsilon$ means a harder problem).
+- Theorem 10 (what is currently known): for every pair $0 < \varepsilon, \delta \leq 1$,
+  $n^{-\varepsilon}$-$\mathrm{MCSP}[2^{\sqrt{\ell}}]$ is NOT in $\mathrm{PFML}[n^{2\varepsilon-\delta}]$.
+  (Hirahara-Santhanam's $n^{2-\delta}$ bound for $\mathrm{MCSP}[2^{\sqrt{\ell}}]$, gap-refined by the same
   pseudorandom-restriction technique; the 2025 paper redoes it one-sided for convenience.)
-- Related magnifications in the same paper: Theorem 25 (crossing the threshold for MCSP[sigma]
+- Related magnifications in the same paper: Theorem 25 (crossing the threshold for $\mathrm{MCSP}[\sigma]$
   gives XOR-P not in NC1) and Theorems 11/27 (crossing the uniform-version threshold gives
-  P != NP^{xor-P}; the threshold is "almost known" because Santhanam-Williams proved
-  P is not in P-uniform-SIZE[n^c] for every c).
+  $\mathrm{P} \neq \mathrm{NP}^{\text{xor-}\mathrm{P}}$; the threshold is "almost known" because Santhanam-Williams proved
+  P is not in $\mathrm{P}$-uniform-$\mathrm{SIZE}[n^c]$ for every $c$).
 
-So for each fixed eps the known exponent is 2 eps - delta for all delta > 0, and the hypothesis
-of Theorem 9(b) needs 2 eps + o(1) for some eps. The gap is the boundary case delta = 0.
+So for each fixed $\varepsilon$ the known exponent is $2\varepsilon - \delta$ for all $\delta > 0$, and the hypothesis
+of Theorem 9(b) needs $2\varepsilon + o(1)$ for some $\varepsilon$. The gap is the boundary case $\delta = 0$.
 
 ## Why this wall is not an accident
 
 1. The 2025 paper proves its own thresholds sharp: "we find it remarkable that the magnification
    threshold Theorem 9(b) obtained by our generic method turns out to be sharp." The
-   distinguisher/compression method cannot be tuned past 2 eps.
+   distinguisher/compression method cannot be tuned past $2\varepsilon$.
 2. Chen-Tell sharp-threshold results (FOCS 2020) make the wall two-sided: for the
-   MCSP[(log N)^c] variants they prove that an n^{2+eps} lower bound (any eps > 0) already
-   implies NP has no n^k-size formulas for all k and #SAT has no log-depth circuits. In this
-   regime the last delta costs exactly as much as the final theorem, provably. The gap is not
+   $\mathrm{MCSP}[(\log N)^c]$ variants they prove that an $n^{2+\varepsilon}$ lower bound (any $\varepsilon > 0$) already
+   implies NP has no $n^k$-size formulas for all $k$ and #SAT has no log-depth circuits. In this
+   regime the last $\delta$ costs exactly as much as the final theorem, provably. The gap is not
    a margin waiting for a stronger analysis of the same technique.
 3. The localization barrier blocks the obvious routes: Corollary 23 of the 2025 paper shows
-   every 2^{n^{o(1)}}-sparse problem has probabilistic formula circuits of size n^{2 + o(1)}
+   every $2^{n^{o(1)}}$-sparse problem has probabilistic formula circuits of size $n^{2+o(1)}$
    WITH small-fan-in oracle gates. Hence any lower-bound technique that still works in the
    presence of such oracle gates (which is what "localizing" means) can never prove the
    magnification thresholds. Known non-localizing exceptions: Santhanam-Williams'
@@ -49,15 +49,15 @@ of Theorem 9(b) needs 2 eps + o(1) for some eps. The gap is the boundary case de
 
 ## The precise open target, then
 
-Unconditional target (non-uniform): exhibit ANY 2^{n^{o(1)}}-sparse problem Q in NP and a
-fixed eps > 0 with n^{-eps}-Q not in PFML[n^{2 eps + o(1)}].
-- Inventory check (from the paper): no explicit 2^{n^{o(1)}}-sparse problem is known outside
-  FML[n^2]; the best sparse-case bounds sit at PFML[n^{2-delta}] (Theorem 10 above).
+Unconditional target (non-uniform): exhibit ANY $2^{n^{o(1)}}$-sparse problem $Q$ in NP and a
+fixed $\varepsilon > 0$ with $n^{-\varepsilon}$-$Q$ not in $\mathrm{PFML}[n^{2\varepsilon+o(1)}]$.
+- Inventory check (from the paper): no explicit $2^{n^{o(1)}}$-sparse problem is known outside
+  $\mathrm{FML}[n^2]$; the best sparse-case bounds sit at $\mathrm{PFML}[n^{2-\delta}]$ (Theorem 10 above).
 - The required technique must be non-localizing, must handle probabilistic formulas with
   two-sided or one-sided error, and must beat the sharpness of the distinguisher method.
-Uniform cousin (arguably closer to P vs NP itself): n^{-eps}-MCSP[sigma] not in
-P-uniform-SIZE[n^{1 + eps + o(1)}] for some eps and sigma <= 2^{o(ell)} (Theorem 27), against
-the Santhanam-Williams lower bound P not in P-uniform-SIZE[n^c] which is known but
+Uniform cousin (arguably closer to P vs NP itself): $n^{-\varepsilon}$-$\mathrm{MCSP}[\sigma]$ not in
+$\mathrm{P}$-uniform-$\mathrm{SIZE}[n^{1+\varepsilon+o(1)}]$ for some $\varepsilon$ and $\sigma \leq 2^{o(\ell)}$ (Theorem 27), against
+the Santhanam-Williams lower bound P not in $\mathrm{P}$-uniform-$\mathrm{SIZE}[n^c]$ which is known but
 non-constructive and does not cover MCSP variants.
 
 ## Candidate directions, ranked by fit to the constraints
@@ -71,8 +71,8 @@ non-constructive and does not cover MCSP variants.
    the antichecker proof does not obviously localize; pushing it from almost-formulas to
    probabilistic formulas at sparse problems is open.
 3. Kt/meta-complexity variants (MKtP gap problems): the Oliveira-Pich-Santhanam FOCS 2019
-   program shows EXP not in NC1 from MKtP gap bounds at N^{2+eps}/N^{3+eps} in restricted
-   models where known bounds are N^{3-o(1)} (average-case, explicit problems); here too the
+   program shows EXP not in NC1 from MKtP gap bounds at $N^{2+\varepsilon}/N^{3+\varepsilon}$ in restricted
+   models where known bounds are $N^{3-o(1)}$ (average-case, explicit problems); here too the
    known exponents press against the needed ones from below.
 
 ## Constructivization assessment: Santhanam-Williams (added 2026-10-03)
@@ -83,17 +83,17 @@ follow-up ("Easiness Amplification and Uniform Circuit Lower Bounds"), and the b
 arithmetic follow-up (Krajicek-Oliveira 2017). Correcting one slip in `williams_ladder.md`
 context: the result is from CCC 2013/CC 2014, not FOCS 2021.
 
-The theorem: for every k, P is not contained in P-uniform SIZE(n^k); i.e., there is L in P
-whose n^k-size circuits cannot be generated in polynomial time.
+The theorem: for every $k$, P is not contained in P-uniform $\mathrm{SIZE}(n^k)$; i.e., there is $L$ in P
+whose $n^k$-size circuits cannot be generated in polynomial time.
 
 The mechanism (indirect diagonalization):
-1. Proposition 1: DTIME(n^{d+1}) is not in DTIME(n^d)/n (time hierarchy against sublinear
+1. Proposition 1: $\mathrm{DTIME}(n^{d+1})$ is not in $\mathrm{DTIME}(n^d)/n$ (time hierarchy against sublinear
    advice, proved by the trick of using the input itself as its own advice).
-2. Assume P is in P-uniform SIZE(n^k). Take any L in P. Its direct connection language L_dc
-   is in P, so it also gets n^k circuits (the assumption is applied a second time, to L_dc).
-3. Pad the direct-connection tuples into a succinct language L_succ of length n^{1/(3k)}
+2. Assume P is in P-uniform $\mathrm{SIZE}(n^k)$. Take any $L$ in P. Its direct connection language $L_{\mathrm{dc}}$
+   is in P, so it also gets $n^k$ circuits (the assumption is applied a second time, to $L_{\mathrm{dc}}$).
+3. Pad the direct-connection tuples into a succinct language $L_{\mathrm{succ}}$ of length $n^{1/(3k)}$
    (the padding exponent is what balances the two applications).
-4. Net effect: every L in P is simulated in DTIME(n^{2k+2})/O(n^{1/2} log n), contradicting
+4. Net effect: every $L$ in P is simulated in $\mathrm{DTIME}(n^{2k+2})/O(n^{1/2} \log n)$, contradicting
    Proposition 1. The hard language is the advice-hierarchy language: pure contradiction
    artifact.
 
@@ -105,15 +105,15 @@ Documented drawbacks (stated verbatim in the CCC 2017 follow-up):
   techniques."
 
 What the magnification threshold needs (Theorem 27 of arXiv:2503.24061):
-n^{-eps}-MCSP[sigma] not in P-uniform-SIZE[n^{1+eps+o(1)}] for one fixed eps and
-sigma <= 2^{o(ell)}, which would give P != NP^{xor-P}.
+$n^{-\varepsilon}$-$\mathrm{MCSP}[\sigma]$ not in $\mathrm{P}$-uniform-$\mathrm{SIZE}[n^{1+\varepsilon+o(1)}]$ for one fixed $\varepsilon$ and
+$\sigma \leq 2^{o(\ell)}$, which would give $\mathrm{P} \neq \mathrm{NP}^{\text{xor-}\mathrm{P}}$.
 
 The porting blocker, made precise this turn: SW14's argument is problem-agnostic in its
-hypothesis (arbitrary L in P gets simulated) but its conclusion is existence-only; the hard
+hypothesis (arbitrary $L$ in P gets simulated) but its conclusion is existence-only; the hard
 language is constructed from the advice-hierarchy. To replace it by MCSP, one must first
-show that MCSP (or the gap variant) cannot be simulated in DTIME(n^{1+o(1)}) with o(n)
+show that MCSP (or the gap variant) cannot be simulated in $\mathrm{DTIME}(n^{1+o(1)})$ with $o(n)$
 advice - and NO super-linear time lower bound of any kind is known for MCSP today (its
-uniform time complexity is wide open: it could in principle be n^{1.01} for all we know).
+uniform time complexity is wide open: it could in principle be $n^{1.01}$ for all we know).
 So constructivization decomposes into two open problems, each at frontier level:
 (1) any super-linear (time or circuit) lower bound for a natural meta-computational problem
     in P, and
@@ -129,7 +129,7 @@ Signs of life around it:
   imply breakthrough lower bounds, and that some separations cannot be constructivized at
   all; Carmosino-Grosser (ECCC TR25-045, 2025) generalize to Student-Teacher refutation games
   and prove, e.g., that a P-Student-Teacher constructive separation of Palindromes from
-  one-tape nondeterministic n^{1+eps} time would imply NP not in SIZE[n^k] for all k, and
+  one-tape nondeterministic $n^{1+\varepsilon}$ time would imply NP not in $\mathrm{SIZE}[n^k]$ for all $k$, and
   that certain high-Kolmogorov-complexity generation protocols provably do not exist. Net
   effect on this route: constructivization is quantifiably potent (each success implies
   breakthroughs) and provably blocked in several regimes - the wall is bidirectional.
@@ -138,12 +138,12 @@ Signs of life around it:
   counterexample" hierarchy theorem - an explicit-witness mechanism that partially answers
   the constructivity complaint, though still for artificially defined languages.
 - The CCC 2017 easiness-amplification paper gives the best candidate natural problem: the
-  Circuit-Composition problem (in TISP[n^{1+eps}, O~(n)]), conjectured to need super-linear
+  Circuit-Composition problem (in $\mathrm{TISP}[n^{1+\varepsilon}, \widetilde{O}(n)]$), conjectured to need super-linear
   circuits even non-uniformly, with proven consequences in both directions (Lemma 4: if it
-  has nearly-linear circuits then every TISP[n^k, O~(n)] problem does). They also proved
-  TIME[n^{1+eps}] is not in LOGSPACE-uniform SIZE[O(n)] by a non-relativizing argument -
+  has nearly-linear circuits then every $\mathrm{TISP}[n^k, \widetilde{O}(n)]$ problem does). They also proved
+  $\mathrm{TIME}[n^{1+\varepsilon}]$ is not in $\mathrm{LOGSPACE}$-uniform $\mathrm{SIZE}[O(n)]$ by a non-relativizing argument -
   the one breach of the relativization barrier in this neighborhood - and recorded the
-  equivalences P not in SIZE[O(n)] iff P not in P^{Sigma2P}-uniform SIZE[O(n)].
+  equivalences P not in $\mathrm{SIZE}[O(n)]$ iff P not in $\mathrm{P}^{\Sigma_2^P}$-uniform $\mathrm{SIZE}[O(n)]$.
 
 Updated judgment for the ladder: Theorem 11/27 of the 2025 magnification paper is
 "almost known" in the sense that the target class (P-uniform circuits) admits proven
@@ -168,7 +168,7 @@ blocked move), and two meta-records that explicitly claim nothing. Details in LO
 
 ## Screen (2026-10-03, frontiers monitor; full detail in `monitor_frontiers_2026-10-03.md`)
 
-Verdict: the sharp 2eps wall and the constructivization porting blocker are UNTOUCHED.
+Verdict: the sharp $2\varepsilon$ wall and the constructivization porting blocker are UNTOUCHED.
 - Atserias-Muller magnification paper (arXiv:2503.24061): zero OpenAlex citations; no
   follow-up crosses or relaxes the Theorem 9(b)/10 boundary.
 - New context only: Atserias-Muller, "From Godel incompleteness to the consistency of
