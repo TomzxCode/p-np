@@ -10,21 +10,21 @@ output is free" (assert on each cert output, all channels, all cells) never fire
 
 ## Setup
 
-Channel law (the corpus-standard answer channel, as stipulated for O1): at the Omega(n,d)
-pipeline, p = 2, a single-variable query x_ij answers
+Channel law (the corpus-standard answer channel, as stipulated for O1): at the $\Omega(n,d)$
+pipeline, p = 2, a single-variable query $x_{ij}$ answers
 
-   free pair (i in D, j in R):      fair coin, memoized per design (f = (2d+1)2d/((n+1)n) per pair)
-   killed-matched (rho(i) = j):     1, determined
+   free pair $(i \in D, j \in R)$:      fair coin, memoized per design ($f = (2d+1)2d/((n+1)n)$ per pair)
+   killed-matched ($\rho(i) = j$):     1, determined
    killed-unmatched (otherwise):    0, determined
 
-A degree-2 AND query (x_ab AND x_cd) answers 1 iff both restricted values are 1; since the
+A degree-2 AND query ($x_{ab}$ AND $x_{cd}$) answers 1 iff both restricted values are 1; since the
 answer is a deterministic function of the two component values, it is charged the 2
 variable reads it needs (budget-honest accounting; chi_and_vs_single.py gave AND a 2x
-subsidy by charging 1). Per-hit posterior cap (proved, no lift): q = (f/2)/(f/2+m) with
-m = (n-2d)/((n+1)n) per pair. Reference points:
+subsidy by charging 1). Per-hit posterior cap (proved, no lift): $q = (f/2)/(f/2+m)$ with
+$m = (n-2d)/((n+1)n)$ per pair. Reference points:
 
-   (32,2): f = 0.01894, m = 0.02652, q = 10/38 = 0.2632; two-phase stipulated-model error 2^-5 = 0.03125
-   (64,4): f = 0.01731, m = 0.01346, q = 36/92 = 0.3913; two-phase stipulated-model error 2^-9 = 0.00195
+   (32,2): f = 0.01894, m = 0.02652, q = 10/38 = 0.2632; two-phase stipulated-model error $2^{-5}$ = 0.03125
+   (64,4): f = 0.01731, m = 0.01346, q = 36/92 = 0.3913; two-phase stipulated-model error $2^{-9}$ = 0.00195
 
 Budgets B in {30, 100, 300, 1000} queries per simulation; success = output pair is free;
 per-hit posterior = free fraction among outputs labeled from a scan hit; hit rate = answer-1
@@ -34,7 +34,7 @@ reads per query.
 
    single     baseline: scan fresh pairs in random order; first answer-1 is labeled;
               fallback = random pair.
-   two-phase  phase 1: query the true Q_i = 1 + sum_j x_ij (1 query per pigeon, assigned
+   two-phase  phase 1: query the true $Q_i = 1 + \sum_j x_{ij}$ (1 query per pigeon, assigned
               pigeons queried and answering 0) until answer 1; phase 2: row-scan the
               certified pigeon until an answer-1 hole; on any failure, the REMAINING
               budget runs a single scan (strongest honest version; no assigned-pigeon
@@ -58,7 +58,7 @@ reads per query.
 
 ## Lemma C (adjacency certification; why chains can beat the single-query no-lift)
 
-If x_p answers 1 and a fresh neighbor nb of p (sharing p's row or column) answers 1, then
+If $x_p$ answers 1 and a fresh neighbor nb of p (sharing p's row or column) answers 1, then
 nb is FREE WITH CERTAINTY (and so is p).
 
 Proof. nb answers 1, so nb is matched or free. If nb = (i,j) were matched, every other
@@ -69,10 +69,10 @@ free. QED.
 
 This is the structural gap in the proved single-query no-lift: that theorem labels one of
 the AND's OWN components over INDEPENDENT pairs, where the matched-matched case carries
-m^2/(f^2/4 + fm + m^2) = 54% of the answer-1 mass at (32,2) (37% at (64,4)) and contributes
+$m^2/(f^2/4 + fm + m^2)$ = 54% of the answer-1 mass at (32,2) (37% at (64,4)) and contributes
 zero freeness. Adjacent pairs cannot be matched-matched, so the chain
 (hit at p, then 1 at nb) has posterior exactly 1 for nb. The cost is rarity: P[cert event
-per read] ~ f * (4d-1)/(2(2n-1)) ~ 1e-3, so the question is whether a scan finds cert
+per read] ~ $f \cdot (4d-1)/(2(2n-1))$ ~ 1e-3, so the question is whether a scan finds cert
 events faster than budget runs out. The measured answer is yes, with an exponential-in-B
 cert rate (below).
 
@@ -122,7 +122,7 @@ cert rate (below).
 
 Confirm's cert rate is exponential in budget at BOTH sizes: 5.17 / 20.50 / 49.17 / 91.83 %
 at B = 30 / 100 / 300 / 1000 (32,2) and 7.50 / 20.83 / 50.17 / 91.83 % at (64,4), i.e.
--ln(1 - cert)/B = 0.0018-0.0026, roughly constant ~ 0.0025/query at both points. The two
+$-\ln(1 - \text{cert})/B$ = 0.0018-0.0026, roughly constant ~ 0.0025/query at both points. The two
 measured points have nearly equal f and hit rate, so the scaling of this constant in (n,d)
 is untested; see Open follow-up below.
 
@@ -148,15 +148,15 @@ B = 1000 (full table in the script output):
    mono2       0.2050 [0.1659,0.2506]  0.7417  0.2629 [0.2129,0.3199]   0.00  -
 
    (at B = 30 the exact two-phase is 0.0167 [0.0076,0.0363]: the budget dies inside the
-   all-zero Q_i scan before any variable is read; at B = 300 it is 0.2733, the single cap.)
+   all-zero $Q_i$ scan before any variable is read; at B = 300 it is 0.2733, the single cap.)
 
 Three exact-pipeline facts, all measured:
-1. The two-phase tree DOES NOT EXIST on the true pipeline: Q_i is a generator of V(n,d),
-   every design kills it, L(Q_i^rho) = 0 for every pigeon (0 ones in 2000 free-pigeon
+1. The two-phase tree DOES NOT EXIST on the true pipeline: $Q_i$ is a generator of $V(n,d)$,
+   every design kills it, $L(Q_i^\rho) = 0$ for every pigeon (0 ones in 2000 free-pigeon
    queries), so phase 1 can never certify and the strategy collapses to the single-variable
    cap (0.2767 vs 0.2650 at B = 1000, CIs overlapping). The corpus's two-phase 0.97 is a
-   property of the stipulated iid channel, not of Omega(n,2).
-2. The literal degree-2 AND channel also dies: P[coord = b1*b2] = 0.49 - degree-2 design
+   property of the stipulated iid channel, not of $\Omega(n,2)$.
+2. The literal degree-2 AND channel also dies: P[coord = $b_1 b_2$] = 0.49 - degree-2 design
    coordinates are fair coins INDEPENDENT of the component degree-1 bits, so no AND (or
    mono2) conjunction test has conjunction semantics. mono2's per-hit posterior still lands
    on the cap: 0.2629 [0.2129,0.3199] vs q = 0.2632 - the proved no-lift, now measured on
@@ -182,15 +182,15 @@ the two-phase tree's success? Answers, split by what the cap is claimed over:
    single-pass no-lift is empirically exact.
 
 2. EQUAL-BUDGET SUCCESS: LIFT, decisively, for adjacency-certification chaining.
-   - confirm beats the single-variable baseline at every B >= 300 at both sizes with
+   - confirm beats the single-variable baseline at every $B \geq 300$ at both sizes with
      disjoint 99% CIs, and reaches 0.9317 [0.9001,0.9538] at B = 1000 at BOTH (32,2) (vs
      0.2550 [0.2120,0.3033], 3.7x, and vs q = 0.2632) and (64,4) (vs 0.3800
      [0.3305,0.4321], vs q = 0.3913). At B = 100 the CIs still overlap; the lift emerges
-     at B >= 300.
+     at $B \geq 300$.
    - The lifted outputs are CERTAINTIES, not better guesses: post|cert = 1.0000 in every
      cell of every channel (asserted per simulation, zero failures). What grows with budget
-     is the probability of reaching a certainty event: cert rate ~ 1 - exp(-B/400).
-   - weighted also breaks both caps at B >= 300 (posterior 0.5719 [0.5193,0.6230] and
+     is the probability of reaching a certainty event: cert rate $\sim 1 - \exp(-B/400)$.
+   - weighted also breaks both caps at $B \geq 300$ (posterior 0.5719 [0.5193,0.6230] and
      0.8000 [0.7548,0.8387] at (64,4) B = 300/1000 vs q = 0.3913; success 0.4483 and 0.3483
      vs single 0.2617/0.2550 at (32,2)): its pool mixes plain hits (posterior q) with
      neighbor-read 1s, each of which is Lemma-C-certified free, so the uniform pool pick's
@@ -201,14 +201,14 @@ the two-phase tree's success? Answers, split by what the cap is claimed over:
      0.2550 at (32,2); 0.0933 vs 0.3800 at (64,4), disjoint CIs) - chi_and_vs_single.py's
      AND advantage was an artifact of charging 1 query per 2-read AND.
 
-3. THE TWO-PHASE REFERENCE: on the stipulated channel the honest (no-oracle, true-Q_i)
+3. THE TWO-PHASE REFERENCE: on the stipulated channel the honest (no-oracle, true-$Q_i$)
    two-phase tree measures 0.8800 [0.8416,0.9101] at (32,2) B = 1000 and 0.9967
    [0.9831,0.9993] at (64,4) - confirm's 0.9317 [0.9001,0.9538] is statistically
    indistinguishable from it at (32,2) (CIs touch) and below it at (64,4). But the
    stipulated channel flatters two-phase: on the TRUE pipeline it collapses to the single
    cap (0.2767, above), while confirm survives unchanged (0.9417). So on the only channel
    that is actually the pipeline, the chaining result is the strongest known adaptive
-   result: success 1 - exp(-Theta(B)) with error DECAYING IN BUDGET, where every
+   result: success $1 - \exp(-\Theta(B))$ with error DECAYING IN BUDGET, where every
    previously tested tree class was capped at q (budget-independent error) and the
    two-phase structure does not exist.
 
@@ -219,21 +219,21 @@ no-lift theorem is sharp, and the cap it proves is a per-query, not a per-tree, 
 
 ## Consequences and open follow-up
 
-- The chi-hypothesis boundary moves: a degree-1 adaptive tree on the TRUE Omega(32,2)
+- The chi-hypothesis boundary moves: a degree-1 adaptive tree on the TRUE $\Omega(32,2)$
   pipeline with measured error 1 - 0.6300 = 0.37 at B = 300 and 1 - 0.9417 = 0.0583 at
-  B = 1000, decaying like e^{-B/400}, breaks the per-query cap extrapolation on the
-  pipeline itself. Whether error < k^{-O(1)} is achievable now reduces
-  to the scaling of the measured constant c ~ 0.0025/query in (n,d): c ~ q * (hit rate) *
-  P[neighbor-1 within k reads | free hit] ~ d^3/n^3 heuristically, so at fixed d the budget
-  to hold error under gamma scales like n^3 * log(1/gamma)/d^3 - plausibly a
+  B = 1000, decaying like $e^{-B/400}$, breaks the per-query cap extrapolation on the
+  pipeline itself. Whether error $< k^{-O(1)}$ is achievable now reduces
+  to the scaling of the measured constant c ~ 0.0025/query in (n,d): $c \sim q \cdot \text{(hit rate)} \cdot$
+  P[neighbor-1 within k reads | free hit] ~ $d^3/n^3$ heuristically, so at fixed d the budget
+  to hold error under $\gamma$ scales like $n^3 \cdot \log(1/\gamma)/d^3$ - plausibly a
   query-race transition of the same shape as Proposition D's, now for ADAPTIVE cert chains.
   No cap theorem covers this class; Propositions C/D cover only non-adaptive trees.
 - The two-phase tree's corpus role (extremal witness on both sides of the d vs log k
   comparison) needs re-anchoring: on the true pipeline its phase-1 signal is void
   (measured 0/2000), so the strongest pipeline-real witness of "adaptive lift" is now the
-  certification chain, with error e^{-Theta(B)} instead of 2^{-Theta(d)}.
+  certification chain, with error $e^{-\Theta(B)}$ instead of $2^{-\Theta(d)}$.
 - Open follow-up (next experiment): scale c along (n,d) = (32,2), (64,2), (128,2),
-  (64,4), (128,4) at B ~ 10^4 to test c ~ d^3/n^3 and the error < k^{-O(1)} reach; and
+  (64,4), (128,4) at $B \sim 10^4$ to test $c \sim d^3/n^3$ and the error $< k^{-O(1)}$ reach; and
   design a depth-3 chain (certify the certified: neighbors of cert outputs) to check
   whether the effective c compounds.
 
@@ -242,15 +242,15 @@ no-lift theorem is sharp, and the cap it proves is a per-query, not a per-tree, 
 - chi_two_phase.py prints its ERROR under a column headed "success" (the code prints
   1 - mean): rerun this session gives 0.0300 at (32,2) and 0.0020 at (64,4), i.e. success
   0.97 / 0.998 as the corpus states. But the 0.97 rests on two conventions: it certifies on
-  row-parity = 1 (which already guarantees a nonzero row, so its phase-2 term 2^{-2d} never
+  row-parity = 1 (which already guarantees a nonzero row, so its phase-2 term $2^{-2d}$ never
   fires - instrumented probe: 0 all-zero-row failures in 482 certified sims vs 30.3
   predicted under independence), and its phase-1 loop never spends queries on assigned
   pigeons (`else: pass`), though the bare row-parity of an assigned pigeon answers 1
-  determinedly and would be certified first in a real transcript. The honest true-Q_i
+  determinedly and would be certified first in a real transcript. The honest true-$Q_i$
   version simulated here (assigned pigeons queried, they answer 0) measures 0.8800 at
-  (32,2) B = 1000: the 2^{-2d} phase-2 term re-enters because Q_i-certification is
+  (32,2) B = 1000: the $2^{-2d}$ phase-2 term re-enters because $Q_i$-certification is
   even-parity, which includes the all-zero row (measured cert rate 83.83% vs the predicted
-  (1 - 2^{-5}) * 7/8 = 0.848). And on the true pipeline both conventions die (measured,
+  $(1 - 2^{-5}) \cdot 7/8$ = 0.848). And on the true pipeline both conventions die (measured,
   above).
 - chi_o1_scaling.py's "hybrid" strategy (c) degenerates to the plain single scan: the
   product-test branch in its docstring is not in the code (it labels the first answer-1 and
