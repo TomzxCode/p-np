@@ -1,0 +1,25 @@
+# Lean dependencies and build artifacts.
+# mathlib4 is a large local clone (several GB), pinned by lean_channel/lake-manifest.json.
+# To build: clone leanprover-community/mathlib4 at that revision into lean_channel/mathlib4
+# (or run `lake update` / `lake exe cache get` after restoring the path dependency).
+lean_channel/.lake/
+lean_channel/mathlib4/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# OS / editor
+.DS_Store
+Thumbs.db

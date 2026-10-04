@@ -1,0 +1,138 @@
+# GOAL.md - standing instructions for this session (compiled 2026-10-04)
+
+This file compiles every standing instruction the corpus owner has given. It is
+the resume-point for any future session: read it, then README.md, then LOG.md's
+tail. Maintenance: when the owner issues a new standing instruction, append it
+here (dated) and note the change in LOG.md.
+
+## 1. The objective
+
+Prove or disprove P != NP.
+
+Honest framing (owner-accepted, in force since the first session): a bounded
+session will not resolve a Millennium Problem. The operational goal is therefore
+dual-track and both tracks are mandatory:
+
+(a) Keep a rigorous, verified research corpus around the problem: route maps with
+named walls and trigger conditions, claim forensics, original proved results,
+experiments, and precisely-stated open problems.
+(b) Make real mathematical progress on the most promising engaged program - the
+p=2 core of the Krajicek pseudo-solution program (arXiv:2609.35927), whose open
+core is the all-degrees budgeted err-floor (O2 in open_problems.md).
+
+The objective is never redefined as met by a smaller subtask. Never present the
+work as finished or blocked merely because it is hard, slow, or uncertain.
+
+## 2. Operating mode: maximum parallel agents
+
+- "Use as many agents as possible to work on parts of the problem in parallel."
+- Fan out on non-overlapping tracks; every agent gets a self-contained prompt
+  (corpus files to read first, exact deliverable paths, verification standard,
+  no-corpus-writes rule).
+- Only the orchestrator writes corpus documents and LOG.md; agents write only
+  their own deliverable files. This avoids write conflicts and keeps one
+  consolidation voice.
+- Consolidate every agent result before relying on it: re-run or spot-check the
+  work (rerun scripts, check proofs line by line, verify quotes against primary
+  sources) before recording anything in the corpus.
+- Concurrency discipline learned by experience: on a provider rate-limit death,
+  queue the dead brief and probe with ONE redispatch when >= 8 agents are
+  running; redispatch freely below that. Agents editing the same directory can
+  collide (the lean-channel zombie incident): give concurrent agents disjoint
+  write paths.
+
+## 3. Verification standards (non-negotiable)
+
+- Every claimed number comes from an executed run; every quote is anchored to
+  the primary source (fetch the arXiv HTML/ECCC page; never trust a summary of a
+  summary).
+- Every finding is recorded with what is PROVED vs MEASURED vs CONJECTURED,
+  explicitly marked.
+- Self-corrections are caught by computation or primary-source checks, never by
+  argument alone, and are logged in LOG.md as prominently as the findings
+  (standing ledger: nine correction-class events + one quantifier repair so
+  far). Retractions stay visible (corpus convention: correction blocks and
+  RETRACTED markers in place).
+- ascii math only; one sentence per line; no em-dashes; no banned terms.
+
+## 4. Corpus conventions
+
+- LOG.md: timestamped audit trail, append-only, orchestrator-only. Every
+  dispatch, finding, correction, screen, and incident gets an entry.
+- verify_corpus.py (corpus root) is the machine gate: run it before declaring
+  any turn's consolidation complete; it must PASS (currently 393 checks).
+- Deliverables of record and their homes:
+  * Route maps (docs/): williams_ladder.md, magnification_gap.md,
+    algebraic_rung.md, proof_complexity.md (correction blocks and ADDENDA are
+    part of the record).
+  * Theorem map (docs/theorem_map.md): Mermaid blocks (no YAML front matter
+    inside fences; renderers choke on it), validated structurally; keep it
+    current when theorems land or die.
+  * Bibliography (bibliography.md, corpus root): status-coded [V]/[L]/[R]/[I],
+    correct-as-of dates, maintenance rule at the foot.
+  * Open problems (docs/open_problems.md): formal statements, decisive
+    toy-scale predictions, per-problem falsification conditions.
+  * Paper (paper/p2_results.tex +PDF): kept at the corpus's post-correction
+    state; recompile after every substantive change (tectonic; zero errors).
+  * Claim forensics (docs/): goertzel_audit.md, edwards_audit.md,
+    failure_modes.md (F1-F7 taxonomy).
+  * Monitoring screens (docs/monitors/): one dated deliverable per screen.
+  * Experiments (experiments/): every script, run-backed; mutual imports stay
+    same-dir (razborov_check.py is the shared F_2 machinery).
+  * Machine gate: verify_corpus.py (corpus root); Lean artifacts: lean_channel/.
+- The corpus owner's two reserved decisions: nothing is sent or posted anywhere
+  (note_to_author.md is a draft; communication is the owner's call), and no
+  public claims are made on the owner's behalf.
+
+## 5. Monitoring obligations
+
+- Screen arXiv/ECCC on a daily delta basis (monitor_YYYY-MM-DD.md deliverables):
+  the engaged papers (2609.35927, 2609.23015) and their citations; the audited
+  claims (2510.08814, 2512.11820) for author responses; new Res(+o+)/AC0[p] lane
+  reports; new P vs NP resolution claims (triage against failure_modes.md, full
+  audit only for load-bearing items).
+- Known tripwires: pith.science machine reviews (note: its author rebuttals are
+  machine-simulated), OpenAlex citation counts, the Braun-bound follow-up chain
+  (Pang arXiv:2610.00837 was the first).
+
+## 6. Current open core (what to attack next)
+
+- The all-degrees budgeted err-floor (O2): degrees 2 and 3 are PROVED (Theorem 3
+  and Theorem 3'; same d^2 ~ n chi-boundary). The open quantifier is degree >= 4;
+  the degree-3 template (star sum rules, alias classes via Boolean identities,
+  wedge/Z certificate inventory) is the stated consumption target.
+- Theorem 3's query-class coverage is a proper subset of the printed degree-2
+  class (F_2 mixtures; likely shallow repair - GAP B').
+- Rigor gaps: Lemma M (O5 degree-2 transfer), de-modularizing the JDP steps,
+  exact exponent constants.
+- Second front: the odd-p analogue (O6, p_family.md; T_p needs the parity-locked
+  recompute).
+- Route note of record: the PRINTED Theorem 6.1(3) is false as printed
+  (chi_transfer.md Theorem 3); the live route is the err-form assembly
+  (chi_transfer.md Theorem 4), whose premise is exactly O2.
+
+## 7. Environment constraints (learned, still binding)
+
+- Disk: keep >1 GB free; formalization work needs >= 10 GB (mathlib). Never let
+  agents download large toolchains without a disk check; clean build artifacts
+  from lean_channel/ before re-cloning. The elan toolchain lives at its DEFAULT
+  home /home/tomzx/.elan (moved out of /tmp on 2026-10-04; PATH line in
+  ~/.bashrc) - do not reinstall it into /tmp or /tmp/opencode.
+- Provider rate limits bite above ~8 concurrent agents; queue, probe, drain.
+- Prefer /tmp/opencode for external temp files.
+
+## 8. Owner instruction log (verbatim, dated)
+
+- 2026-10-03: "Prove or disprove P != NP." (objective, repeated as the standing
+  continuation directive each cycle).
+- 2026-10-03: "Reset the continuation budget and set an infinite one. Then
+  continue working on the problem. Use as many agents as possible to work on
+  parts of the problem in parallel."
+- 2026-10-03: "Stop thinking and distribute the work among subagents."
+- 2026-10-03: "You should be running more parallel agents."
+- 2026-10-04: "Generate a diagram of the theorems/proofs you've identified and
+  what they build on and where there are currently gaps."
+- 2026-10-04: "Those should be in mermaid blocks."
+- 2026-10-04: "Create a file tracking all relevant bibliography."
+- 2026-10-04: "Take all the instructions I gave and turn them into a GOAL.md
+  file." (this file)

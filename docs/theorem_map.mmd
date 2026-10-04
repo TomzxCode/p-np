@@ -1,0 +1,92 @@
+---
+title: Theorem dependency map - the p=2 program of arXiv:2609.35927
+config:
+  theme: base
+---
+flowchart TD
+    KRA["Krajicek pipeline Omega(n,d) at p=2<br/>arXiv:2609.35927, Def 4.3"]:::external
+    T61["Theorem 6.1 (Krajicek, conditional)<br/>chi-hypothesis for ALL budgeted trees<br/>implies super-poly AC0[2]-Frege PHP bounds"]:::conditional
+    OBJ["P != NP<br/>AC0[2]-Frege bounds are a rung toward it,<br/>not the end: Cook-Reckhow needs all systems"]:::goal
+
+    subgraph FOUND["Foundations (kernel-true)"]
+        KERNEL["ONE kernel: V(n,d)^rho = V(2d,d)<br/>outer = canonical; design-space debate dissolved"]:::proved
+        CL["Channel law, kernel-true:<br/>row-incomplete fair coins; full free rows<br/>parity-locked (XOR=1); Q_i = 0 on all pigeons"]:::proved
+        LIN["Lemma 1: F_2 linearity<br/>ans(g) = a + XOR of variable answers"]:::proved
+        REL["Lemma REL: coin channel = true channel<br/>below per-row cost Theta(n)"]:::proved
+        L3["Lemma 3: counting certificates<br/>killed rows and columns show exactly one 1"]:::proved
+        LEMC["Lemma C = Theorem 1: ADJACENCY certificates<br/>two adjacent 1s give a free pair with certainty"]:::proved
+    end
+
+    subgraph COIN["Coin-channel layer (valid below Theta(n)/row)"]
+        PRODAC["Props A, C: variable-class caps"]:::proved
+        LEMB1["Lemma B.1: depletion bound<br/>quantifier repaired; 35/35 exact grid PASS"]:::proved
+        THB["Theorem B: adaptive single-variable cap<br/>success at most q + budget slack"]:::proved
+        ANDNL["AND-no-lift: single-pass posterior = q<br/>q_and = 0.2763 at (32,2), measured"]:::proved
+        THF["Theorem F: exact COIN-channel floor<br/>err* = 2^-Theta(d^2), counting tree<br/>Bayes audit + 2^20 exact enumeration"]:::proved
+        THT["Theorem T, literal:<br/>err = 5 x 2^-(2d+1) at d = 2<br/>coin-model only; dead on true pipeline"]:::proved
+    end
+
+    subgraph TRUEPIPE["True-pipeline theory (post-correction)"]
+        TH2["Theorem 2: one-row posteriors<br/>parity-suppressed below q"]:::proved
+        TH3["Theorem 3: BUDGETED CAP, full degree-<=2<br/>success at most q + P_adj + P_K + o(1)"]:::proved
+        COR31["Cor 3.1: chi-hypothesis ALIVE<br/>whenever d^2 log k = o(n)<br/>(the program's own regime)"]:::proved
+        S8["Sec 8: exact budgeted boundary<br/>err*(d, d log k) = k^-Theta(d^2/n)"]:::proved
+        TH4B["Theorem 4b: K_j column-parity tree<br/>strongest budgeted attacker (0.9692 at (32,2))"]:::proved
+        TH5["Theorem 5: full-scan success EXACTLY 1<br/>on the true pipeline: unbounded optimum = 0"]:::proved
+    end
+
+    subgraph RETRACTED["Retracted during the session (with provenance)"]
+        ART["Theorem T 'exact law' 1 - 2^-(2d+1)<br/>RETRACTED: simulator artifact<br/>(row-XOR condition no query implements)"]:::retracted
+        PROPD["Proposition D as stated<br/>RETRACTED: rc counterexample 0.9067 vs 0.625"]:::retracted
+        OLDFLOOR["2^-Theta(d) floor conjecture<br/>RETRACTED: refuted by Theorem F"]:::retracted
+        PARITY4["'parity-locked floor shifts ~4x'<br/>CORRECTED: terminates at 0 (Theorem 5)"]:::retracted
+    end
+
+    subgraph GAPS["Open gaps (the exact remaining work)"]
+        GAPD3["GAP A: degree >= 3 extension<br/>the all-degrees quantifier - AGENT RUNNING"]:::gap
+        GAPTR["GAP B: chi-transfer to the printed<br/>chi-quantity - AGENT RUNNING"]:::gap
+        GAPLM["GAP C: Lemma M (O5): degree-2 monomial<br/>semantics, pipeline transfer proved"]:::gap
+        GAPJDP["GAP D: de-modularize the JDP steps"]:::gap
+        GAPCST["GAP E: exact exponent constants<br/>cap ~0.32 vs witness 0.06 at (128,2)"]:::gap
+        GAPO6["GAP F: O6 odd-p analogue<br/>T_p needs the parity-locked recompute"]:::gap
+    end
+
+    KRA --> KERNEL
+    KERNEL --> CL
+    CL --> REL
+    LIN --> REL
+    CL --> L3
+    CL --> LEMC
+    REL --> PRODAC
+    REL --> LEMB1
+    REL --> ANDNL
+    REL --> THT
+    L3 --> THF
+    LIN --> THF
+    PRODAC --> THB
+    LEMB1 --> THB
+    ART -.->|supersedes| THT
+    CL --> TH2
+    THB --> TH3
+    LEMC --> TH3
+    L3 --> TH3
+    TH2 --> TH3
+    TH3 --> COR31
+    TH3 --> S8
+    CL --> TH4B
+    TH4B --> S8
+    CL --> TH5
+    TH5 -.->|requalifies as coin-only| THF
+    OLDFLOOR -.->|refuted by| THF
+    PROPD -.-> TH3
+    PARITY4 -.-> TH5
+
+    COR31 --> GAPD3
+    GAPTR --> COR31
+    GAPLM --> TH3
+    GAPJDP --> TH3
+    GAPCST --> S8
+    GAPD3 --> T61
+    GAPTR --> T61
+    T61 -->|"if premise proved:<br/>super-poly AC0[2]-Frege PHP bounds"| OBJ
+    GAPO6 -.-> T61

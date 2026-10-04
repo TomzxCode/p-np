@@ -1,0 +1,2563 @@
+% p2_results.tex
+%
+% Self-contained write-up of the characteristic-2 results of the research
+% session on the Krajicek pseudo-solution pipeline (arXiv:2609.35927) for
+% -PHP_n.
+%
+% Attribution: the pipeline, the solution condition, and the chi-task are due
+% to J. Krajicek (arXiv:2609.35927).  All other theorems, propositions, and
+% lemmas below are original to this research session (2026-10-03) and are not
+% peer-reviewed.  This is a draft for the corpus owner; it has not been
+% submitted anywhere.
+%
+% Revised 2026-10-03 to the corpus's post-correction state: retracts the
+% two-phase exact law (simulator artifact) and the all-degrees non-adaptive
+% cap; adds the exact certification floor (Theorem F), the rc parity tree,
+% and the budget reconciliation; measured points are split into
+% hybrid-artifact and literal rows.
+%
+% Revised 2026-10-03 (final pass) to the corpus's post-kernel state: integrates
+% the kernel-structure findings (one design space, V(n,d)^rho = V(2d,d); the
+% channel law restated with parity-locked full rows; the i.i.d. law resting on
+% the zeroing completion after the disjoint-support route fails at d >= 2),
+% the adjacency certificates (Lemma C) with the confirmation-chain
+% measurements, the Theorem-F-under-parity-locking remark, and the
+% theorem-faithfulness table; supersedes the design-space readings discussion
+% and the canonical reversed-certificate scenario.
+%
+% Compile: tectonic p2_results.tex  (or pdflatex, twice, for cross-references).
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[margin=1.1in]{geometry}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{openproblem}{Open Problem}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\PHPn}{\neg\mathrm{PHP}_n}
+\newcommand{\Des}{\mathrm{Des}}
+\newcommand{\Sp}{\mathrm{Span}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\AC}{\mathrm{AC}}
+\newcommand{\lab}{\mathrm{lab}}
+
+\title{Adaptive decision-tree caps and the exact certification floor
+for the pseudo-solution pipeline of $\PHPn$ at characteristic $2$:\\
+the answer channel, depletion bounds, the AND-query no-lift, the
+certification floor, the adjacency certificates, and the corrected
+two-phase tree}
+
+\author{Research session of October 3, 2026\thanks{
+Draft prepared for the corpus owner; not submitted and not peer-reviewed.
+The pipeline $\Omega(n,d)$, the solution condition
+(Definition~\ref{def:solution}), and the chi-task
+(Theorem~\ref{thm:chi}) are due to J.~Kraj\'i\v{c}ek \cite{Kra26}, building
+on \cite{BIKPPS97}; they are quoted here from the printed definitions of
+\cite{Kra26}.  All remaining results
+(Theorems~\ref{thm:channel}, \ref{thm:B}, \ref{thm:and},
+\ref{thm:twophase}, \ref{thm:floor}, Propositions~\ref{prop:fixed},
+\ref{prop:nonadaptsingle}, \ref{prop:nonadaptall}, \ref{prop:rigidity},
+\ref{prop:rcparity}, and
+Lemmas~\ref{lem:degonespan}, \ref{lem:completion}, \ref{lem:factor},
+\ref{lem:depletion}, \ref{lem:linear}, \ref{lem:certificates},
+\ref{lem:rescue}, \ref{lem:classb}, \ref{lem:adjacency}) are original
+to this research session.  This revision retracts the earlier exact
+two-phase law and
+its optimality conjecture (a simulator artifact;
+Remark~\ref{rem:artifact}) and the all-degrees non-adaptive cap
+(Remark~\ref{rem:retraction}); the final revision integrates the
+kernel-level verification (one design space, parity-locked full rows),
+the adjacency certificates (Lemma~\ref{lem:adjacency}) and the
+confirmation-chain measurements, the Theorem-\ref{thm:floor}
+parity-locking remark, and the theorem-faithfulness table
+(Table~\ref{tab:faithfulness}).}}
+
+\date{October 3, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the pseudo-solution pipeline $\Omega(n,d)$ of Kraj\'i\v{c}ek
+\cite{Kra26} for the negated pigeonhole principle over $\F_2$, the
+reduction target of the $\AC[2]$-Frege lower-bound problem.  We prove an
+exact answer-channel law: killed pairs answer deterministically, free
+pairs answer fair bits marginally and jointly on every row-incomplete
+query set, a fully queried free row is \emph{parity-locked} (answer XOR
+$1$; only $2^{2d-1}$ of the $2^{2d}$ patterns occur), and the row sums
+answer the determined $0$ on every pigeon.  A kernel-level verification
+proves $V(n,d)^{\rho}=V(2d,d)$ exactly: one design space, the
+outer/canonical ambiguity dissolves, the printed vanishing condition
+itself forces the row parities, and the i.i.d.\ law rests on the
+zeroing completion (the earlier disjoint-support route fails at
+$d\ge2$).  On this law we prove a hypergeometric depletion bound via
+negative association; exact success caps for fixed-label trees, for
+non-adaptive variable- and monomial-class trees, and for all adaptive
+single-variable trees within their budget; and a no-lift theorem: the
+per-hit freeness posterior of a degree-$2$ AND query equals, by an
+algebraic identity, the single-variable Bayes posterior.  In the coin
+model, our main theorem settles the unbounded-budget certification
+problem at degree $1$: every adaptive degree-$1$ tree errs with
+probability at least
+$\mathrm{err}^*=(1-2d/n)\,(2d+1)(2d)!\,/\,2^{(2d+1)2d}
+=2^{-\Theta(d^2)}$, attained by a non-adaptive full-scan counting
+tree, through sound line-count certificates and a near-permutation
+obstruction; under the pipeline's parity-locking the order survives
+and the exact constant is open.  An earlier draft asserted an exact
+law $1-2^{-(2d+1)}$ for the two-phase certification tree; we retract
+it as a simulator artifact (the simulator certified freeness on a
+row-XOR condition that no degree-$1$ query implements), and against
+the literal pipeline the tree is dead outright.  The per-hit caps are
+sharp but not per-tree: two adjacent $1$s certify a free pair
+\emph{with certainty} (a matched pair forces its row-neighbors to
+$0$), and a scan-then-confirm chain, sound on the literal pipeline,
+measures success $0.9317$ at budget $1000$ at both $(32,2)$ and
+$(64,4)$ ($0.9417$ on the exact pipeline at $(32,2)$) with posterior
+$1.0000$ on every certified output, the certificate rate following
+$1-e^{-B/400}$; the scaling of that constant in $(n,d)$ is the
+sharpest open problem.  We tabulate which results are kernel-faithful
+(the caps, the posteriors, the completion, both surviving certificate
+mechanisms) and which are coin-model-only (the retracted two-phase
+law, the floor's constant, the AND identity's pipeline transfer).
+Every attacker remains over the printed budget $e'=d\log k$: the open
+problem is the \emph{budgeted} certification floor over the
+certificate trichotomy --- parity (dead), counting (inert within
+budget), adjacency (alive) --- with the chi-hypothesis open in exactly
+its printed budgeted form, together with the odd-characteristic
+analogue.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The proof-complexity target}
+
+By the Cook--Reckhow theorem \cite{CookReckhow79}, a propositional proof
+system with polynomially bounded proof size exists if and only if
+$\mathrm{NP}=\mathrm{coNP}$; hence any super-polynomial lower bound for a
+sufficiently strong propositional proof system implies
+$\mathrm{NP}\neq\mathrm{coNP}$ and therefore $\mathrm{P}\neq\mathrm{NP}$.
+For resolution the pigeonhole principle has exponential lower bounds
+\cite{Haken85}, and so it has for constant-depth Frege \cite{Ajtai94}.
+Adding $\mathrm{MOD}_p$ gates defeats the Razborov--Smolensky circuit
+technology \cite{Smolensky87}, and no non-trivial lower bound is known for
+$\AC[2]$-Frege on any formula sequence.  In 2026 the adjacent frontier
+moved: an exponential lower bound was proved, with a Lean~4 formalization,
+for the bit pigeonhole principle in unrestricted dag-like resolution over
+parities (Res$(\oplus)$) \cite{resxor26}, the system immediately below
+$\AC[2]$-Frege, and super-linear lower bounds for random 3-CNFs became
+available in bounded-depth Frege \cite{randomcnf26}.  The $\AC[2]$-Frege
+lower bound for $\PHPn$ itself is the frontier open problem, and the
+pseudo-solution program of \cite{Kra26} is currently its most concrete
+reduction: it replaces the qualitative lower-bound question by a
+quantitative probabilistic task about explicitly given objects
+(Theorem~\ref{thm:chi}).  Proving anything about that task requires, first,
+an exact understanding of what an adaptive decision tree with low-degree
+queries can extract from the pipeline $\omega=(\rho,L)$ at the
+Boolean-relevant characteristic $p=2$.  This paper supplies that
+understanding for the single-variable, non-adaptive, and single-pass
+product query classes; proves the answer-channel law at kernel level
+(one design space, $V(n,d)^{\rho}=V(2d,d)$, with parity-locked full
+rows and the i.i.d.\ law resting on the zeroing completion);
+settles the unbounded-budget certification
+problem at degree $1$ in the coin model exactly (Theorem~\ref{thm:floor}:
+the optimal error is $2^{-\Theta(d^2)}$, attained by a non-adaptive
+counting tree; under the pipeline's parity-locking the order survives
+and the constant is open); proves the adjacency-certificate lemma and
+reports the confirmation-chain measurements that beat the per-query
+caps on the literal pipeline (Section~\ref{sec:adjacency});
+restates the two-phase certification tree under the literal query
+semantics, after retracting its earlier exact law as a simulator
+artifact, and shows it dead against the pipeline;
+reconciles the unbounded results with the printed budget of
+Theorem~\ref{thm:chi}; and isolates the budgeted certification floor
+over the certificate trichotomy as
+the precise remaining open problem.
+
+\subsection{Contributions}
+
+All results concern the pipeline $\Omega(n,d)$ of \cite{Kra26} at $p=2$
+with $n_\rho=2d$ (Definition~\ref{def:pipeline}).
+
+\begin{enumerate}
+\item \textbf{The answer channel law, restated at kernel level}
+(Theorem~\ref{thm:channel}): matched pairs answer the constant $1$,
+killed--unmatched pairs the constant $0$, free pairs answer fair bits
+marginally and jointly on every \emph{row-incomplete} query set, a
+fully queried free row is \emph{parity-locked} (Theorem~\ref{thm:channel}(iv)),
+and the row sums answer the determined $0$ on every pigeon
+(Proposition~\ref{prop:rigidity}), so aggregate row-sum queries carry
+no signal at all.  The joint law rests on the zeroing completion
+(Lemma~\ref{lem:completion}); the disjoint-support route recorded in an
+earlier draft fails at $d\ge2$ (Remark~\ref{rem:proofroute}).  A
+kernel-level verification (Remark~\ref{rem:onekernel}) proves
+$V(n,d)^{\rho}=V(2d,d)$ exactly: the outer/canonical design-space
+ambiguity of the previous draft dissolves, one design space carries the
+printed vanishing condition, and no reading of the printed definition
+realizes the coin channel beyond its row-incomplete single-variable law
+(Corollary~\ref{cor:coin}).
+\item \textbf{Completion of partial patterns}
+(Lemma~\ref{lem:completion}): every partial assignment with fewer than
+$2d$ pinned coordinates in each row extends to a design, and the number of
+extensions is independent of the assigned values; a fully pinned row must
+carry parity $1$.  Consequently the answer channel of any set of
+single-variable queries coincides, in joint law, with an i.i.d.-coin
+channel except on the event that some row's free pairs are queried in
+their entirety (Corollary~\ref{cor:coin}); on that event the row is
+parity-locked (Theorem~\ref{thm:channel}(iv)).
+\item \textbf{Depletion}
+(Lemma~\ref{lem:depletion}): conditioned on any transcript, the freeness
+probability of any pair whose own cell was not probed exceeds the base
+rate by a factor $1+O(s/n)$ at most.  This is the hypergeometric
+negative-association bound, placed on record with the standard citations
+\cite{JoagDevProschan83,DubhashiRanjan98}.
+\item \textbf{Caps}: Proposition~\ref{prop:fixed} (fixed-label trees
+succeed at the base rate $f$ exactly); Proposition~\ref{prop:nonadaptsingle}
+(non-adaptive single-variable trees with answer-seeking labels succeed at
+most $f(1+s/2)+o(1)$); Proposition~\ref{prop:nonadaptall} (non-adaptive
+trees whose queries are single variables or monomials with at most
+$\gamma$ distinct variable pairs each succeed at most
+$(\gamma s+1)f+o(1)$ at budget $s$, with the transition
+$d=\Theta_\gamma(n^{2/3}(\log k)^{-1/3})$; the earlier all-queries
+generality of this cap is \emph{retracted}, with a counterexample, in
+Remark~\ref{rem:retraction}); Theorem~\ref{thm:B} (all adaptive
+single-variable trees of depth $e$ succeed at most
+$\max(q,f)(1+O(e/n))+o(1)$, where $q=\frac{2d^2+d}{2d^2-d+n}$ is the
+exact per-hit Bayes posterior; in particular the success is at most
+$\frac12+o(1)$ for $2d\le\sqrt{2n}$; the cap is a \emph{budgeted}
+statement, Remark~\ref{rem:Bscope}).  Hence the chi-task hypothesis of
+Theorem~\ref{thm:chi} holds for these classes with margin.
+\item \textbf{The AND-query no-lift}
+(Theorem~\ref{thm:and}): a degree-$2$ product query is a joint test with
+no per-hit advantage: its labeling posterior equals $q$ exactly, by the
+polynomial identity $(f+2m)^2=f^2+4fm+4m^2$.
+\item \textbf{The exact certification floor at degree $1$}
+(Theorem~\ref{thm:floor}): over \emph{all} adaptive degree-$1$ trees
+with no query budget, the optimal error in the coin model of
+Definition~\ref{def:table} is exactly
+$\mathrm{err}^*=(1-2d/n)(2d+1)(2d)!/2^{(2d+1)2d}=2^{-\Theta(d^2)}$,
+attained by a non-adaptive full-scan counting tree.  The proof:
+linearity of degree-$1$ answers (Lemma~\ref{lem:linear}), full-scan
+dominance reducing adaptivity to the Bayes problem on the answer table
+(Corollary~\ref{cor:fullscan}), sound line-count certificates
+(Lemma~\ref{lem:certificates}), pigeonhole rescue
+(Lemma~\ref{lem:rescue}), and the near-permutation class as the unique
+obstruction, with pair posterior flat at $2d/n$
+(Lemma~\ref{lem:classb}).  Verification: an exhaustive Bayes audit at
+$(4,1)$ and exact enumeration of all $2^{20}$ coin matrices at $(5,2)$
+(Remark~\ref{rem:floorverify}).  The rows-and-columns parity tree
+(Proposition~\ref{prop:rcparity}) dominates the two-phase tree at
+equal $O(n)$ cost.  The constant is a coin-model number: under the
+pipeline's parity-locking the hard class vanishes and the
+unbounded floor on the literal pipeline is exactly $0$
+(Remark~\ref{rem:parityfloor}); the open remnant is the budgeted
+all-degrees floor.
+\item \textbf{Adjacency certificates and the confirmation chain}
+(Section~\ref{sec:adjacency}): two adjacent $1$s certify a free pair
+\emph{with certainty} (Lemma~\ref{lem:adjacency}; a matched pair
+forces its row-neighbors to the determined $0$), sound against the
+literal pipeline directly, with no design property used.  The
+scan-then-confirm chain measures success $0.9317$ at budget $1000$ at
+both $(32,2)$ and $(64,4)$ ($0.9417$ on the exact pipeline at
+$(32,2)$), posterior $1.0000$ on every certified output, certificate
+rate $1-e^{-B/400}$: the per-query caps are sharp, but they are
+per-query bounds, and the chain is the strongest known adaptive
+attacker on the pipeline, with the scaling of its constant the
+sharpest open problem (Open Problem~\ref{op:adjacency}).
+\item \textbf{The two-phase certification tree, corrected}
+(Theorem~\ref{thm:twophase}): under the literal query semantics the
+tree's error is exactly
+$2^{-(2d+1)}+(1-2^{-(2d+1)})\,2^{-2d+1}$ (the count-$0$ phase-$2$
+branch); the earlier exact law $1-(1-f)2^{-(2d+1)}$ is retracted as a
+simulator artifact (Remark~\ref{rem:artifact}), the recorded
+$0.97$-level measurements are requalified as hybrid-artifact
+measurements, and the literal tree measures $0.8500$ at $(32,2)$
+(Table~\ref{tab:twophase}); against the literal pipeline the tree is
+dead outright (Corollary~\ref{cor:closed}).
+\item \textbf{Budget reconciliation} (Section~\ref{sec:budget}):
+Theorem~6.1 of \cite{Kra26} quantifies over $(d,d\log k)$-trees; every
+constructed attacker is over budget, counting certificates are inert
+within budget, and the open problem is the budgeted certification
+floor, now organized by the certificate trichotomy (parity: dead;
+counting: inert within budget; adjacency: alive,
+Remark~\ref{rem:trichotomy}).
+\item \textbf{Open problems} (Section~\ref{sec:open}): the
+chi-hypothesis in its printed budgeted form, the budgeted
+certification floor over the certificate trichotomy, the
+adjacency-budget race, chaining beyond the per-hit posterior,
+and the odd-characteristic analogue.
+\end{enumerate}
+
+All numerical claims are exact channel simulations or exact
+enumerations over the finite coin model of Section~\ref{sec:floor}
+(they sample the proved channel law or enumerate its answer tables,
+not the design space), except where stated: the exact-pipeline rows of
+Section~\ref{sec:adjacency} sample uniform designs over $\Des(4,2)$
+directly.  The two-phase table separates two laws and
+labels every row: \emph{hybrid-artifact} rows verify the artifact
+simulator's certification law (Remark~\ref{rem:artifact}); \emph{literal}
+rows verify Theorem~\ref{thm:twophase}.  Against the literal pipeline
+the tree is dead outright: the row-sum channel answers the determined
+$0$ on every pigeon (Corollary~\ref{cor:closed}), a fact now proved at
+kernel level (Remark~\ref{rem:onekernel}).  The floor verification
+combines an exhaustive Bayes audit at $(4,1)$, exact enumeration of
+all $2^{20}$ coin matrices at $(5,2)$, and Monte Carlo at three points
+in one registered run.  Measurements confirm the proved laws and are
+never used in place of proofs.
+
+\subsection{Attribution}
+
+The pipeline, the solution condition, the reduction chain, and the
+chi-task are due to J.~Kraj\'i\v{c}ek \cite{Kra26}, with the algebraic
+foundation in \cite{BIKPPS97}; we quote the printed definitions of
+\cite{Kra26} in Section~\ref{sec:prelim}.  Everything else in this paper
+--- the answer channel law, the degree-one span lemma, the completion
+lemma, the rigidity proposition, the factorization and depletion lemmas,
+Propositions~\ref{prop:fixed}, \ref{prop:nonadaptsingle},
+\ref{prop:nonadaptall} (in its surviving class form), Theorems~\ref{thm:B},
+\ref{thm:and}, \ref{thm:twophase} (in its corrected literal form), the
+two-phase tree itself, the floor lemmas and
+Theorem~\ref{thm:floor}, the rows-and-columns parity tree
+(Proposition~\ref{prop:rcparity}), and the adjacency certificate
+(Lemma~\ref{lem:adjacency}) --- is original to this
+research session and unpublished.  This revision retracts two earlier
+claims of the session: the exact two-phase law $1-(1-f)2^{-(2d+1)}$
+with its optimality conjecture (a simulator artifact,
+Remark~\ref{rem:artifact}) and the all-degrees non-adaptive cap
+(Remark~\ref{rem:retraction}).  It also supersedes the previous
+draft's design-space readings discussion: the kernel-level
+verification (Remark~\ref{rem:onekernel}) proves
+$V(n,d)^{\rho}=V(2d,d)$ exactly, so the outer/canonical debate
+dissolves, and the canonical-reading ``reversed certificate'' scenario
+of the previous draft does not exist under the zeroing restriction
+semantics (Remark~\ref{rem:proofroute},
+Proposition~\ref{prop:rigidity}).  We work from the definitions as
+printed; if the intended notion of the design set or of the tree class in
+\cite{Kra26} differs from our reading, our results apply to the printed
+formulation.
+
+\subsection{Notation}\label{sec:notation}
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\hline
+Symbol & Meaning \\
+\hline
+$n$ & outer dimension: $n+1$ pigeons, $n$ holes; the outer system is
+$\PHPn$ \\
+$d$ & degree bound of the pipeline and of the queries; $d\ge 2$ is assumed
+where stated \\
+$p$ & field characteristic; throughout, $p=2$ and the field is $\F_2$ \\
+$x_{ij}$ & outer Boolean variable ``pigeon $i$ goes to hole $j$'',
+$i\in[n+1]$, $j\in[n]$ \\
+$\PHPn$ & system: hole collisions $x_{i_1j}x_{i_2j}$, two per pigeon
+$x_{ij_1}x_{ij_2}$, \\
+ & row sums $Q_i=1+\sum_j x_{ij}$, Boolean axioms $x_{ij}^2+x_{ij}$ \\
+$\rho$ & uniform random partial injection leaving exactly $2d$ holes
+unfilled \\
+$D,\ R$ & the $2d+1$ free pigeons and the $2d$ free holes under $\rho$;
+$F=D\times R$ the free pairs \\
+$L$ & uniform random degree-$d$ design of the restricted system
+(Def.~\ref{def:pipeline}) \\
+$V(N,d)$ & span of the degree $\le d$ consequences of a system on $N+1$
+pigeons, $N$ holes \\
+$\Des(N,d)$ & affine space of linear functionals with $L(1)=1$ and
+$L|_{V(N,d)}=0$ \\
+$\omega=(\rho,L)$ & pipeline sample; the answer to a query $g$ is
+$L(g^\rho)$ \\
+$g^\rho$ & restriction of $g$ by $\rho$ (killed variables become $0$ or
+the constant $1$) \\
+$f$ & free-pair density $=\Prob[(i,j)\in F]=\frac{(2d+1)\,2d}{(n+1)\,n}$ \\
+$m$ & matched-pair density $=\Prob[\rho(i)=j]=\frac{n-2d}{(n+1)\,n}$ \\
+$q$ & per-hit Bayes posterior $=\frac{f/2}{f/2+m}=\frac{2d^2+d}{2d^2-d+n}$ \\
+$s,\ e$ & number of queries (budget); depth of a tree \\
+$e'$ & printed query budget of Theorem~\ref{thm:chi}:
+$O(\log n)+O(d\log n)$, written $d\log k$ \\
+$M$ & answer table $M(i,j)=\mathrm{ans}(x_{ij})$
+(Section~\ref{sec:floor}) \\
+$\mathrm{err}^*$ & the exact degree-$1$ certification floor
+(Theorem~\ref{thm:floor}) \\
+$\lab(\ell)$ & the pair output at leaf $\ell$ of a tree \\
+$\chi(P,\rho)$ & chi-indicator of \cite{Kra26}: $1$ iff $\lab(P)\notin F$
+and $1\in\Sp(W(P)^\rho)$ \\
+$k,\ l$ & refutation size and $\AC$ depth in the target application;
+$d=(\log k)^{O(l)}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+All probabilities are over the uniform pipeline sample $\omega=(\rho,L)$:
+$\rho$ is uniform over partial injections leaving exactly $2d$ holes free
+(the free hole set $R$, the free pigeon set $D$, and the bijection
+$[n+1]\setminus D\to[n]\setminus R$ being chosen independently and
+uniformly), and $L$ is uniform over $\Des(2d,d)$, independently of
+$\rho$.  Constants in $O(\cdot)$ and $o(\cdot)$ are absolute unless a
+parameter is displayed.
+
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{The negated pigeonhole principle as a polynomial system}
+
+Work over $\F_2$.  The outer system $\PHPn$ on the variables $x_{ij}$,
+$i\in[n+1]$, $j\in[n]$, consists of the hole-collision polynomials
+$x_{i_1j}x_{i_2j}$ ($i_1<i_2$), the two-per-pigeon polynomials
+$x_{ij_1}x_{ij_2}$ ($j_1<j_2$), the row sums
+$Q_i=1+\sum_{j=1}^n x_{ij}$ (in characteristic $2$, minus is plus), and
+the Boolean axioms $x_{ij}^2+x_{ij}$.  The system expresses that the
+assignment is a total injection of $n+1$ pigeons into $n$ holes; it is
+inconsistent.  For a rectangle of $N+1$ pigeons and $N$ holes let
+\[
+V(N,d)\;=\;\Sp\bigl\{\,g\cdot h \;:\; h \text{ a generator},\ \deg(gh)\le
+d\,\bigr\}\;\subseteq\;\F_2^{\le d}[x_{ij}]
+\]
+be the span of its degree-$\le d$ consequences, where $\F_2^{\le d}$
+carries the multiset monomials ($x^2$ is a distinct basis element from
+$x$).  A \emph{design} is a linear functional $L$ on $\F_2^{\le d}$ with
+$L(1)=1$ and $L|_{V(N,d)}=0$; designs exist precisely when
+$1\notin V(N,d)$, which holds in the regime of interest (Razborov's
+theorem as quoted in \cite{Kra26}; verified by exact $\F_2$ elimination
+in the cases of Table~\ref{tab:dims}).
+
+\begin{table}[t]
+\centering
+\begin{tabular}{rrrrr}
+\hline
+$N$ & $d$ & $\dim \F_2^{\le d}$ & $\mathrm{rank}\,V(N,d)$ &
+$\dim\Des(N,d)$\\
+\hline
+4 & 2 & 231 & 165 & 65\\
+5 & 2 & 496 & 306 & 189\\
+6 & 2 & 946 & 511 & 434\\
+7 & 2 & 1653 & 792 & 860\\
+8 & 2 & 2701 & 1161 & 1539\\
+6 & 3 & 14190 & 12110 & 2079\\
+\hline
+\end{tabular}
+\caption{Exact $\F_2$ dimensions of the consequence space $V(N,d)$ inside
+the multiset-monomial space, and of the affine design space
+$\Des(N,d)$, whose cardinality is $2^{\dim\Des}$.  In every case
+$1\notin V(N,d)$ and the degree-$\le d$ closure of $V$ was verified by
+exact elimination.}
+\label{tab:dims}
+\end{table}
+
+\subsection{The systems ladder and where $\AC[2]$-Frege sits}
+
+Resolution has exponential lower bounds for the pigeonhole principle
+\cite{Haken85}; so do Res$(k)$ and $\AC^0$-Frege \cite{Ajtai94}.  The
+system $\AC^0[p]$-Frege (constant-depth Frege with $\mathrm{MOD}_p$
+gates) is equivalent to the Extended Nullstellensatz algebraic proof
+system \cite{Kra19}, and the circuit lower-bound technology for
+$\AC^0[p]$ \cite{Smolensky87} has never lifted to it.  In 2026 the
+adjacent frontier moved: unrestricted dag-like Res$(\oplus)$ was shown
+exponential for the bit pigeonhole principle \cite{resxor26}, and random
+3-CNFs got super-linear bounded-depth Frege bounds \cite{randomcnf26}.
+The $\AC[2]$-Frege lower bound for $\PHPn$ remains open, with no
+non-trivial bound known on any formula sequence; the pseudo-solution
+program of \cite{Kra26} is its most concrete current reduction.
+
+\subsection{The reduction chain of Kraj\'i\v{c}ek}
+
+We quote the chain as printed in \cite{Kra26}.
+
+\begin{itemize}
+\item \textbf{Theorem 2.2 of \cite{Kra26}} (from \cite{BIKPPS97}): a
+$k$-step $\mathrm{F}_l(\mathrm{MOD}_p)$ refutation of $\PHPn$ yields an
+Extended Nullstellensatz refutation with $S=k^{O(1)}$ extension
+polynomials in $l+O(1)$ levels, accuracy $h=O(\log S)$, and degree
+$d\le(\log k)^{O(l)}$.
+\item \textbf{Theorems 3.2 and 3.3 of \cite{Kra26}}: if $e^{h/p}\ge 2S^2$
+there is no $(d,h+\log S,S^{-1})$-solution; contrapositively, a
+$((\log k)^{O(l)},\,O(\log k),\,k^{-O(1)})$-solution of $\PHPn$ rules out
+$k$-step refutations.
+\item \textbf{Definition 3.1 of \cite{Kra26}} (the solution condition),
+quoted in Definition~\ref{def:solution} below: every tree of the
+permitted class must fail, i.e.\ output a non-conflict, with probability
+at least $\gamma=k^{-O(1)}$.
+\item \textbf{Definition 4.3 of \cite{Kra26}} (the candidate
+$\Omega(n,d)$), quoted in Definition~\ref{def:pipeline}.
+\item \textbf{Theorem 6.1 of \cite{Kra26}} (the chi-task), quoted in
+Theorem~\ref{thm:chi}.
+\end{itemize}
+
+\begin{definition}[pipeline $\Omega(n,d)$; Definition 4.3 of
+\cite{Kra26}]\label{def:pipeline}
+Fix the characteristic $p$ (here $p=2$), outer dimension $n$, and degree
+$d$ with $2d\le n$.  The pipeline $\Omega(n,d)$ is the distribution on
+pairs $\omega=(\rho,L)$:
+\begin{enumerate}
+\item $\rho$ is a uniform random partial injection from $[n+1]$ to $[n]$
+leaving exactly $n_\rho=2d$ holes unfilled; let $D\subseteq[n+1]$ be the
+$2d+1$ unassigned pigeons and $R\subseteq[n]$ the $2d$ unfilled holes.
+The restricted system is $\neg\mathrm{PHP}$ on the rectangle $D\times R$,
+still contradictory ($2d+1$ pigeons, $2d$ holes).
+\item $L$ is a uniform random degree-$d$ design of the restricted
+system: a linear functional on the degree-$\le d$ multiset monomials of
+the variables $\{x_{ij}:(i,j)\in D\times R\}$, vanishing on the
+restricted consequence space $V(n,d)^{\rho}$ (span of the restrictions
+of the outer degree-$\le d$ consequences), with
+\[
+L(1)=1,\qquad L|_{V(n,d)^{\rho}}=0 ,
+\]
+an element of a non-empty affine space (designs exist by the same
+separation as in Table~\ref{tab:dims}; by Remark~\ref{rem:onekernel}
+the constraint space equals the canonical $V(2d,d)$, whose
+complementary dimensions the table records).
+\item the answer to a query $g$, a polynomial of degree $\le d$ in the
+outer variables, is $\omega(g):=L(g^\rho)$, where $g^\rho$ replaces each
+outer variable $x_{ij}$ by $1$ if $\rho(i)=j$, by $0$ if $i$ is assigned
+and $j\ne\rho(i)$, and leaves it alone if $(i,j)\in D\times R$.  (The
+printed clause leaves the cell \emph{free pigeon, matched hole} ---
+$(i,j)$ with $i\in D$, $j\notin R$ --- uncovered; the \emph{zeroing
+completion} sets such cells to $0$, the only choice consistent with the
+determined killed--unmatched answer, Remark~\ref{rem:proofroute}.)
+\end{enumerate}
+A pair $(i,j)$ is \emph{free} if $(i,j)\in F:=D\times R$, \emph{matched}
+if $\rho(i)=j$, and \emph{killed--unmatched} otherwise.
+
+\emph{One design space.}  An earlier draft discussed two ``readings''
+of the design set --- vanishing on $V(n,d)^{\rho}$ as printed (the
+\emph{outer reading}) versus membership in the canonical $\Des(2d,d)$
+of the fresh system $\neg\mathrm{PHP}$ on $D\times R$ --- and treated
+their difference as material.  A kernel-level verification
+(Remark~\ref{rem:onekernel}) settles the question:
+$V(n,d)^{\rho}=V(2d,d)$ \emph{exactly}, so the two readings coincide
+and the debate dissolves: there is only one design space, and the
+operative content of the printed vanishing condition is that it forces
+the free-row parities (Proposition~\ref{prop:rigidity}) while leaving
+the free pairs fair on row-incomplete query sets
+(Theorem~\ref{thm:channel}(iii)).  All results below are stated for
+this single space.
+\end{definition}
+
+\begin{definition}[solution condition; Definition 3.1 of \cite{Kra26}]
+\label{def:solution}
+For parameters $(d,e,\gamma)$, a sample $\omega=(\rho,L)$ \emph{satisfies
+the solution condition} if every $(d,e)$-tree $T$ --- an adaptive
+decision tree of depth $e$ whose queries are polynomials of degree
+$\le d$ and whose leaves are labelled by pairs --- fails on $\omega$ with
+probability at least $\gamma$, where $T$ \emph{succeeds} on $\omega$ if
+$\lab(T)\notin D\times R$ and $1\in\Sp(W(T)^\rho)$, with $W(T)$ the span
+of the restricted system together with the query polynomials along the
+path of $T$.  The family $\Omega(n,d)$ is a $(d,e,\gamma)$-pseudo-solution
+if the condition holds with probability $1$.
+\end{definition}
+
+\begin{theorem}[chi-task; Theorem 6.1 of \cite{Kra26}]\label{thm:chi}
+If every $(d,\,d\log k)$-tree $T'$ satisfies
+\[
+\Prob_{\rho,\,P}\bigl[\chi(P,\rho)=1\bigr]\;\ge\;k^{-O(1)},
+\]
+where $P$ is a random path of $T'$ and $\chi(P,\rho)=1$ iff
+$\lab(P)\notin D^\rho\times R^\rho$ and $1\in\Sp(W(P)^\rho)$, then every
+$\AC^0[l](\mathrm{MOD}_2)$-Frege refutation of $\PHPn$ has at least $k$
+steps.
+\end{theorem}
+
+The conjecture of \cite{Kra26} is that the hypothesis holds even with a
+constant lower bound at $k(n)=2^{n^\delta}$ for small $\delta>0$.  The
+program can fail in two directions: if some tree succeeds with
+probability $>1-k^{-O(1)}$, the candidate $\Omega(n,d)$ is refuted as a
+pseudo-solution; if every tree's chi-probability is below $k^{-O(1)}$,
+Theorem~\ref{thm:chi} cannot be applied.  The results of this paper bound
+the first quantity from above for large tree classes, thereby protecting
+the pseudo-solution, and isolate the exact residual open class.
+
+\section{The answer channel at characteristic 2}\label{sec:channel}
+
+Throughout this section $(\rho,L)\sim\Omega(n,d)$ with $p=2$ and
+$2d\le n$; $d\ge2$ is assumed where stated (the channel law
+(Theorem~\ref{thm:channel}) holds for $d\ge1$, the completion lemma
+needs $2d\ge4$).
+
+\subsection{The degree-one span lemma}
+
+Recall the generators of the restricted system on $D\times R$: the
+collision polynomials $x_{i_1j}x_{i_2j}$, the two-per-pigeon polynomials
+$x_{ij_1}x_{ij_2}$, the row sums $Q^{c}_{i}=1+\sum_{j\in R}x_{ij}$, the
+Boolean axioms $x_{ij}^2+x_{ij}$, and all their shifts by monomials of
+degree at most $d-\deg$.  Write
+$\mathcal{G}$ for the set of their coefficient vectors in
+$\F_2^{\le d}$, so that $V(2d,d)=\Sp(\mathcal{G})$, and recall the
+affine design space $\Des(2d,d)=\{L:\langle L,g\rangle=0\ \forall
+g\in\mathcal{G},\ \langle L,e_0\rangle=1\}$, where $e_0$ is the constant
+monomial and $\langle\cdot,\cdot\rangle$ is the coefficient pairing.
+
+For a placement point $z_{rv}$ ($r\in D$, $v\in R$) let
+$\mathrm{eval}_{z_{rv}}$ be the linear functional ``evaluate at the
+partial injection placing pigeon $r$ on hole $v$ and no other pigeon'',
+with $x^2$ evaluated as $x$.
+
+\begin{lemma}[degree-one span]\label{lem:degonespan}
+Assume $d\ge2$ (so each row has $2d\ge4$ cells).  The degree-$\le1$ part
+of $\Sp(\mathcal{G}\cup\{e_0\})$ is exactly
+$\Sp\{e_0,\;Q^{c}_1,\dots,Q^{c}_{2d+1}\}$: that is, a polynomial of
+degree $\le1$ is a consequence of the restricted system (up to the
+constant) if and only if it is constant on each row.
+\end{lemma}
+
+\begin{proof}
+The inclusion $\supseteq$ is trivial: each $Q^c_r$ is a generator and
+$e_0$ is present.  For the inclusion $\subseteq$, let $\delta$ be a
+degree-$\le1$ element of $\Sp(\mathcal{G}\cup\{e_0\})$ that is not
+constant on each row; we build a linear functional killing
+$\mathcal{G}\cup\{e_0\}$ but not $\delta$, contradicting membership.
+Choose a row $r^\ast$ on which $\delta$ is neither identically $0$ nor
+identically $1$, and let $t$ be the number of cells of row $r^\ast$ on
+which $\delta$ has coefficient $1$; then $1\le t\le 2d-1$.  Define a
+weight vector $w$ on the cells of row $r^\ast$:
+\begin{itemize}
+\item if $t$ is odd, let $w$ be the all-ones vector of the row (weight
+$2d$, even);
+\item if $t$ is even, let $w$ be the indicator of one $1$-cell of
+$\delta$ and one $0$-cell of $\delta$ (both exist since
+$1\le t\le 2d-1$ and $2d-t\ge1$).
+\end{itemize}
+In both cases $w$ has even total weight, and the correlation
+$w\cdot\delta|_{r^\ast}$ equals $t\bmod 2=1$.  Set
+\[
+L^{*}\;=\;\sum_{v\in R} w_{v}\,\mathrm{eval}_{z_{r^\ast v}} .
+\]
+Every generator vanishes pointwise at every placement point (collisions
+and two-per-pigeon need two placed pigeons on a common hole or row;
+Booleans vanish on $0$/$1$ points), hence their shifts do as well, so
+$\langle L^{*},g\rangle=0$ for every shifted collision, two-per-pigeon,
+and Boolean generator.  For the row sums,
+$Q^{c}_u(z_{r^\ast v})=[u\neq r^\ast]$, whence
+$\langle L^{*},Q^c_u\rangle=[u\neq r^\ast]\cdot\sum_v w_v
+=[u\neq r^\ast]\cdot 0=0$, the total weight of $w$ being even; likewise
+$\langle L^{*},e_0\rangle=0$.  Thus $L^{*}$ annihilates
+$\mathcal{G}\cup\{e_0\}$, while
+$\langle L^{*},\delta\rangle=\sum_v w_v\delta_{r^\ast v}=1$.  A
+polynomial annihilated by no such functional cannot lie in the span;
+contradiction.  Finally, the polynomials constant on each row are exactly
+the combinations $c\,e_0+\sum_r a_r Q^c_r$ (row-$r$ coefficient
+$c+a_r$), which proves the characterization.
+
+For the pipeline's design space the constraint set is the span of the
+restrictions of the outer generators; by Remark~\ref{rem:onekernel}
+($V(n,d)^{\rho}=V(2d,d)$ exactly) that span coincides with
+$\Sp(\mathcal{G})$, so the proof above covers the pipeline directly:
+the degree-$\le1$ part of the constraint span (with $e_0$) is
+$\Sp\{e_0,\;Q^{c}_1,\dots,Q^{c}_{2d+1}\}$, and the row parities are
+forced to $1$ on the free rows, the assigned rows carrying no free
+coordinates at all (their variables are zeroed by the restriction).
+\end{proof}
+
+\subsection{The channel law}
+
+\begin{theorem}[answer channel law, single variables; the kernel
+law]\label{thm:channel}
+Let $(i,j)$ be an outer pair and $a(x_{ij})=L(x_{ij}^\rho)$ the answer to
+the single-variable query $x_{ij}$.
+\begin{enumerate}
+\item[(i)] If $\rho(i)=j$ (matched), then $a=1$ deterministically.
+\item[(ii)] If $i\notin D$ and $j\ne\rho(i)$ (killed--unmatched), then
+$a=0$ deterministically.
+\item[(iii)] If $(i,j)\in F$ (free), then $a$ is uniform on $\{0,1\}$;
+moreover, on any \emph{row-incomplete} query set $S$ --- no row of the
+rectangle has all $2d$ of its cells in $S$ --- the answers of the free
+pairs of $S$ are jointly uniform: every pattern occurs for the same
+number of designs (Lemma~\ref{lem:completion}(a)).
+\item[(iv)] \emph{Parity-locking.}  If the $2d$ cells of a free row are
+all queried, the answer pattern is locked to odd parity: exactly
+$2^{2d-1}$ of the $2^{2d}$ patterns occur, each for the same number of
+designs (Lemma~\ref{lem:completion}(b)); the row XOR is $1$ for every
+occurring pattern, and the all-zero pattern never occurs.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) If $\rho(i)=j$ then $x_{ij}^\rho=1$ and $a=L(1)=1$ by the design
+axiom.  (ii) If $i\notin D$ and $j\ne\rho(i)$ then $x_{ij}^\rho=0$ and
+$a=0$.  (iii) Marginal uniformity: the coordinate $L\mapsto L(x_{ij})$ is
+constant on the affine design space if and only if the vector
+$e_{ij}$ lies in the orthogonal complement of its direction space,
+which is $\Sp(\mathcal{G}\cup\{e_0\})$ (the restricted generators
+together with the constant).  By
+Lemma~\ref{lem:degonespan} every degree-$\le1$ element of that span is
+constant on each row; $e_{ij}$ is supported on the single cell $(i,j)$
+and its row has $2d\ge2$ cells, so it is not row-constant and not the
+constant vector.  Hence the coordinate is non-constant, and a
+non-constant linear coordinate on an affine space over $\F_2$ takes the
+values $0$ and $1$ equally often: $a$ is a fair bit.  The joint
+statement is Lemma~\ref{lem:completion}(a): the zeroing completion
+exhibits, for every row-incomplete pattern $\psi$ on $S$, exactly
+$2^{\dim\Des(2d,d)-|S|}$ designs, independently of $\psi$, so the
+answers of the free pairs of $S$ are jointly uniform.  (iv) If $S$
+contains a full free row $r$, Lemma~\ref{lem:completion}(b) applies:
+extensions exist exactly for the pinned patterns of parity $1$ on row
+$r$ (rigidity \eqref{eq:rowparity}), and every admissible pattern
+occurs for the same number of designs, so the answer law is uniform on
+the $2^{2d-1}$ odd-parity patterns and gives nothing to the rest: the
+row is parity-locked, its XOR equal to $1$.
+\end{proof}
+
+\begin{remark}[proof-route correction: no disjoint supports at
+$d\ge2$]\label{rem:proofroute}
+An earlier recorded route to the joint law (iii) argued from a kernel
+basis with pairwise-disjoint single-variable supports.  That route
+fails at $d\ge2$ and is superseded: the kernel's single-variable
+projection is the even-parity subspace of each free row, and within a
+row of $2d$ coordinates no $2d-1$ even-weight vectors with pairwise
+disjoint supports exist, their total weight being at least
+$2(2d-1)>2d$ (the counting obstruction; at the restricted point
+$(4,2)$ the reduced basis already has $15$ overlapping single-variable
+pairs).  At $(2,1)$ the disjoint route happens to work; at every $d$
+the correct route is the zeroing completion, Lemma~\ref{lem:completion},
+on which (iii) and (iv) rest.  The completion itself is forced: the
+printed definition of $g^\rho$ leaves the cell (free pigeon, matched
+hole) uncovered, and any completion leaving those variables symbolic
+would contradict the determined killed--unmatched answer (ii).
+\end{remark}
+
+\begin{proposition}[row-parity rigidity; the aggregate channel is
+closed]\label{prop:rigidity}
+Every design $L$ of the restricted system satisfies
+\begin{equation}\label{eq:rowparity}
+\sum_{j\in R}L(x_{ij})=1\qquad\text{for every row } i\in D .
+\end{equation}
+Consequently, in the pipeline, the outer row-sum query
+$Q_i=1+\sum_jx_{ij}$ answers the determined $0$ on \emph{every} pigeon:
+for a free pigeon $i$, $Q_i^{\rho}=Q^{c}_{\mathrm{row}(i)}$ is itself a
+restricted consequence; for an assigned pigeon $i$ with $\rho(i)=j_0$,
+the zeroing restriction gives
+$Q_i^{\rho}=1+x_{i,j_0}^{\rho}=1+1=0$ identically.  Row queries
+therefore carry no information at all, and no certificate built on
+$Q_i$ exists against the pipeline.  (An earlier draft derived, under a
+canonical reading, a ``reversed certificate'' with assigned pigeons
+answering $1$; that computation treated assigned-row variables as
+symbolic, which the zeroing semantics excludes, and the scenario does
+not exist --- the kernel-level verification confirms
+$L(Q_i^{\rho})=0$ under the single design space,
+Remark~\ref{rem:onekernel}.)
+\end{proposition}
+
+\begin{proof}
+The restricted row sum $Q^c_i=1+\sum_{j\in R}x_{ij}$ is a generator of
+degree $1\le d$, so $L(Q^c_i)=0$; expanding with $L(1)=1$ gives
+\eqref{eq:rowparity}.  For the outer query: if $i\in D$ then
+$Q_i^{\rho}=1+\sum_{j\in R}x_{ij}=Q^c_i$, whence $L(Q_i^{\rho})=0$.  If
+$i\notin D$ with $\rho(i)=j_0$, the zeroing completion kills every cell
+of row $i$ except the matched one, so
+$Q_i^{\rho}=1+1+\sum_{j}0=0$ as a polynomial, whence
+$L(Q_i^{\rho})=0$.  (The zeroing completion is the only one consistent
+with the determined killed--unmatched answer;
+Remark~\ref{rem:proofroute}.)
+\end{proof}
+
+\begin{remark}[the one-kernel theorem]\label{rem:onekernel}
+Exact $\F_2$ elimination (every generator row built through the outer
+route --- outer polynomials, outer shifts, then restriction --- and
+compared with the independently built canonical list by rank and by
+containment in both directions) gives $V(n,d)^{\rho}=V(2d,d)$ at every
+tested point, with the ranks matching the canonical values of
+Table~\ref{tab:dims}:
+\begin{center}
+\small
+\begin{tabular}{rrrrl}
+\hline
+outer $(n,d)$ & restricted $(2d,d)$ & $\mathrm{rank}\,V(n,d)^{\rho}$ &
+$\mathrm{rank}\,V(2d,d)$ & containment\\
+\hline
+(7,1)  & (2,1) & 3     & 3     & both ways\\
+(15,2) & (4,2) & 165   & 165   & both ways\\
+(31,3) & (6,3) & 12110 & 12110 & both ways\\
+\hline
+\end{tabular}
+\end{center}
+The reason is structural: an assigned pigeon's $Q_i$ restricts to the
+zero polynomial ($1+1=0$), the killed Booleans, collisions, and
+two-hole monomials restrict to $0$, and $\deg(h^{\rho})=\deg(h)$
+whenever $h^{\rho}\neq0$, so every restricted outer generator is a
+canonical generator shift or $0$.  Three consequences are used below.
+First, the outer/canonical design-space debate of the previous draft
+dissolves: there is only one kernel, and the corpus's adoption of the
+outer reading is moot as a definitional matter.  Second, the printed
+vanishing condition itself forces the free-row parities
+(Proposition~\ref{prop:rigidity}).  Third, no design space satisfying
+the printed definition realizes the coin channel beyond its
+row-incomplete single-variable law: the ``outer-design kernel'' that
+masks the row parities in the never-queried killed coordinates
+violates the printed condition for about half its designs (measured
+$50382/100000$ and $49962/100000$), so the coin channel is exactly the
+row-incomplete single-variable answer law, the precise content of
+Corollary~\ref{cor:coin} with its $E_{\mathrm{full}}$ clause.
+\end{remark}
+
+\subsection{Completion of partial answer patterns}
+
+\begin{lemma}[completion]\label{lem:completion}
+Assume $d\ge2$.  Let $S$ be a set of cells of the rectangle $D\times R$
+and $\psi:S\to\F_2$.
+\begin{enumerate}
+\item[(a)] If no row contains all $2d$ of its cells in $S$, then $\psi$
+extends to a design: there is $L\in\Des(2d,d)$ with $L|_S=\psi$; and the
+number of designs with $L|_S=\psi$ equals $2^{\dim\Des(2d,d)-|S|}$,
+independently of $\psi$.
+\item[(b)] If $S$ pins all cells of some row $r$, extensions exist only
+if the pinned values on row $r$ have the parity forced by rigidity
+(parity $1$ for a free row; assigned rows carry no free cells whose
+design values could be pinned).  If every fully pinned row meets its
+parity requirement,
+extensions exist, and their number is
+$2^{\dim\Des(2d,d)-|S|+\{\#\text{ fully pinned rows}\}}$,
+independently of the admissible $\psi$.  In the applications below only
+free cells are ever pinned (killed cells answer determinedly and impose
+no design constraint), so every pinned row is a free row.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The number of designs with $L|_S=\psi$ equals
+$2^{\,n-\mathrm{rank}(A)-|S|+\rho_S}$, where $n$ is the number of
+monomials, $A$ the constraint system $(\mathcal{G},e_0)$ of rank
+$\mathrm{rank}(A)$, and $\rho_S$ the dimension of the intersection of
+$\Sp\{e_u:u\in S\}$ with $\Sp(\mathcal{G}\cup\{e_0\})$; the solution set,
+when non-empty, is an affine space over the nullspace, giving the
+$\psi$-independence.  So it suffices to compute $\rho_S$ and feasibility.
+
+(a) Suppose no row is fully pinned.  If
+$\sum_u\delta_ue_u\in\Sp(\mathcal{G}\cup\{e_0\})$ for some $\delta$
+supported on $S$, then by Lemma~\ref{lem:degonespan} the polynomial
+$\sum_u\delta_ux_u$ is constant on each row, say with value $c+a_r$ on
+row $r$; but every row has a cell outside $S$, where the polynomial
+vanishes, forcing $c+a_r=0$ for every $r$, i.e.\ the polynomial is
+identically zero and $\delta=0$.  Hence $\rho_S=0$, the $S$-equations
+are independent of $(\mathcal{G},e_0)$, every $\psi$ is feasible, and
+the count is $2^{\dim\Des-|S|}$, where
+$\dim\Des=n-\mathrm{rank}(A)-1$.
+
+(b) Suppose $S$ pins the full rows of a set $R^{\ast}$ of rows, and
+parity $1$ holds on each of them.  Any dependency now satisfies: on a
+non-fully-pinned row the polynomial vanishes off $S$, forcing
+$c+a_r=0$ there; on a fully pinned row $r\in R^{\ast}$ the polynomial
+equals the constant $c+a_r$.  Hence the dependency space is spanned by
+$\{\,\sum_{u\in\mathrm{row}(r)}e_u \;:\; r\in R^{\ast}\,\}$, of
+dimension $|R^{\ast}|$, since $\sum_{u\in\mathrm{row}(r)}x_{u}
+=Q^c_r+1\in\Sp(\mathcal{G}\cup\{e_0\})$ and no smaller combination lies
+in the span (the restriction of the dependency to a single fully pinned
+row is the all-ones pattern, which is not a dependence unless the whole
+row is used).  Thus
+$\rho_S=|R^{\ast}|$ and the count is
+$2^{\dim\Des-|S|+|R^{\ast}|}$ for every feasible $\psi$.  Feasibility:
+rigidity \eqref{eq:rowparity} forces the parity condition, so it is
+necessary.  For sufficiency, remove one pinned cell from each fully
+pinned row, obtaining $S'$ with no full row; by (a) there is a design
+$L'$ with $L'|_{S'}=\psi|_{S'}$, and by \eqref{eq:rowparity} the value
+of $L'$ on each removed cell is forced to equal
+$1-\sum_{\text{rest of its row}}\psi$, which is exactly the prescribed
+$\psi$-value by the parity hypothesis.  Hence $L'$ extends $\psi$.
+\end{proof}
+
+\subsection{The coin channel and its equivalence with the pipeline for
+single-variable trees}
+
+\begin{definition}[coin channel]\label{def:coin}
+$\mathsf{Coin}(n,d)$ is the channel with the same status process $\rho$
+as the pipeline, in which each free pair carries an independent fair bit,
+independent across pairs and of $\rho$, a matched pair answers $1$ and a
+killed--unmatched pair answers $0$, and the answer to a product
+$g=\prod x_{i_tj_t}$ is the $\F_2$-product of the answers to its
+factors.
+\end{definition}
+
+\begin{corollary}[coin-channel equivalence for single-variable
+trees]\label{cor:coin}
+Let $T$ be an adaptive tree of depth $e$ all of whose queries are single
+outer variables, and let $E_{\mathrm{full}}$ be the event (under
+$\Omega$ or under $\mathsf{Coin}$, identically) that the set of free
+pairs queried along the path of $T$ contains all $2d$ cells of some row
+of the rectangle.  Then
+\[
+\Bigl|\Prob_{\Omega}\bigl[T \text{ outputs a free pair}\bigr]
+-\Prob_{\mathsf{Coin}}\bigl[T \text{ outputs a free pair}\bigr]\Bigr|
+\;\le\;\Prob\bigl[E_{\mathrm{full}}\bigr]
+\;\le\;\min\Bigl\{1,\;\frac{(n+1)\binom{e}{2d}}{\binom{n}{2d}}\Bigr\} .
+\]
+\end{corollary}
+
+\begin{proof}
+Conditionally on $\rho$ and on the complement of
+$E_{\mathrm{full}}$, Lemma~\ref{lem:completion}(a) gives that the
+probability, over the design space, of any fixed
+answer pattern on the queried free pairs equals $2^{-a(\rho)}$, where
+$a(\rho)$ is the number
+of queried free pairs, independently of the pattern; the killed pairs
+answer determinedly in both models.  This is exactly the coin-channel
+likelihood.  Equal likelihoods given $\rho$ imply equal joint laws of
+$(\rho,\text{transcript})$ off $E_{\mathrm{full}}$, hence equal output
+laws off that event; on the event the two laws may differ, and the total
+variation between the output distributions is at most the probability of
+the event.  For the bound: if the path queries $s_r$ cells of row $r$,
+then the row's free pairs are all queried only if $s_r\ge2d$ and the
+row's free set is a $2d$-subset of the queried cells; by symmetry of
+$\rho$, a fixed $2d$-set is the free set of a fixed row with probability
+$\binom{n}{2d}^{-1}$, and a union bound over rows and over the at most
+$\binom{e}{2d}$ subsets of the queried cells gives the claim.
+\end{proof}
+
+Thus for the single-variable class the coin channel is not an
+idealization but an exact law up to the negligible event
+$E_{\mathrm{full}}$; in the parameter regime of interest,
+$e=d\log k\ll n$, the bound is $o(1)$ (and at $(n,d,e)=(32,2,33)$ it is
+below $4\times10^{-3}$).  The kernel-level verification sharpens the
+statement to its exact form: off $E_{\mathrm{full}}$ the total
+variation between the two answer laws is exactly $0$ (on every
+marginal and on every row-incomplete joint, confirmed at the points of
+Remark~\ref{rem:onekernel}); on a fully queried free row it is exactly
+$\tfrac12$, the design law being uniform on the $2^{2d-1}$ odd
+patterns against the coin law's $2^{2d}$; and the coin channel is
+realized by no design space satisfying the printed definition
+(Remark~\ref{rem:onekernel}).  The coin-channel samplers accordingly
+over-sample: a coin sample satisfies the design constraints with
+probability $\approx2^{-(2d+1)}$ (measured $0.12587$, $0.03051$,
+$0.00793$ against $2^{-3},2^{-5},2^{-7}$ at the restricted points
+$(2,1),(4,2),(6,3)$).
+
+\section{Fixed labels and non-adaptive trees}\label{sec:nonadaptive}
+
+Throughout, $f=\Prob[(i,j)\in F]=\frac{(2d+1)2d}{(n+1)n}$ and
+$m=\Prob[\rho(i)=j]=\frac{n-2d}{(n+1)n}$; note $f=O(d^2/n^2)$ and
+$f+m\le 2/n$ whenever $2d\le\sqrt{n}$.
+
+The following trivial but fundamental disintegration underlies all caps.
+Recall that a \emph{status pattern} $\sigma$ assigns to each cell of a
+set $S$ one of the labels free, matched, killed--unmatched.
+
+\begin{lemma}[factorization]\label{lem:factor}
+Let $A$ be any event determined by the answers to a fixed set of queries,
+and let $\sigma(A)$ denote the $\sigma$-algebra generated by the status
+patterns of the queried cells that are consistent with those answers.
+For every event $B$ depending only on $\rho$ (such as $p\in F$):
+\[
+\Prob[B\mid A]\;=\;\sum_{\sigma}\Prob[\sigma\mid A]\,
+\Prob[B\mid\sigma] .
+\]
+\end{lemma}
+
+\begin{proof}
+Given a status pattern $\sigma$, the answers are a deterministic function
+of the status pattern and the design values of the free queried
+coordinates; the latter are, conditionally on $\sigma$, independent of
+$\rho$ (the design is sampled independently of $\rho$, and $\sigma$ is
+$\rho$-measurable).  Hence $\Prob[B\mid\sigma,\text{answers}]
+=\Prob[B\mid\sigma]$ for every $\rho$-event $B$, and the tower rule
+applied to the partition generated by $(\sigma,\text{answers})$ gives
+the claim.
+\end{proof}
+
+\begin{lemma}[hypergeometric depletion]\label{lem:depletion}
+Let $S$ be a set of at most $s$ cells and let $\sigma$ be a status
+assignment on $S$.  Then for every cell $p\notin S$,
+\[
+\Prob\bigl[\,p\in F \,\big|\, \mathrm{status}(S)=\sigma\,\bigr]
+\;\le\;\frac{(2d+1)}{(n+1-s)}\cdot\frac{2d}{(n-s)}
+\;=\;f\,\Bigl(1+O\bigl(\tfrac{s}{n}\bigr)\Bigr)
+\qquad (s\le n/2),
+\]
+and the same bound holds conditionally on any event determined by the
+answers, by Lemma~\ref{lem:factor}.  The pigeon-freeness indicators
+$\{[i\in D]\}_i$ and the hole-freeness indicators $\{[j\in R]\}_j$ are
+inclusion indicators of without-replacement samples and are negatively
+associated in the sense of Joag-Dev and Proschan
+\cite{JoagDevProschan83} (their Section~3 and Theorem~8); the pair
+indicators $[p\in F]=[i\in D]\cdot[j\in R]$ inherit the negative
+association by the closure of negative association under products over
+disjoint supports, in the occupancy formulation of Dubhashi and Ranjan
+\cite{DubhashiRanjan98}.
+\end{lemma}
+
+\begin{proof}
+Reveal the statuses on $S$; let $r_p$ be the number of pigeons other
+than $p$'s pigeon revealed free, and $r_h$ the number of holes revealed
+free.  The completions of $\sigma$ to full partial injections form a
+without-replacement scheme: the free pigeons of the completion are a
+uniform subset of the right size, and similarly for holes.  Direct
+counting gives
+$\Prob[i\in D\mid\sigma]=\frac{2d+1-r_p}{n+1-s'}$ and
+$\Prob[j\in R\mid\sigma]=\frac{2d-r_h}{n-s'}$ with $s'\le s$ the number
+of cells of $S$ touching the relevant coordinate, and the joint
+probability satisfies
+\[
+\Prob[p\in F\mid\sigma]
+\;\le\;\frac{2d+1}{n+1-s}\cdot\frac{2d}{n-s}
+\;=\;\frac{(2d+1)\,2d}{(n+1)n}
+ \cdot\frac{(n+1)n}{(n+1-s)(n-s)}
+\;=\;f\bigl(1+O(s/n)\bigr),
+\]
+the joint inequality being the negative dependence of sampling without
+replacement: the freeness indicators of the pigeons are the inclusion
+indicators of a uniform without-replacement sample, a canonical
+negatively associated family \cite{JoagDevProschan83}, and the product
+form for $p\in F$ follows from the closure under products of
+negatively associated families over disjoint index sets
+\cite{JoagDevProschan83}, in the occupancy formulation of
+\cite{DubhashiRanjan98}.  The final sentence is
+Lemma~\ref{lem:factor} with $B=\{p\in F\}$.
+\end{proof}
+
+\begin{proposition}[fixed labels]\label{prop:fixed}
+Let $T$ be any tree, with queries of any degree and any depth, all of
+whose leaves carry the same label $(i_0,j_0)$.  Then its success
+probability (output a free pair on a live path) equals exactly
+\[
+\Prob[(i_0,j_0)\in F]\;=\;\frac{(2d+1)}{(n+1)}\cdot\frac{2d}{n}\;=\;f,
+\]
+independent of the queries, the depth, and the answers.
+\end{proposition}
+
+\begin{proof}
+Success is the event that the fixed output pair is free, which depends
+on $\rho$ alone.  The pipeline is invariant under the full pigeon and
+hole permutation groups (the design space $\Des(2d,d)$ is invariant, $L$
+being uniform over it), so every one of the $(n+1)n$ pairs is free with
+the same probability; the expected number of free pairs is
+$|D|\,|R|=(2d+1)2d$, so the common value is
+$(2d+1)2d/((n+1)n)=f$.  The queries are irrelevant because the label is
+fixed.
+\end{proof}
+
+\begin{proposition}[non-adaptive single-variable trees with answer-seeking
+labels]\label{prop:nonadaptsingle}
+Let $T$ be a non-adaptive tree with single-variable queries
+$q_1,\dots,q_s$ fixed in advance and the leaf label a function of the
+$s$ answers.  Assume the label is either a pair that answered $1$, or,
+if all answers are $0$, an unqueried pair.  Then
+\[
+\Prob[T\text{ succeeds}]
+\;\le\;\frac{s\,f}{2}\;+\;f\Bigl(1+O\bigl(\tfrac{s}{n}\bigr)\Bigr)+o(1)
+\;=\;f\bigl(1+\tfrac{s}{2}\bigr)+O\bigl(\tfrac{sf}{n}\bigr)+o(1),
+\]
+and the error is at least $\frac12-o(1)$ whenever $s\le n/2$ and
+$2d\le\sqrt{n/2}$.
+\end{proposition}
+
+\begin{proof}
+Let $A_1$ be the event that some answer equals $1$.  On $A_1$ the label
+is a pair that answered $1$; success requires some queried pair to
+answer $1$ while free, and the label can coincide with at most one of
+them, so by the union bound and linearity (no independence needed; each
+$q_t$ is a fixed pair)
+\[
+\Prob[\text{success},\,A_1]
+\;\le\;\sum_{t=1}^{s}\Prob\bigl[q_t\in F \text{ and } a(q_t)=1\bigr]
+\;=\;\sum_{t=1}^{s}\Prob[q_t\in F]\cdot\tfrac12
+\;=\;\frac{sf}{2},
+\]
+using Theorem~\ref{thm:channel}(iii) and symmetry.  On the complement
+$A_0$ (all answers $0$) the label is an unqueried pair $p$ determined by
+the all-zero pattern, and Lemma~\ref{lem:depletion} applied to the $s$
+queried cells gives
+$\Prob[p\in F\mid A_0]\le f(1+O(s/n))$.  Summing gives the bound.  The
+numeric claim: $f(1+s/2+O(s/n))\le \frac{4d^2}{n^2}\bigl(1+\frac{n}{4}
++O(1)\bigr)\le\frac{d^2}{n}+o(1)\le\frac12$ for $2d\le\sqrt{n/2}$ and
+$s\le n/2$.
+\end{proof}
+
+\begin{remark}
+Without the fallback discipline (a tree may output a queried pair that
+answered $0$, which is free with probability $f/2$ per query), the
+$s f/2$ term doubles to $s f$; that case is covered by
+Proposition~\ref{prop:nonadaptall} within the variable/monomial class.
+The measured adaptive first-hit
+success $0.2367$ at $(n,d,s)=(32,2,33)$ sits below the bound
+$f(1+s/2)=0.256$, as it must.
+\end{remark}
+
+\begin{proposition}[non-adaptive variable/monomial-class trees]
+\label{prop:nonadaptall}
+Let $T$ be a non-adaptive tree with $s\le n/2$ fixed queries, each of
+which is either a single variable or a monomial in at most $\gamma$
+distinct variable pairs (so $\gamma=1$ for single-variable queries and
+$\gamma=2$ for degree-$2$ monomials), the label an arbitrary function
+of the answers, possibly an unqueried pair.  Then
+\[
+\Prob[T\text{ succeeds}]
+\;\le\;(\gamma s+1)\,f\,\Bigl(1+O\bigl(\tfrac{s}{n}\bigr)\Bigr)+o(1).
+\]
+Consequently, at the program's budget $s=e'=d\log k$, the chi-task error
+requirement $k^{-O(1)}$ is safe within this class as long as
+$(\gamma s+1)f\le 1-k^{-O(1)}$, i.e.\ up to
+$d=\Theta_\gamma\bigl(n^{2/3}(\log k)^{-1/3}\bigr)$; beyond that the
+bound ceases to decide the hypothesis.
+\end{proposition}
+
+\begin{proof}
+Let $Q$ be the set of variable pairs occurring in the queries,
+$|Q|\le\gamma s$.  Split by whether the output is in $Q$:
+\[
+\Prob[\text{success}]
+=\Prob[\text{success},\,\lab\in Q]
+ +\Prob[\text{success},\,\lab\notin Q].
+\]
+Queried output: for each $q\in Q$,
+$\Prob[\lab=q,\,q\in F]\le\Prob[q\in F]=f$ by symmetry
+(Proposition~\ref{prop:fixed}); the union bound gives the first term at
+most $|Q|f\le\gamma s f$.
+
+Unqueried output: condition on the full answer pattern $\pi$; the label
+is a fixed cell $p(\pi)\notin Q$.  The answers reveal information about
+$\rho$ only through the status pattern of the queried cells
+(Lemma~\ref{lem:factor}: for variables and for monomials under the
+product semantics the answer of each query is a deterministic function
+of the answers to its at most $\gamma$ component pairs; on the literal
+pipeline the monomial answer is instead a fresh value of the same data,
+and Lemma~\ref{lem:factor} needs only that each answer be a function of
+the queried cells' statuses and design values, the latter independent
+of $\rho$), and by
+Lemma~\ref{lem:depletion} every status assignment $\sigma$ satisfies
+$\Prob[p(\pi)\in F\mid\sigma]\le f(1+O(s/n))$; averaging over
+$\sigma$ with the weights $\Prob[\sigma\mid\pi]$ gives
+$\Prob[p(\pi)\in F\mid\pi]\le f(1+O(s/n))$, and averaging over $\pi$
+gives the second term.
+
+At $s=d\log k$, $(\gamma s+1)f=\Theta(\gamma d^3\log k/n^2)$, which is
+at most $1-k^{-O(1)}$ exactly up to
+$d=\Theta_\gamma(n^{2/3}(\log k)^{-1/3})$.
+\end{proof}
+
+\begin{remark}[retraction of the all-queries generality]
+\label{rem:retraction}
+Proposition~\ref{prop:nonadaptall} was previously claimed for
+arbitrary queries of any degree, with the bound $(s+1)f+o(1)$ and the
+transition $d>\Theta(n^{2/3}(\log k)^{-1/3})$ read as an all-degrees
+statement.  That generality is \textbf{false} and is retracted.  The
+rc counting tree --- non-adaptive, $s=2n+1$: query all $n+1$ row sums
+$Q_i$ and all $n$ column sums $K_j=1+\sum_ix_{ij}$, certify every line
+whose count of $1$s differs from $1$, and output a certified row's
+pigeon paired with a certified column's hole --- achieves exact success
+$1-3\cdot 2^{-(2d+1)}$ at $s=2n+1$ queries: $0.9067$ at $(64,2)$,
+against the retracted cap's $(s+1)f=130f=0.625$ at the same point.
+The retracted proof's per-query accounting implicitly required the
+answer-$1$ event of a query to carry $O(f)$ of free mass; that holds
+for single variables and bounded-degree monomials, whose answer-$1$
+event entails all $\gamma$ component pairs to be free or matched, but
+fails for linear forms: the row sum touches the $2d$ free cells of its
+row and answers $1$ with probability $\approx\frac12\gg f$.  The
+counting certificates that break the general claim are exactly the
+line-count certificates of Lemma~\ref{lem:certificates}
+(Section~\ref{sec:floor}), where they are proved sound and shown to be
+optimal.
+\end{remark}
+
+The argument uses only pair symmetry, the determined-answer law, and
+depletion, so Proposition~\ref{prop:nonadaptall} holds at every prime
+$p$ and under either semantics for product queries, within the
+variable/monomial class.
+
+\section{Adaptive single-variable trees}\label{sec:adaptive}
+
+\begin{lemma}[own-answer Bayes bound]\label{lem:bayes}
+In the coin channel, let $p$ be a pair queried $h\ge1$ times along a
+path (necessarily with the identical answer repeated, since the same
+design bit is re-read).  Then
+\[
+\Prob\bigl[p\in F\mid a_1,\dots,a_h\bigr]\;\le\;\max\bigl(q,\,f\bigr),
+\qquad
+q=\frac{f/2}{f/2+m}=\frac{2d^2+d}{2d^2-d+n},
+\]
+with equality throughout for a single answer $1$.  The same bound holds
+in the pipeline up to the event $E_{\mathrm{full}}$
+(Corollary~\ref{cor:coin}).
+\end{lemma}
+
+\begin{proof}
+Given only the pair's own answers, its status is matched (all answers
+$1$, likelihood $1$), free (the single design bit, likelihood
+$\tfrac12$ for any consistent pattern), or killed--unmatched (all
+answers $0$, likelihood $1$); the priors are $m$, $f$, $1-f-m$.  Bayes
+gives
+\[
+\Prob[p\in F\mid a_1=\dots=a_h=1]
+=\frac{f/2}{f/2+m}=q,
+\quad
+\Prob[p\in F\mid \text{some } a_t=0]
+=\frac{f/2}{f/2+1-f-m}\le f .
+\]
+The transfer to the pipeline is Corollary~\ref{cor:coin}.
+\end{proof}
+
+\begin{lemma}[one-cell perturbation]\label{lem:perturb}
+In the coin channel, fix a cell $p$ and a partial answer sequence $T'$
+for the other queried cells ($|T'|\le s$).  Then for every pair of
+statuses $s_1,s_2\in\{F,M,U\}$ of $p$,
+\[
+\frac{\Prob[T'\mid \sigma_p=s_1]}{\Prob[T'\mid \sigma_p=s_2]}
+\;\in\;\bigl[\,1-C\tfrac{s}{n},\;1+C\tfrac{s}{n}\,\bigr]
+\qquad\text{whenever } s\le n/2,
+\]
+for an absolute constant $C$, where $\sigma_p$ denotes the status of
+$p$.  The same holds in the pipeline off the event
+$E_{\mathrm{full}}$ of Corollary~\ref{cor:coin}.
+\end{lemma}
+
+\begin{proof}
+Reveal $T'$ answer by answer, and condition throughout on the revealed
+prefix and on $\sigma_p$.  Conditional on the prefix, the next answer's
+law is determined by the conditional composition of the pools: the
+probability that the next queried cell is matched, free, or
+killed--unmatched is a hypergeometric quantity in the remaining pigeon
+and hole pools.  The two hypotheses $\sigma_p=s_1$ and $\sigma_p=s_2$
+differ by the position of one fixed pigeon--hole pair (free in one,
+matched or absent in the other), and by the elementary finite-population
+count of Lemma~\ref{lem:depletion} every conditional status probability
+of an as-yet-unqueried cell differs between the two branches by a factor
+$1+O(1/n)$ (one consumed or freed pair shifts the numerators and
+denominators of the same hypergeometric ratios by at most one).
+Conditional on the prefix and the status of the next cell, its answer is
+either determined identically in both branches, or it is a fresh fair
+design bit in both branches; hence each per-step likelihood ratio lies
+in $[1-C/n,\,1+C/n]$, and after at most $s$ steps the ratio lies in
+$[1-Cs/n,\,1+Cs/n]$.  The pipeline statement is
+Corollary~\ref{cor:coin}: off $E_{\mathrm{full}}$ the two channels have
+equal likelihoods for single-variable transcripts.
+\end{proof}
+
+\begin{theorem}[adaptive single-variable cap]\label{thm:B}
+Let $T$ be an adaptive tree of depth $e$ all of whose queries are single
+outer variables.  Then, in the pipeline at $p=2$,
+\[
+\Prob[T\text{ succeeds}]
+\;\le\;\max\bigl(q,\,f\bigr)
+\Bigl(1+O\bigl(\tfrac{e}{n}\bigr)\Bigr)+o(1),
+\qquad
+q=\frac{f/2}{f/2+m}=\frac{2d^2+d}{2d^2-d+n}
+\;\approx\;\frac{2d^2}{2d^2+n}.
+\]
+In particular, for $2d\le\sqrt{2n}$ we have $q\le\frac12+o(1)$ and
+$f=o(1)$, so every such tree fails with probability at least
+$\frac12-o(1)\ge k^{-O(1)}$ for every polynomial $k$: the chi-task
+hypothesis of Theorem~\ref{thm:chi} holds for the entire adaptive
+single-variable class at $p=2$ in the super-polynomial regime.
+\end{theorem}
+
+\begin{proof}
+By Corollary~\ref{cor:coin} it suffices to prove the bound in the coin
+channel and add the $E_{\mathrm{full}}$ slack, which is absorbed into
+$o(1)$.  Decompose success over the leaves $\ell$:
+\[
+\Prob[\text{success}]
+=\sum_{\ell}\Prob[\mathrm{reach}(\ell)]\,
+\Prob\bigl[\lab(\ell)\in F \mid \mathrm{reach}(\ell)\bigr],
+\]
+the reach events being disjoint.  Fix a leaf with transcript
+$T_\ell$ (queries and answers along the path) and label $p$.
+
+Case 1: $p$ occurs among the path's queries.  Let $a(p)$ be its own
+answers and $T'$ the remaining answers.  Condition on the status
+$\sigma_p$ of $p$; by Lemma~\ref{lem:factor} (the design values carry no
+information about $\rho$ beyond the statuses), the posterior odds
+between any two statuses of $p$ given the full transcript equal the
+prior odds times the own-answer likelihood ratio times the perturbation
+factor of Lemma~\ref{lem:perturb}:
+\[
+\frac{\Prob[\sigma_p=s_1\mid T_\ell]}{\Prob[\sigma_p=s_2\mid T_\ell]}
+=\frac{\Prob[\sigma_p=s_1]}{\Prob[\sigma_p=s_2]}
+\cdot\frac{\Prob[a(p)\mid s_1]}{\Prob[a(p)\mid s_2]}
+\cdot\Theta ,
+\qquad
+\Theta\in\bigl(1-O\bigl(\tfrac{e}{n}\bigr),\,1+O\bigl(\tfrac{e}{n}\bigr)\bigr),
+\]
+with priors $f$, $m$, $1-f-m$ for $F$, $M$, $U$.  If $a(p)$ is
+all-ones, $\Prob[a(p)\mid F]=\tfrac12$ and $\Prob[a(p)\mid M]=1$, while
+$\Prob[a(p)\mid U]=0$: hence
+\[
+\Prob[p\in F\mid T_\ell]
+=\frac{(f/2)\,\Theta_F}{(f/2)\,\Theta_F+m\,\Theta_M}
+\;\le\;\frac{f/2}{f/2+m}\bigl(1+O(e/n)\bigr)
+=q\bigl(1+O(e/n)\bigr),
+\]
+using $\Theta_F/\Theta_M\in(1-O(e/n),\,1+O(e/n))$.  If $a(p)$ contains
+a $0$, then $\Prob[a(p)\mid M]=0$ and $\Prob[a(p)\mid U]=1$, so the
+posterior is at most
+$\frac{f/2}{f/2+(1-f-m)}\bigl(1+O(e/n)\bigr)\le f\bigl(1+O(e/n)\bigr)$.
+In both sub-cases
+$\Prob[p\in F\mid T_\ell]\le\max(q,f)(1+O(e/n))$, which is
+Lemma~\ref{lem:bayes} relaxed by the perturbation factor.
+
+Case 2: $p$ is not queried on the path.  Then $T_\ell$ reveals no
+own-answer for $p$, and Lemma~\ref{lem:depletion} with $S$ the queried
+cells gives $\Prob[p\in F\mid T_\ell]\le f(1+O(e/n))$ directly.
+
+Summing over leaves and using
+$\sum_\ell\Prob[\mathrm{reach}(\ell)]\le 1$ completes the proof.  For
+the corollary, $q\le\frac12+o(1)$ is equivalent to $4d^2\le(1+o(1))n$,
+i.e.\ $2d\le(1+o(1))\sqrt{2n}$.
+\end{proof}
+
+\begin{remark}[scope: Theorem~\ref{thm:B} is a budgeted cap]
+\label{rem:Bscope}
+The coupling slack $O(e/n)$ is budget-dependent, and the bound is
+vacuous at $e\asymp n^2$.  The full-scan counting tree of
+Theorem~\ref{thm:floor} queries $n(n+1)$ single variables and succeeds
+with probability $1-2^{-\Theta(d^2)}$; this does \emph{not} contradict
+Theorem~\ref{thm:B}: the counting tree lives where the slack has
+exploded.  At the program's budget $e=d\log k\ll n$ the slack is
+$o(1)$ and Theorem~\ref{thm:B} is the strongest proved barrier for the
+adaptive single-variable class.  Reconciling the unbounded and
+budgeted quantifiers is Section~\ref{sec:budget}.
+\end{remark}
+
+\begin{remark}[measured confirmations]\label{rem:measured-adaptive}
+Exact channel simulations (sampling the proved channel law) confirm
+Theorem~\ref{thm:B} and Lemma~\ref{lem:bayes}.
+\begin{enumerate}
+\item At $(n,d)=(32,2)$: the analytic posterior is
+$q=\frac{2d^2+d}{2d^2-d+n}=\frac{10}{38}=0.2632$; the measured freeness
+posterior given answer $1$ was $0.2367$ over $300$ simulations, against
+the base rate $f=0.0189$, and the first-hit scan over $33$ queries
+succeeded $0.2367$.
+\item Threshold scan at $n=128$: first-hit success tracks the posterior
+across $d=2$, $4$, $8$, $11$, $16$, $24$, $32$: measured success
+$0.018$, $0.072$, $0.246$, $0.400$, $0.656$, $0.898$, $0.970$, against
+the posterior $q=0.075$, $0.231$, $0.548$, $0.705$, $0.846$, $0.936$,
+$0.970$; the posterior crosses
+$\frac12$ at $d\approx\sqrt{n/2}=8$ as predicted, and the scan's own
+success crosses shortly above it, the offset being the budget factor
+$1-(1-p_1)^{s}$ with per-query hit probability $p_1=f/2+m$.
+\item Scaling at fixed $(d,s)=(2,25)$: success
+$0.1450$, $0.0425$, $0.0125$ at $n=32$, $64$, $128$ ($400$ simulations
+each), an
+empirical exponent of $-1.77$ against the cap model's $-2$: the
+freeness signal decays polynomially in $n$ exactly as the rare-event
+analysis predicts, while $k^{-O(1)}=2^{-n^{\delta}O(1)}$ decays
+exponentially, so the hypothesis' margin grows rapidly in the
+conjecture's regime.
+\item Adaptive degree-$2$ strategies at $(d,s)=(2,40)$: single-variable
+$0.183$, $0.067$, $0.013$; hybrid (single plus AND) $0.250$, $0.083$,
+$0.020$; pure AND-scan $0.027$, $0.003$, below $10^{-3}$; at $n=32$,
+$64$, $128$: empirical exponents
+$-1.8$ to $-1.9$; no tested adaptive degree-$2$ strategy decays more
+slowly than $n^{-2}$ (see Section~\ref{sec:and} and Open
+Problem~\ref{op:chaining}).  (The tested ``hybrid'' branch was later
+found to have degenerated to the plain scan --- its product test was
+never implemented --- so this probe never exercised
+adjacency-conditioned certification; the dedicated chaining study of
+Section~\ref{sec:adjacency} supplies the missing test and reverses the
+empirical conclusion at the tree level.)
+\end{enumerate}
+\end{remark}
+
+\section{Degree-2 product queries: the no-lift theorem}\label{sec:and}
+
+At $p=2$ we formalize the answer to a product query
+$g=x_{ab}\cdot x_{cd}$ by the multiplicative evaluation semantics, as in
+the session's simulation harness and consistently with the channel law:
+\[
+a(g)\;=\;a(x_{ab})\cdot a(x_{cd}),
+\]
+so $a(g)=1$ iff both factors evaluate to $1$.  (See
+Remark~\ref{rem:linear-reading} for the strictly linear reading
+$L(g^\rho)$; the two agree except when both component pairs are free.)
+
+\begin{theorem}[AND-query no-lift]\label{thm:and}
+In the pipeline at $p=2$ (equivalently, in the coin channel), let
+$g=x_{ab}\cdot x_{cd}$ with distinct component pairs and let
+$pa=(a,b)$ be the first component.  Then
+\[
+\Prob[a(g)=1]\;=\;\frac{f^2}{4}+fm+m^2,
+\qquad
+\Prob\bigl[a(g)=1 \text{ and } pa\in F\bigr]\;=\;\frac{f^2}{4}+\frac{fm}{2},
+\]
+and consequently the per-hit labeling posterior is
+\[
+\Prob\bigl[pa\in F\mid a(g)=1\bigr]
+=\frac{f^2/4+fm/2}{f^2/4+fm+m^2}
+=\frac{f}{f+2m}
+=\frac{f/2}{f/2+m}
+\;=\;q ,
+\]
+exactly the single-variable posterior: the AND query is a rarer joint
+test whose per-hit posterior coincides with the single-variable Bayes
+posterior.
+\end{theorem}
+
+\begin{proof}
+Enumerate the joint statuses of the two component pairs, using that the
+answers of distinct free pairs are independent fair bits
+(Theorem~\ref{thm:channel}(iii) with Lemma~\ref{lem:completion}(a)) and
+that matched and killed--unmatched answers are determined:
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+statuses of $(pa,pb)$ & probability & $\Prob[a(g)=1]$
+ & $\Prob[a(g)=1,\ pa\in F]$\\
+\hline
+both free & $f^2$ & $1/4$ & $1/4$\\
+$pa$ free, $pb$ matched & $fm$ & $1/2$ & $1/2$\\
+$pa$ matched, $pb$ free & $fm$ & $1/2$ & $0$\\
+both matched & $m^2$ & $1$ & $0$\\
+some killed--unmatched & $1-(f+m)^2$ & $0$ & $0$\\
+\hline
+\end{tabular}
+\end{center}
+For ``both free'' the answer is the product of two independent fair
+design bits, equal to $1$ with probability $\frac14$, and $pa$ is then
+free with certainty.  For ``free--matched'' the matched factor
+contributes its determined $1$ and the free factor its fair bit.  Column
+sums give the two displayed identities.  For the posterior, multiply
+numerator and denominator by $4/f$ (a polynomial identity in $(f,m)$,
+hence exact):
+\[
+\frac{f^2/4+fm/2}{f^2/4+fm+m^2}
+=\frac{f+2m}{f+4m+4m^2/f}
+=\frac{f(f+2m)}{f^2+4fm+4m^2}
+=\frac{f}{f+2m}
+=\frac{f/2}{f/2+m},
+\]
+using $(f+2m)^2=f^2+4fm+4m^2$.
+\end{proof}
+
+The matched--matched mass dominates $\Prob[a(g)=1]$ and contributes zero
+labeling success, exactly canceling the both-free advantage: within the
+class of trees whose degree-$2$ tests are single-pass, no lift over the
+single-variable posterior is possible.  At the tree level the picture
+changed with the adjacency mechanism (Section~\ref{sec:adjacency}): the
+lift exists, through certainty events rather than better posteriors,
+and it needs single variables, not products.  For degree-$2$ chains
+specifically, budget-honest accounting shows no lift: the AND-scan is
+\emph{worse} than the single-variable scan ($0.1333$ against $0.2550$
+at $(32,2)$, budget $1000$), and AND-split chains that certify through
+adjacency fire far more rarely than the degree-$1$ chain
+(Open Problem~\ref{op:chaining}).
+
+\begin{remark}[the strictly linear reading]\label{rem:linear-reading}
+If instead the answer to $g=x_{ab}x_{cd}$ is the linear value
+$L(g^\rho)$, then when both component pairs are free the answer is the
+design value of the degree-$2$ monomial, itself a fair bit provided that
+monomial is not a consequence of the restricted system (generic for
+distinct rows and columns).  The table then changes only in the
+``both free'' row, from $\frac14$ to $\frac12$, and the posterior
+becomes $\frac{f(f+m)}{f^2+2fm+2m^2}$, equal to $0.311$ at $(32,2)$
+against $0.263$; simultaneously the hit probability falls by the loss of
+the matched--matched mass from the both-free row's complement, i.e.\ the
+test becomes rarer per unit of posterior gain, and the no-lift
+conclusion for first-hit strategies at fixed budget is unaffected in
+order of magnitude.  Open Problem~\ref{op:chaining} subsumes both
+readings.
+\end{remark}
+
+\begin{remark}[pipeline degree-$2$ laws; transfer status of
+Theorem~\ref{thm:and}]\label{rem:andpipeline}
+On the exact pipeline the product semantics of this section is not the
+design law: the same-hole and same-pigeon degree-$2$ monomials are
+consequences (determined $0$, where the product semantics answers $1$
+with probability $\tfrac14$), the diagonal monomials are fresh fair
+bits independent of their two component singles (the product semantics
+correlates them perfectly), and the square law $L(x^2)=L(x)$ is the
+one identity the product semantics gets right.  The per-hit no-lift of
+Theorem~\ref{thm:and} is derived under the product semantics; its
+pipeline transfer is not covered by the proof but is
+measured-consistent: true monomial queries on the exact pipeline land
+on the cap, $0.2629$ $[0.2129,0.3199]$ against $q=0.2632$ at $(32,2)$,
+budget $1000$ (the \texttt{mono2} row of the chaining study).  The
+transfer is listed as coin-model-only in
+Table~\ref{tab:faithfulness}.
+\end{remark}
+
+\section{The two-phase certification tree}\label{sec:twophase}
+
+\subsection{The tree and its exact error law in the coin channel}
+
+The two-phase certification tree $\mathcal{T}_{2\mathrm{ph}}$ is the
+adaptive degree-$1$ tree:
+\begin{enumerate}
+\item[Phase 1.] For pigeons $i=1,\dots,n+1$: query the row sum
+$Q_i=1+\sum_jx_{ij}$; stop at the first answer $1$ and set $i^{\ast}$ to
+that pigeon.  (In the coin channel an assigned pigeon answers the
+determined $0$; a free pigeon answers $1$ plus the XOR of its $2d$
+free-row design bits, a fair coin: answer $1$ iff the row's free count
+is \emph{even}.)
+\item[Phase 2.] For holes $j$: query $x_{i^{\ast}j}$; stop at the first
+answer $1$ and label the leaf $(i^{\ast},j)$.
+\item[Fallback.] If all queries of a phase answer $0$, label an
+arbitrary pair.
+\end{enumerate}
+
+\begin{theorem}[literal error law of the two-phase tree, coin channel]
+\label{thm:twophase}
+In $\mathsf{Coin}(n,d)$, under the literal query semantics (the answer
+to $Q_i$ is $1$ iff the row XOR is $0$), the two-phase tree errs with
+probability exactly
+\[
+\mathrm{err}(\mathcal{T}_{2\mathrm{ph}})
+\;=\;2^{-(2d+1)}\;+\;\bigl(1-2^{-(2d+1)}\bigr)\;2^{-2d+1}
+\;=\;2^{-2d}\bigl(\tfrac52-2^{-2d}\bigr)
+\;=\;5\cdot 2^{-(2d+1)}\bigl(1+o(1)\bigr),
+\]
+up to the fallback's base-rate luck: with the fallback pair free with
+probability $f$, the total error is
+$(1-f)\,\mathrm{err}(\mathcal{T}_{2\mathrm{ph}})$.  The first term is
+the phase-$1$ miss (every free pigeon's row answers even); the second
+is the \emph{count-$0$ branch}: the certified pigeon's row has an even
+count of $1$s, and all-zero is even, an event of conditional
+probability $2^{-2d}/\tfrac12=2^{-2d+1}$.
+\end{theorem}
+
+\begin{proof}
+Phase 1 queries the row sums in order.  An assigned pigeon answers the
+determined $0$: its row XOR is $1$ (the matched cell), so
+$Q_i^{\rho}=1+1=0$.  A free pigeon's answer is $1$ plus the XOR of its
+$2d$ free-row design bits: an independent fair coin, the events across
+the $2d+1$ free pigeons being independent (disjoint rows, independent
+coordinates).  An answer $1$ certifies freeness soundly (assigned
+pigeons never produce it), and phase 1 misses with probability exactly
+$2^{-(2d+1)}$.
+
+Given certification, the certified pigeon's row has an even count.
+Phase 2 scans that row (killed holes answer the determined $0$) and
+succeeds iff the count is at least $1$; conditionally on evenness the
+row's answer pattern is uniform over the $2^{2d-1}$ even patterns, of
+which exactly one is all-zero, so the failure probability is
+$2^{-2d}/\frac12=2^{-2d+1}$.  The earlier
+draft asserted this step deterministic (``phase 2 never fails given
+certification''); that assertion is precisely the gap corrected here:
+an even row count need not contain a $1$.
+
+Total, with the fallback firing on either failure and its label free
+with the base rate $f$:
+\[
+\mathrm{err}(\mathcal{T}_{2\mathrm{ph}})
+=2^{-(2d+1)}+\bigl(1-2^{-(2d+1)}\bigr)2^{1-2d}
+=2^{-2d}\bigl(\tfrac52-2^{-2d}\bigr)
+=5\cdot 2^{-(2d+1)}\bigl(1+o(1)\bigr). \qedhere
+\]
+\end{proof}
+
+\begin{remark}[the simulator artifact; retraction of the exact law
+$1-(1-f)2^{-(2d+1)}$]\label{rem:artifact}
+The session's simulators certified a pigeon as free when its row XOR
+equals $1$ (odd count of $1$s), after pre-checking, with oracle
+knowledge of $\rho$, that the pigeon is free.  No legitimate
+degree-$1$ query implements that certification: by linearity (the
+mechanism of Lemma~\ref{lem:degonespan}; explicitly
+Lemma~\ref{lem:linear} below) the stated query $Q_i=1+\sum_jx_{ij}$
+answers $1$ iff the row XOR is $0$, the constant-free row sum answers
+$1$ on \emph{every} killed pigeon, and the oracle pre-check conditions
+on the very quantity (freedom) that the tree is supposed to be
+certifying.  The exact law $1-(1-f)2^{-(2d+1)}$, with its ``phase $2$
+never fails'' step, is accordingly \textbf{retracted}.  The previously
+recorded measurements --- success $0.970$ at $(32,2)$, $0.97$--$0.98$
+at $(64,2)$, $0.974$ at $(128,2)$, $0.998$ at $(64,4)$, and the
+five-point replication over $816{,}000$ simulations --- verify the
+\emph{hybrid} law of the artifact simulator (certify on ``free and
+row-XOR odd''), not the tree; the replication's $(48,4)$ fluctuation
+investigation stands, but within the artifact.
+Table~\ref{tab:twophase} separates the hybrid rows from the literal
+rows, the latter confirming Theorem~\ref{thm:twophase} point for
+point, including by exact enumeration.
+\end{remark}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llrrr}
+\hline
+$(n,d)$ & law & measured & predicted & simulations\\
+\hline
+\multicolumn{5}{l}{\emph{hybrid-artifact rows: certify on ``free and
+row-XOR odd'' (Remark~\ref{rem:artifact})}}\\
+$(32,2)$ & $1-(1-f)2^{-5}$ & 0.970 & 0.969 & 500\\
+$(64,2)$ & $1-(1-f)2^{-5}$ & 0.97--0.98 & 0.969 & 500\\
+$(128,2)$ & $1-(1-f)2^{-5}$ & 0.974 & 0.969 & 500\\
+$(64,4)$ & $1-(1-f)2^{-9}$ & 0.998 & 0.998 & 500\\
+\multicolumn{5}{l}{\emph{literal-tree rows: the law of
+Theorem~\ref{thm:twophase}}}\\
+$(32,2)$ & $1-(1-f)\bigl[2^{-5}+(1-2^{-5})2^{-3}\bigr]$
+& 0.8500 & 0.8505 & 2000\\
+$(64,2)$ & $1-(1-f)\bigl[2^{-5}+(1-2^{-5})2^{-3}\bigr]$
+& 0.8380 & 0.8484 & 1500\\
+$(64,4)$ & $1-(1-f)\bigl[2^{-9}+(1-2^{-9})2^{-7}\bigr]$
+& 0.9888 & 0.9904 & 800\\
+$(32,2)$ & retry: $1-(1-f)(9/16)^{5}$ & 0.9430 & 0.9448 & 2000\\
+\hline
+\end{tabular}
+\caption{Measured success of the two-phase certification tree,
+separated by law.  Hybrid rows: the artifact simulator of
+Remark~\ref{rem:artifact}, whose certification condition no degree-$1$
+query implements; they verify the hybrid law, not the tree.  Literal
+rows: an exact literal-law re-implementation confirming
+Theorem~\ref{thm:twophase}.  Exact enumeration at $(5,2)$ (all
+$2^{20}$ coin matrices) gives strict values $0.8476562=(31/32)(7/8)$
+for the literal tree and $0.9436865=1-(9/16)^5$ for the literal retry,
+both digit-exact; the published-law tree re-measures $0.9695$ at
+$(32,2)$, reproducing the corpus's $0.97$ (flipped-law audit only).}
+\label{tab:twophase}
+\end{table}
+
+\begin{remark}[retry variant, literal law]\label{rem:retry}
+If phase 1 collects the full certified set $C$ (the free pigeons whose
+row answered even, $|C|\sim\mathrm{Bin}(2d+1,\tfrac12)$) and phase 2
+retries across $C$, the rows being disjoint, the failure event is
+``every certified row all-zero'', of probability
+\[
+\Bigl(\tfrac{1+2^{1-2d}}{2}\Bigr)^{2d+1}
+=2^{-(2d+1)}\bigl(1+o(1)\bigr):
+\]
+the retry recovers the retracted law's asymptotic constant.  Measured
+(literal re-implementation): success $0.9430$ at $(32,2)$ against
+$0.9448$ predicted; exact enumeration at $(5,2)$: strict success
+$0.9436865=1-(9/16)^5$, digit-exact.  The earlier retry measurements
+($0.975/0.968/0.970$ at $(n,d)=(32,2),(64,2),(128,2)$, $0.9925$ and
+$1.0000$ at $d=4$, $1.0000$ at $d=8$) were produced by the artifact
+simulator and verify the hybrid law (Remark~\ref{rem:artifact}).
+\end{remark}
+
+\subsection{Model fidelity: the rigidity against the literal pipeline}
+
+Theorem~\ref{thm:twophase} is a theorem about the coin channel.  Against
+the literal pipeline of Definition~\ref{def:pipeline} the phase-1
+certification channel does not exist.
+
+\begin{corollary}[the parity-certification channel is closed against
+the pipeline]\label{cor:closed}
+Against the literal pipeline of Definition~\ref{def:pipeline} the
+two-phase tree's phase 1 never certifies: every pigeon answers the
+determined $0$ to its row sum (Proposition~\ref{prop:rigidity}), phase
+1 completes without firing, and the fallback decides, so the tree's
+success collapses to the base rate $f$, far below either coin-channel
+value of Theorem~\ref{thm:twophase} (hybrid or literal).  Measured on
+the exact pipeline (uniform designs over $\Des(4,2)$) at $(32,2)$,
+budget $1000$: two-phase $0.2767$ $[0.2323,0.3260]$ against the
+single-variable scan's $0.2650$ $[0.2213,0.3138]$ ---
+statistically indistinguishable, the phase-$1$ signal void ($0$
+answers $1$ among $2000$ free-pigeon row-sum queries).  The
+``reversed tree'' scenario of the previous draft (stop at the first
+$0$, then scan the certified row for a $1$, winning with probability
+exactly $1$) does not exist: it required assigned pigeons to answer
+$1$, which the zeroing restriction semantics excludes under either
+presentation (Remark~\ref{rem:onekernel}); every pigeon answers $0$,
+so a first $0$ certifies nothing.  The parity-certificate mechanism is
+dead at kernel level; the certificate mechanisms that survive against
+the pipeline are the counting certificates
+(Lemma~\ref{lem:certificates}, over budget) and the adjacency
+certificates (Section~\ref{sec:adjacency}).
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:rigidity}, $Q_i^{\rho}$ is a restricted
+consequence for free pigeons and the zero polynomial for assigned
+pigeons, so every row-sum answer is the determined $0$ and phase 1
+never fires; the fallback labels an arbitrary pair, free with
+probability $f$.  For the reversed scenario: the first $0$ is answered
+by every pigeon, free or assigned, so it certifies nothing; with the
+assigned-row variables zeroed there is no reading under which an
+assigned pigeon answers $1$.  The measured values are the exact-pipeline
+rows of the chaining study (Section~\ref{sec:adjacency}).
+\end{proof}
+
+\begin{remark}[what the fidelity means]\label{rem:fidelity}
+Three lessons.  First, the hybrid rows of Table~\ref{tab:twophase}
+validate the artifact simulator's certification law, and the literal
+rows validate Theorem~\ref{thm:twophase}: a
+sampler that draws free-pair design bits independently implements the
+coin channel, not the design space, whose row parities are forced
+(Proposition~\ref{prop:rigidity}); the coin channel drops exactly the
+row-parity constraints (legal fraction $\approx2^{-(2d+1)}$,
+Remark~\ref{rem:onekernel}) and, at degree $2$, the product identities
+(Remark~\ref{rem:andpipeline}).  Second, the rigidity is good for
+the pseudo-solution program: the literal $\Omega(n,d)$ at $p=2$ is
+strictly more robust against parity-certification attacks than the
+coin model suggests, and both the solution condition
+(Definition~\ref{def:solution}) and the chi-task hypothesis
+(Theorem~\ref{thm:chi}) survive the strongest known adaptive attacker
+(Section~\ref{sec:adjacency}).  Third, aggregate queries are not fully
+dead in principle: a full scan of a row reveals its parity, and an
+assigned row always shows exactly one answer $1$ while a free row
+shows an odd number of them (parity-locking,
+Theorem~\ref{thm:channel}(iv)); at $d=2$ a free row shows three $1$s
+with probability $\frac12$ (odd counts $1$ and $3$ being equally
+likely, $\binom{4}{c}/2^{3}$ on odd $c$), a detectable event.  But each
+full scan costs $2d$ queries against a free-row density
+$\approx 2d/n$, so within budget $e=d\log k$ the detection probability
+is $O(ed/n^2)$-small, consistent with the cap of Theorem~\ref{thm:B}.
+Quantifying the best statistical freeness signal obtainable from
+aggregate queries within budget is Open Problem~\ref{op:floor}.
+\end{remark}
+
+\section{The certification floor at degree 1}\label{sec:floor}
+
+This section settles the unbounded-budget certification problem at
+degree $1$.  All trees below query single outer variables only and have
+no query budget; adaptivity is allowed throughout but will not help.
+
+\begin{definition}[answer table; configuration]\label{def:table}
+The \emph{answer table} is $M\in\F_2^{(n+1)\times n}$ with
+$M(i,j)=\mathrm{ans}(x_{ij})$; call $M(i,j)=1$ a \emph{one-entry}.  A
+\emph{configuration} is a pair $(Z,c)=\bigl((D,R,\mu),\text{coins}\bigr)$
+of the pipeline: the status data $Z$ (the free sets $D,R$ and the
+matching $\mu$) together with the free-region coin draws $c$; $M$ is a
+function of the configuration.  In this section the free cells'
+answers are the independent fair bits of $\mathsf{Coin}(n,d)$
+(Definition~\ref{def:coin}), the answer-table model that the session's
+exact-channel samplers implement and in which the closed forms below
+are verified; fidelity to the literal pipeline is discussed in
+Remark~\ref{rem:floorfidelity}.  Fallback convention: a tree that
+exhausts its search outputs a fixed fallback pair, free with the base
+rate $f=(2d+1)2d/((n+1)n)$; ``strict'' exact values below carry no
+fallback luck (the canonical fallback pair is matched).
+\end{definition}
+
+\begin{lemma}[linearity of answers]\label{lem:linear}
+For any affine-linear query $g=a+\sum_{p\in S}x_p$ ($a\in\F_2$, $S$ any
+set of pairs: the entire degree-$1$ query class),
+$\mathrm{ans}(g)=a+\bigoplus_{p\in S}\mathrm{ans}(x_p)$.
+\end{lemma}
+
+\begin{proof}
+$\mathrm{ans}(g)=L(g^{\rho})
+=L\bigl(a\cdot 1+\sum_px_p^{\rho}\bigr)
+=a\,L(1)+\sum_pL(x_p^{\rho})
+=a+\sum_p\mathrm{ans}(x_p)$ over $\F_2$, using the linearity of $L$
+and the design axiom $L(1)=1$.
+\end{proof}
+
+\begin{corollary}[full-scan dominance]\label{cor:fullscan}
+For every adaptive degree-$1$ tree $T$ there is a \emph{non-adaptive}
+tree $T'$ that queries all $n(n+1)$ single variables and then outputs,
+with the same success probability as $T$ on every configuration.
+Consequently the optimal error over the whole adaptive degree-$1$
+family equals the Bayes error of the pair posterior given $M$,
+\[
+\mathrm{err}^*\;=\;\mathbb{E}_M\Bigl[\,1-\max_p\Prob\bigl[p\in F\mid
+M\bigr]\Bigr],
+\]
+and randomized trees do not beat the deterministic optimum (convexity).
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:linear} the answer to any query of $T$ is an
+$\F_2$-function of $M$.  By induction on the query index, $T$'s
+$t$-th query and its answer are functions of $M$ for every $t$, so
+$T$'s output label is a function of $M$.  $T'$ computes $M$ by a fixed
+full scan, then replays $T$'s decision procedure, answering each
+simulated query by Lemma~\ref{lem:linear}, and outputs $T$'s final
+label.  The displayed identity is the definition of the optimal
+measurable selector of a pair given $M$; a randomized tree is a
+mixture of deterministic trees, so the optimum is attained by a
+deterministic one.
+\end{proof}
+
+\begin{lemma}[counting certificates]\label{lem:certificates}
+In every configuration, every killed pigeon's row of $M$ contains
+exactly one one-entry (at its matched hole) and every killed hole's
+column contains exactly one one-entry (at its matched pigeon).  Hence,
+soundly against every configuration consistent with the transcript:
+\begin{enumerate}
+\item[(a)] a row containing any number of $1$s other than exactly one
+certifies its pigeon free;
+\item[(b)] a column containing any number of $1$s other than exactly
+one certifies its hole free;
+\item[(c)] a one-entry in the row of a certified-free pigeon certifies
+its hole free, and a one-entry in the column of a certified-free hole
+certifies its pigeon free.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Killed pigeon $i$: $x_{i,\mu(i)}$ answers $1$ (matched,
+Theorem~\ref{thm:channel}(i)); every other pair $(i,j')$ of the row is
+killed--unmatched and answers $0$ (Theorem~\ref{thm:channel}(ii));
+there is no free hole in the row because $i\notin D$.  Symmetrically
+for columns.  Soundness of (a): if the pigeon were killed, its row
+would show exactly one $1$.  Soundness of (c): with the pigeon
+certified free, a one-entry $(i,j)$ cannot be matched, and killed $j$
+would make $(i,j)$ killed--unmatched (answer $0$).
+\end{proof}
+
+The session's earlier trees aggregate answers by XOR
+($Q_i=1+\text{row XOR}$, Theorem~\ref{thm:twophase}).  The certificates
+above need the \emph{count}, which a decision tree may compute but no
+single parity query can express; this is the whole gap between
+Theorem~\ref{thm:twophase} and the floor, and the mechanism that the
+parity framing missed.
+
+\begin{lemma}[pigeonhole rescue]\label{lem:rescue}
+If every row of $M$ shows exactly one $1$, then some column shows at
+least two $1$s (there are $n+1$ rows and $n$ columns).  In that event
+the column is certified free by Lemma~\ref{lem:certificates}(b), a
+certified-free column contains no matched pair, so every one-entry in
+it certifies its pigeon free by Lemma~\ref{lem:certificates}(c), and
+the tree outputs a \emph{certified} free pair (error $0$ on this
+event).
+\end{lemma}
+
+\begin{lemma}[the near-permutation class]\label{lem:classb}
+Define class $\mathfrak{b}=\{$every column of $M$ shows exactly one
+$1$, and every row shows at most one $1\}$.  Then:
+\begin{enumerate}
+\item[(i)] $\Prob[\mathfrak{b}]=(2d+1)\,(2d)!\,/\,2^{(2d+1)2d}$;
+\item[(ii)] on class $\mathfrak{b}$ the free-region coin matrix is a
+permutation matrix on $2d$ of the $2d+1$ free pigeons plus one
+all-zero row, and every one-entry of $M$ lies in the near-permutation
+formed by the killed matching and that partial permutation;
+\item[(iii)] the configurations consistent with a class-$\mathfrak{b}$
+table are exactly the $\binom{n}{n-2d}$ choices of $n-2d$ one-entries
+as the matched pairs; each hole is free in a fraction exactly $2d/n$
+of them, the all-zero row's pigeon is free in all of them, and no pair
+has posterior above $2d/n$;
+\item[(iv)] the Bayes error on class $\mathfrak{b}$ is exactly
+$1-2d/n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Killed rows and columns show exactly one $1$ automatically, so the
+condition lives on the $(2d+1)\times 2d$ free-region coin matrix: each
+of the $2d$ columns has exactly one $1$, and the rows sum to $2d$ with
+each row at most one $1$, forcing exactly one all-zero row and a
+bijection elsewhere: $(2d+1)$ choices times $(2d)!$ permutation
+matrices, out of $2^{(2d+1)2d}$ equally likely coin matrices.
+(ii) Immediate.  (iii) A consistent configuration is any choice of
+$n-2d$ one-entries as $\mu$, with killed sets the endpoints of the
+chosen entries: disjoint rows and columns hold automatically (each
+column has one one-entry, rows at most one), every unchosen one-entry
+has both endpoints free, and the coins are forced; conversely every
+configuration generating this $M$ arises so.  Each hole's column edge
+is chosen in $\binom{n-1}{n-2d-1}$ of the $\binom{n}{n-2d}$ twins, so
+$\Prob[\text{hole free}]
+=1-\binom{n-1}{n-2d-1}\big/\binom{n}{n-2d}=2d/n$; the all-zero row
+cannot be matched, so its pigeon has posterior $1$; every
+matched-candidate pigeon has posterior $1-2d/n$; and hence every pair
+has joint posterior at most $2d/n$ (pairs with the all-zero row:
+exactly $2d/n$; all other pairs: bounded by the hole's $2d/n$).
+(iv) Immediate.
+\end{proof}
+
+\begin{theorem}[exact certification floor at degree $1$]\label{thm:floor}
+Every adaptive degree-$1$ tree for the pipeline at $p=2$, with no
+query budget, in the answer-table model of Definition~\ref{def:table},
+has error probability exactly
+\[
+\mathrm{err}^*\;=\;\Bigl(1-\frac{2d}{n}\Bigr)\cdot
+\frac{(2d+1)\,(2d)!}{2^{(2d+1)2d}}
+\;=\;2^{-4d^2+2d\log_2 d-O(d)}
+\;=\;2^{-\Theta(d^2)},
+\]
+and the following \emph{non-adaptive} tree attains it: query all
+$n(n+1)$ variables in fixed order; compute all row and column counts;
+then
+\begin{enumerate}
+\item[(1)] if some row and some column both have count $\neq1$, output
+(that row's pigeon, that column's hole);
+\item[(2)] else if every row has count exactly $1$, output the first
+one-entry of the first column with count $\ge2$;
+\item[(3)] else if every column has count exactly $1$ and some row has
+count $\ge2$, output that pigeon with its first $1$-column;
+\item[(4)] else (class $\mathfrak{b}$) output the count-$0$ row's
+pigeon with any hole.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The four cases exhaust all $M$.  Cases 1--3 output pairs with
+posterior $1$ by Lemmas~\ref{lem:certificates} and~\ref{lem:rescue},
+the best possible.  Case 4 is class $\mathfrak{b}$, where by
+Lemma~\ref{lem:classb} the posterior of every pair is at most $2d/n$
+and the tree attains it.  By Corollary~\ref{cor:fullscan} no tree
+exceeds the Bayes value on any $M$, so the displayed value is the
+exact optimum.  The asymptotic form is Stirling's applied to
+$\log_2\mathrm{err}^*
+=-(2d+1)\,2d+\log_2\bigl((2d+1)(2d)!\bigr)+O(1)$.
+\end{proof}
+
+At $(32,2)$: $\mathrm{err}^*=1.0\times10^{-4}$, against the conjectured
+floor $2^{-5}=3.1\times10^{-2}$ of the earlier draft and
+Theorem~\ref{thm:twophase}'s literal error $39/256=1.5\times10^{-1}$;
+at $(64,4)$: $\mathrm{err}^*=6.7\times10^{-17}$ against $2^{-9}$.
+The $2^{-\Theta(d)}$ certification-floor conjecture and the two-phase
+tree's optimality are both false.
+
+\begin{remark}[verification record]\label{rem:floorverify}
+All closed forms are verified digit-exactly by exhaustive computation
+in one registered run of \texttt{cert\_floor\_check.py} ($31$\,s; fixed
+seeds, registered output reproduced in the corpus).
+\begin{enumerate}
+\item \emph{Bayes audit at $(4,1)$, exhaustive.}  All
+$120\times64=7680$ configurations enumerated and grouped into $6120$
+answer-table classes.  On every class the counting tree's output pair
+achieves exactly the maximum pair posterior (max
+$\lvert\text{tree}-\text{best}\rvert=0$), and the pooled Bayes error
+$\mathbb{E}_M[1-\max\text{ posterior}]=0.046875$ equals
+$\mathrm{err}^*(4,1)$ exactly.
+\item \emph{Exact enumeration at $(5,2)$.}  All $2^{20}$ coin
+matrices: strict success $0.9998856=1-120/2^{20}$, matching
+$\Prob[\mathfrak{b}]=(2d+1)(2d)!/2^{(2d+1)2d}$ digit for digit.
+\item \emph{Monte Carlo.}  Counting-tree success $1.0000$ at $(32,2)$
+in $2000$ runs (expected failures $0.2$ at
+$\mathrm{err}^*=1.0\times10^{-4}$), $1.0000$ at $(64,2)$ in $1500$
+runs, and $1.0000$ at $(64,4)$ in $800$ runs
+($\mathrm{err}^*=6.7\times10^{-17}$).
+\end{enumerate}
+In a $200{,}000$-configuration sample at $(5,2)$, seven
+multi-configuration classes showed a nonzero tree-versus-Bayes gap;
+every one is a class-$\mathfrak{b}$ table, where
+Lemma~\ref{lem:classb}(iii) makes all pair posteriors flat at $2d/n$
+and small samples fluctuate.  A gap on any other table would have
+refuted Theorem~\ref{thm:floor}; none occurred.
+\end{remark}
+
+\begin{proposition}[rows-and-columns parity tree, $O(n)$ queries]
+\label{prop:rcparity}
+Scan the $n+1$ row sums $Q_i$ and the $n$ column duals
+$K_j=1+\sum_ix_{ij}$ ($2n+1$ queries); let $I$ be the set of pigeons
+that answered $1$ and $J$ the set of holes that answered $1$ (both
+certified free, soundly: assigned lines answer the determined $0$).
+Output $(\min I,\min J)$ if both are nonempty; if $I$ is empty, the
+global parity identity (the sum of the row XORs equals the sum of the
+column XORs) forces some column to be certified, and the tree scans
+the certified columns for a one-entry and outputs it; symmetrically if
+$J$ is empty.  Its error is exactly
+\[
+\mathrm{err}_{R}
+=\frac{\displaystyle\sum_{b\ \mathrm{odd}}\binom{2d}{b}\,
+2^{2d(2d-b-1)}
++\sum_{a\ \mathrm{odd}}\binom{2d+1}{a}\,
+2^{(2d-a)(2d-1)}}{2^{(2d+1)2d}}
+=(6d+2)\,2^{-6d}\,\bigl(1+o(1)\bigr),
+\]
+versus Theorem~\ref{thm:twophase}'s $5\cdot 2^{-(2d+1)}$: an
+exponential gap of $2^{4d}/\mathrm{poly}(d)$ at equal query cost.  The
+purely non-adaptive variant (output $(\min I,\min J)$ only when both
+sets are nonempty, fallback otherwise) has error $2^{-(2d+1)}+2^{-2d}$.
+Exact enumeration at $(5,2)$: strict success
+$0.9965019=1-3668/2^{20}$ (the two failure forms contributing $1028$
+and $2640$), digit-exact; measured $0.9955$ at $(32,2)$, $0.9960$ at
+$(64,2)$, $1.0000$ at $(64,4)$.
+\end{proposition}
+
+\begin{proof}
+Certification is sound: assigned lines answer the determined $0$, so
+an answer $1$ certifies freeness.  The non-adaptive variant errs iff
+no row or no column is certified, events of probability $2^{-(2d+1)}$
+and $2^{-2d}$; they are disjoint, because both failing forces the sum
+of the row XORs and the sum of the column XORs to differ ($n+1$ odd
+versus $n$ odd), contradicting the global parity identity.  For the
+adaptive tree, the rescue branches leave two failure forms, F1 (no row
+certified and the column rescue failing:
+$\sum_{b\ \mathrm{odd}}\binom{2d}{b}2^{2d(2d-b-1)}$ configurations) and
+F2 (rows certified but no column and the row rescue failing:
+$\sum_{a\ \mathrm{odd}}\binom{2d+1}{a}2^{(2d-a)(2d-1)}$); dividing by
+$2^{(2d+1)2d}$ and applying Stirling gives the displayed asymptotics.
+The case analysis is mechanical; the closed form is confirmed
+digit-exactly by the exact enumeration quoted.
+\end{proof}
+
+\begin{remark}[floor fidelity: coin model versus literal pipeline]
+\label{rem:floorfidelity}
+Theorem~\ref{thm:floor} is proved and verified in the answer-table
+model of Definition~\ref{def:table}, in which the free cells' answers
+are independent fair bits.  The full scan on which the counting tree
+relies leaves the regime of Corollary~\ref{cor:coin}: it pins every
+row in its entirety, the event $E_{\mathrm{full}}$ on which the
+coin-channel equivalence for single-variable trees fails, and
+Proposition~\ref{prop:rigidity}'s forced row parities then constrain
+the literal pipeline's answer table (no free row of the literal
+pipeline is ever all-zero).  A verbatim transfer of the floor to the
+literal pipeline's answer table is therefore not claimed here; the
+chi-transfer note of the corpus (for the counting tree the
+chi-indicator coincides with its error indicator whenever no
+degree-$\le d$ consequence in $V(n,d)^{\rho}$ has constant term $1$, a
+reading of Definition~\ref{def:pipeline} to verify against
+\cite{Kra26}) transfers the floor to the chi-task directly under that
+reading.  The budgeted floor, which is what
+Theorem~\ref{thm:chi} actually quantifies over, is
+Open Problem~\ref{op:floor}.
+\end{remark}
+
+\begin{remark}[Theorem~\ref{thm:floor} under parity-locking]
+\label{rem:parityfloor}
+The exact constant
+$\mathrm{err}^*=(1-2d/n)(2d+1)(2d)!/2^{(2d+1)2d}$ is a
+\emph{coin-model} number: it is proved and verified in the
+answer-table model of Definition~\ref{def:table}, whose free rows are
+unconstrained.  On the literal pipeline every free row is
+parity-locked (Theorem~\ref{thm:channel}(iv)): a fully scanned free
+row shows an odd count of $1$s, with
+$\Prob[\text{count}=c]=\binom{2d}{c}/2^{2d-1}$ on odd $c$ --- so the
+count-$1$ probability is $2d/2^{2d-1}$, exactly twice the coin model's
+$2d/2^{2d}$ --- while killed rows still show exactly one $1$.  The
+counting mechanism survives (a count other than $1$ still certifies
+freeness soundly, Lemma~\ref{lem:certificates}), but the hard class
+does not merely shift: it \emph{vanishes}.  Class
+$\mathfrak{b}$ (Lemma~\ref{lem:classb}) would require an all-zero free
+row: with $2d+1$ free rows and $2d$ free holes each showing exactly
+one $1$, only $2d$ rows can carry a $1$ --- and parity-locking
+(forced row XOR $1$) forbids exactly the all-zero row that
+$\mathfrak{b}$ needs.  Hence on the literal pipeline the full-scan
+counting tree succeeds \emph{with probability exactly $1$}: the
+unbounded floor terminates at zero, not at a changed constant
+(verified: $0$ failures in $5000$ exact-channel simulations).
+Theorem~\ref{thm:floor} therefore survives as the exact floor of the
+\emph{coin channel} --- the row-incomplete completion model, which is
+the correct model of the pipeline below per-row query cost
+$\Theta(n)$ --- and the open remnant is the \emph{budgeted}
+all-degrees floor (Open Problem~\ref{op:floor}), whose
+degree-$\le 2$ form is settled at
+$\mathrm{err}^*(d,\,d\log k)=k^{-\Theta(d^2/n)}$.
+\end{remark}
+
+\section{Adjacency certificates and the confirmation chain}
+\label{sec:adjacency}
+
+The caps proved so far bound what a single answer can say: the per-hit
+posterior of any scan hit is $q$ (Lemma~\ref{lem:bayes},
+Theorem~\ref{thm:and}), and the measured confirmations show every
+single-hit strategy landing on $q$.  This section exhibits the
+mechanism that defeats the per-query caps at the tree level.  It rests
+on a certificate that consumes only the determined answers
+(Theorem~\ref{thm:channel}(i)--(ii)), so it is sound against the
+literal pipeline of Definition~\ref{def:pipeline} directly, with no
+coin-channel intermediate step and no property of the design values at
+all.
+
+\begin{lemma}[adjacency certification]\label{lem:adjacency}
+Let $p\neq p'$ be pairs sharing a row or a column.  If
+$\mathrm{ans}(x_p)=\mathrm{ans}(x_{p'})=1$, then $p$ and $p'$ are both
+free.  The certificate is error-free, and it is valid against the
+literal pipeline (Remark~\ref{rem:onekernel}'s single design space).
+\end{lemma}
+
+\begin{proof}
+An answer $1$ excludes the killed--unmatched status, which answers the
+determined $0$ (Theorem~\ref{thm:channel}(ii)); so each of $p,p'$ is
+free or matched.  A matched pair forces all of its row-neighbors and
+column-neighbors to the determined $0$: if $\rho(i)=j$, then every
+other cell of row $i$ is killed--unmatched, and so is every other cell
+of column $j$ (the hole $j$ is taken, and $\rho$ is injective).
+Suppose $p'=(i,j)$ were matched; then $p$, being one of its
+row- or column-neighbors, would answer the determined $0$ ---
+contradicting $\mathrm{ans}(x_p)=1$.  So $p'$ is free.  Symmetrically,
+if $p$ were matched, its neighbor $p'$ would be killed--unmatched and
+answer $0$; and $p$ itself is not killed--unmatched; hence $p$ is
+free.  Every step is a $\rho$-determined answer law, which no design
+can alter.
+\end{proof}
+
+\subsection{The confirmation chain and its measurements}
+
+The \emph{confirmation chain} (\texttt{confirm} in the session's
+chaining study) spends a budget $B$ of single-variable reads as
+follows: scan fresh pairs in random order; on a hit at $p$ (answer
+$1$), spend up to $k=6$ reads on fresh row- and column-neighbors of
+$p$; any neighbor answering $1$ certifies $p$ free by
+Lemma~\ref{lem:adjacency} and is output immediately; otherwise resume
+scanning; at budget end, output the least-confirmed accumulated hit.
+The certificate events are what the caps cannot price:
+Lemma~\ref{lem:adjacency} makes their posterior exactly $1$, so the
+chain's success is the probability of \emph{reaching} a certainty
+event, a quantity that grows with budget, whereas every previously
+capped quantity was budget-independent.
+
+\begin{remark}[measured chain performance]\label{rem:chainmeasured}
+Registered run (\texttt{chi\_and\_chain.py}: $600$ simulations per
+cell, Wilson $99\%$ confidence intervals, budget-honest accounting;
+the self-check ``every certified output is free'' was asserted per
+simulation and never fired in $52{,}800$ simulations).
+\begin{enumerate}
+\item \emph{Stipulated coin channel.}  Success $0.9317$
+$[0.9001,0.9538]$ at budget $B=1000$ at \emph{both} $(32,2)$ and
+$(64,4)$, against the single-variable scan's $0.2550$
+$[0.2120,0.3033]$ and $0.3800$ $[0.3305,0.4321]$ (a $3.7\times$ lift
+at $(32,2)$); the confidence intervals are disjoint from the scan's at
+every $B\ge300$ at both sizes and overlap at $B=100$.  Posterior given
+certification $1.0000$ in every cell.  The certificate rate is
+exponential in budget: $5.17$, $20.50$, $49.17$, $91.83\%$ at
+$B=30,100,300,1000$ and $(32,2)$; $7.50$, $20.83$, $50.17$,
+$91.83\%$ at $(64,4)$; i.e.\ $-\ln(1-\mathrm{cert})/B$ lies in
+$[0.0018,0.0026]$, roughly constant at $\approx0.0025$ per query, so
+$\mathrm{cert}\approx1-e^{-B/400}$.
+\item \emph{Exact pipeline} (uniform designs over $\Des(4,2)$, the
+one-kernel space of Remark~\ref{rem:onekernel}): success $0.9417$
+$[0.9119,0.9618]$ at $(32,2)$, $B=1000$; certificate rate $92.83\%$;
+posterior given certification $1.0000$ (asserted).  The chain consumes
+only the $\rho$-determined facts (matched restricts to $1$, killed to
+$0$) and the marginal fairness of the free design bits (measured
+$0.4918$ over $n=8000$ samples), so nothing in its mechanism changes
+under parity-locking (odd row parities permit the neighbor $1$s); it
+is the only tested strategy that beats the single-variable cap on the
+true pipeline at $(32,2)$.
+\item \emph{The per-hit no-lift is intact.}  The chain's posterior
+given a plain scan hit falls \emph{below} $q$, $0.1633$
+$[0.0696,0.3372]$: free hits self-select into certifications,
+leaving a matched-enriched residue.  The lift is not a better guess
+but a certainty reached more often; the single-pass no-lift
+(Theorem~\ref{thm:and}) is sharp, and the cap it proves is a
+per-query, not a per-tree, bound.
+\item \emph{No lift without adjacency.}  Budget-honest AND-scans are
+worse than single variables ($0.1333$ against $0.2550$ at $(32,2)$,
+$B=1000$), and AND-pool and AND-split strategies sit at the cap
+($0.2317$ and $0.2717$, overlapping the scan's interval); a
+posterior-weighted chain that pools certified neighbors with plain
+hits lifts by the same mechanism, diluted ($0.3483$ at $(32,2)$ and
+$0.8000$ at $(64,4)$, $B=1000$).  The earlier ``no lift found at toy
+scale'' reading is superseded: the probe that supported it never
+implemented its product-test branch (a measurement bug recorded in
+the corpus).
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[compatibility with the proved caps]\label{rem:chainvsB}
+Lemma~\ref{lem:adjacency} does not contradict Theorem~\ref{thm:B} (or
+the no-lift theorem): the coupling slack of the cap is
+budget-dependent and vacuous at $e\asymp10^3$ ($e/n\approx31$ at
+$(32,2)$, $B=1000$), while at the program's budget $e'=d\log k\ll n$
+the slack is $o(1)$.  What the chain changes is the shape of the
+budgeted question: its error decays in \emph{budget} like
+$e^{-B/400}$ rather than staying at $q$, so the printed chi-hypothesis
+survives or falls with the scaling of the certificate constant in
+$(n,d)$ (Open Problem~\ref{op:adjacency}).
+\end{remark}
+
+\begin{remark}[place in the certificate trichotomy]\label{rem:trichotomy}
+The known freeness certificates divide three ways.  \emph{Parity}
+certificates --- query the row sum, certify on answer $1$ --- are dead
+against the literal pipeline: $Q_i$ answers the determined $0$ on
+every pigeon (Proposition~\ref{prop:rigidity}; measured $0/2000$ on
+free pigeons), and the two-phase tree collapses to the base rate
+(Corollary~\ref{cor:closed}).  \emph{Counting} certificates --- line
+counts $\neq1$, Lemma~\ref{lem:certificates} --- are alive and
+Bayes-optimal in the coin model unbounded (Theorem~\ref{thm:floor}),
+but inert within any polylog budget (Section~\ref{sec:budget}), and
+their exact constant is a coin-model number
+(Remark~\ref{rem:parityfloor}).  \emph{Adjacency} certificates
+(Lemma~\ref{lem:adjacency}) are alive, error-free, sound on the
+pipeline, and the only mechanism measured to beat the per-query caps
+there; the budget scaling of their constant is the sharpest open
+problem of the session (Open Problem~\ref{op:adjacency}).
+\end{remark}
+
+\section{Budget reconciliation}\label{sec:budget}
+
+Theorem~\ref{thm:chi} (Theorem 6.1 of \cite{Kra26}) quantifies over
+\emph{budgeted} trees: $(d,e')$-trees with $e'=d\log k$ queries (the
+printed budget is $e'=O(\log n)+O(d\log n)$; we keep the shorthand
+$d\log k$).  Every attacker constructed in this paper is over that
+budget in the intended regime $e'=\mathrm{poly}(\log n)\ll n$:
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\hline
+attacker & queries & error (coin channel; chain: measured)\\
+\hline
+two-phase tree (Theorem~\ref{thm:twophase}) & $\asymp\,2n+1$ &
+$5\cdot 2^{-(2d+1)}$\\
+rc parity tree (Proposition~\ref{prop:rcparity}) & $2n+1$ &
+$(6d+2)\,2^{-6d}$\\
+full-scan counting tree (Theorem~\ref{thm:floor}) & $n(n+1)$ &
+$2^{-\Theta(d^2)}$\\
+confirmation chain (Lem.~\ref{lem:adjacency}) & $B$ (single variables) &
+$\approx e^{-B/400}$, decaying in $B$\\
+\hline
+\end{tabular}
+\end{center}
+
+The first three errors are coin-channel closed forms (for the counting
+value the $2^{-\Theta(d^2)}$ order is kernel-faithful,
+Remark~\ref{rem:parityfloor}); against the literal pipeline the first
+two are dead outright (Corollary~\ref{cor:closed}).  The chain's error
+is measured on both channels (Remark~\ref{rem:chainmeasured}) and is
+the first to decay in budget rather than in $d$.  The two-phase
+witness alone exceeds the budget $d\log k$ whenever
+$d<2n^{1-\delta}$ at $k=2^{n^{\delta}}$, \emph{a fortiori} the counting
+tree.  Counting certificates are inert within budget: a single
+variable answers $1$ with probability $m+f/2=O(1/n)$, so $e$
+single-variable queries elicit an expected number of $1$s of order
+$e/n$, and a line-count certificate (two $1$s in one row or column)
+does not occur until $e\gtrsim n$, far above $d\log k$.  Within budget
+the certificate mechanism of Lemma~\ref{lem:certificates} cannot fire,
+the cap of Theorem~\ref{thm:B} governs (its slack $O(e/n)$ is $o(1)$
+there), and the chi-hypothesis survives every known attack at the
+printed budget.  The one attacker whose measured error decays in
+budget, the confirmation chain, needs $\approx c^{-1}\log(1/\gamma)$
+queries with $c\approx1/400$ per query at the measured points; whether
+$e'=d\log k$ suffices at the program's parameters is the
+adjacency-budget race (Open Problem~\ref{op:adjacency}).  Three
+precise statements record where matters stand:
+
+\begin{enumerate}
+\item The unbounded degree-$1$ quantifier is settled, by
+Theorem~\ref{thm:floor}.  The unbounded quantifier is not the printed
+one: Definition~\ref{def:solution} quantifies over $(d,e)$-trees, and
+whether any reading of \cite{Kra26} leaves the class unbounded is a
+reading question to verify against the source.  Under an unbounded
+reading of the solution condition, the counting tree's error
+$2^{-\Theta(d^2)}$ falls below the required $\gamma=k^{-O(1)}$
+precisely when $4d^2-O(d\log d)>O(\log k)$, which holds throughout the
+program's intended regime $d=(\log k)^{O(l)}$ with $l\ge1$ fixed: the
+budgeted quantifier of Definition~\ref{def:solution} is essential for
+the program's viability at $p=2$.
+\item The budgeted floor is open: the optimal error of $e$-query
+adaptive degree-$1$ trees as a function of $e$ and, in particular,
+whether any $e=d\log k$ tree beats the cap of Theorem~\ref{thm:B}
+(Open Problem~\ref{op:floor}).  The confirmation chain answers the
+large-$e$ end: it beats every per-query cap for $B\ge300$ at the
+measured points, with error decaying like $e^{-B/400}$
+(Section~\ref{sec:adjacency}); the open span is the scaling in
+between (Open Problems~\ref{op:floor} and~\ref{op:adjacency}).
+\item The chi-hypothesis of Theorem~\ref{thm:chi} remains open in
+exactly its printed budgeted form (Open Problem~\ref{op:main}).
+\end{enumerate}
+
+\section{Consequences for the chi-task}\label{sec:consequences}
+
+Collecting the proved caps, at $p=2$, on the pipeline
+$\Omega(n,d)$:
+\begin{enumerate}
+\item \emph{Non-adaptive variable/monomial-class trees}
+(Proposition~\ref{prop:nonadaptall}): success
+$\le(\gamma s+1)f+o(1)$; the chi-hypothesis is safe within the class
+up to $d=\Theta_\gamma(n^{2/3}(\log k)^{-1/3})$ at budget $s=d\log k$.
+The all-queries generality previously claimed for this cap is
+retracted (Remark~\ref{rem:retraction}).
+\item \emph{All adaptive single-variable trees within budget}
+(Theorem~\ref{thm:B}, Remark~\ref{rem:Bscope}): success
+$\le\max(q,f)+o(1)$; the hypothesis is
+safe with large margin for all $2d\le\sqrt{2n}$, i.e.\ for
+$k=2^{n^{\delta}}$ with $\delta\lesssim 1/(2O(l))$ under the program's
+parameter connection $d=(\log k)^{O(l)}$.  Without budget the same
+class is settled exactly at the Bayes floor $2^{-\Theta(d^2)}$ in the
+coin model (Theorem~\ref{thm:floor}); the floor's order is
+kernel-faithful and its constant is not
+(Remark~\ref{rem:parityfloor}).
+\item \emph{Single-pass degree-$2$ product tests}
+(Theorem~\ref{thm:and}): no per-hit posterior lift; sharp, and
+measured on the exact pipeline (Remark~\ref{rem:andpipeline}).  The
+tree-level lift goes through adjacency and needs only single
+variables (Section~\ref{sec:adjacency}).
+\item \emph{Certification-style attacks and the certificate
+trichotomy:} in the coin model
+the two-phase tree errs $5\cdot 2^{-(2d+1)}$ under the literal query
+semantics (Theorem~\ref{thm:twophase}); it is dominated at equal
+$O(n)$ cost by the rc parity tree (Proposition~\ref{prop:rcparity})
+and, at $n(n+1)$ queries, by the counting tree's Bayes-optimal
+$2^{-\Theta(d^2)}$ (Theorem~\ref{thm:floor}).  Against the literal
+pipeline the parity mechanism is dead outright
+(Corollary~\ref{cor:closed}), the counting mechanism survives with a
+parity-locked hard class (Remark~\ref{rem:parityfloor}), and the
+adjacency mechanism is alive and measured: the confirmation chain
+reaches $0.9417$ on the exact pipeline at $(32,2)$, budget $1000$
+(Section~\ref{sec:adjacency}).  Every unbounded attacker is over
+budget, counting certificates are inert below $e\asymp n$
+(Section~\ref{sec:budget}), and the chain's reach at the printed
+budget is exactly the adjacency-budget race
+(Open Problem~\ref{op:adjacency}).  Hence the candidate $\Omega(n,2)$ remains
+consistent with all known \emph{budgeted} attackers at $p=2$, and both
+the solution condition and the chi-hypothesis remain open and
+plausible in their printed budgeted forms.
+\item \emph{Trivial multiplicative tests do not refute the candidate:}
+an adaptive degree-$2$ tree built from random monomial triples detects
+violations of multiplicativity of $\omega=L\circ\rho$ outside the free
+region with measured probability $5\times10^{-4}$ over the full
+pipeline ($4000$ samples), against $0.37$ for a canonical computation
+that drops the restriction layer: $\omega$ is automatically
+multiplicative outside the tiny free region, whose all-free-triple
+density is $\Theta((d/n)^4)\to0$.
+\end{enumerate}
+
+The genuinely open classes are: budgeted degree-$1$ trees at
+intermediate budgets (the budgeted floor, with the confirmation chain
+as its strongest measured witness), and adaptive trees of degree
+$\ge2$ beyond the adjacency mechanism; Section~\ref{sec:open}
+formalizes the remaining problems.
+
+\subsection{Theorem-faithfulness}\label{sec:faithfulness}
+
+The coin channel $\mathsf{Coin}(n,d)$ and the literal pipeline agree
+\emph{exactly} (total variation $0$) on the marginal and joint
+single-variable laws of every row-incomplete query set, and disagree
+on a fully queried free row (conditional total variation $\tfrac12$;
+parity-locking, Theorem~\ref{thm:channel}(iv)) and at degree $2$
+(Remark~\ref{rem:andpipeline}).  Table~\ref{tab:faithfulness} records
+the status of each result; ``kernel-faithful'' means the proved
+statement holds verbatim for Definition~\ref{def:pipeline}'s pipeline.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\begin{tabular}{lll}
+\hline
+result & status & why\\
+\hline
+coin equivalence (Cor.~\ref{cor:coin}) & kernel-faithful & exact off
+$E_{\mathrm{full}}$ (TV $=0$); $\tfrac12$ on full rows\\
+channel law (Thm.~\ref{thm:channel}) & kernel-faithful & it \emph{is} the
+kernel law (verified)\\
+completion (Lem.~\ref{lem:completion}) & kernel-faithful & the zeroing
+completion, all $d$\\
+Prop.~\ref{prop:fixed} (A), \ref{prop:nonadaptsingle} (C) & kernel-faithful &
+pair symmetry; single variables\\
+Prop.~\ref{prop:nonadaptall} (D, variable/monomial class) & kernel-faithful &
+Lemma~\ref{lem:factor} $+$ depletion\\
+Thm.~\ref{thm:B}, Bayes caps (Lem.~\ref{lem:bayes}) & kernel-faithful &
+single variables; TV $=0$ off $E_{\mathrm{full}}$\\
+counting certificates (Lem.~\ref{lem:certificates}) & kernel-faithful &
+determined answers; odd-count law corrected\\
+Thm.~\ref{thm:floor}'s \emph{order} $2^{-\Theta(d^2)}$ & kernel-faithful &
+Rem.~\ref{rem:parityfloor}\\
+adjacency certificate (Lem.~\ref{lem:adjacency}) & kernel-faithful &
+determined answers only\\
+\hline
+two-phase law (Thm.~\ref{thm:twophase}) & coin-model-only & parity mechanism
+dead (Cor.~\ref{cor:closed})\\
+rc parity tree (Prop.~\ref{prop:rcparity}) & coin-model-only & row sums answer
+$0$ (Prop.~\ref{prop:rigidity})\\
+Thm.~\ref{thm:floor}'s \emph{constant} & coin-model-only & hard class
+parity-locked (Rem.~\ref{rem:parityfloor})\\
+AND no-lift identity (Thm.~\ref{thm:and}) & coin-model-only$^{\dagger}$ &
+product semantics; transfer unproved\\
+\hline
+\end{tabular}
+\caption{Theorem-faithfulness against the literal pipeline of
+Definition~\ref{def:pipeline}.  ``Kernel-faithful'': the statement holds
+verbatim for the pipeline (the coin channel agrees with it exactly on the
+query sets the result uses).  ``Coin-model-only'': the statement is proved
+in $\mathsf{Coin}(n,d)$ and does not transfer verbatim; for
+Theorem~\ref{thm:and} the pipeline transfer is measured-consistent but
+unproved.  Results above the second rule are used in their
+kernel-faithful form throughout Sections~\ref{sec:budget}
+and~\ref{sec:open}.}
+\label{tab:faithfulness}
+\end{table}
+
+\noindent$^{\dagger}$Measured-consistent: true monomial queries on the exact
+pipeline land on the cap, $0.2629$ $[0.2129,0.3199]$ against
+$q=0.2632$ (Remark~\ref{rem:andpipeline}).
+
+\section{Open problems}\label{sec:open}
+
+\begin{openproblem}[the chi-hypothesis, printed budgeted form]
+\label{op:main}
+Is there a constant $C$ such that every $(d,e')$-tree with
+$e'=d\log k$ (printed: $e'=O(\log n)+O(d\log n)$) and queries of
+degree $\le d$ has, on the pipeline
+$\Omega(n,d)$ at $p=2$ with $d=(\log k)^{O(l)}\le\sqrt{n}$,
+\[
+\Prob[\text{failure}]\;\ge\;k^{-C}\;?
+\]
+Equivalently: no shallow low-degree adaptive tree certifies freeness
+with probability $1-k^{-O(1)}$.  An affirmative answer, together with
+Theorem~\ref{thm:chi}, yields $k$-step lower bounds for
+$\AC^0[l](\mathrm{MOD}_2)$-Frege refutations of $\PHPn$ with
+$k=2^{n^{\delta}}$, $\delta\approx1/(2O(l))$: the first
+super-polynomial $\AC[2]$-Frege lower bounds, on the pigeonhole
+principle.  A negative answer would refute $\Omega(n,d)$ as a
+pseudo-solution at $p=2$ and redirect the program.  Proved here: the
+affirmative answer for non-adaptive variable/monomial-class trees
+(Proposition~\ref{prop:nonadaptall}) and for adaptive single-variable
+trees at budget (Theorem~\ref{thm:B}); without budget, degree $1$ is
+settled exactly at the Bayes floor $2^{-\Theta(d^2)}$
+(Theorem~\ref{thm:floor}), which stays above $k^{-O(1)}$ only while
+$d^2\lesssim\log k$ --- one more reason the budgeted quantifier is the
+right one.  The residual classes: budgeted degree-$1$ trees at
+intermediate budgets (Open Problem~\ref{op:floor}), now dominated in
+the measured range by the confirmation chain, whose error decays in
+budget like $e^{-B/400}$ on the pipeline itself
+(Section~\ref{sec:adjacency}; its budget scaling is
+Open Problem~\ref{op:adjacency}), and adaptive trees of degree $\ge2$
+beyond the adjacency mechanism (Open Problem~\ref{op:chaining}).
+\end{openproblem}
+
+\begin{openproblem}[chaining beyond the per-hit posterior]
+\label{op:chaining}
+The per-hit no-lift is sharp: every single-pass test has posterior
+exactly $q$ (Theorem~\ref{thm:and}), measured on the exact pipeline as
+well (Remark~\ref{rem:andpipeline}).  At the tree level the picture
+inverted: adaptive chaining \emph{does} beat the per-query posterior
+cap --- not by raising any single answer's posterior, but by chaining
+a hit with an adjacent answer into a certain-free event whose
+probability grows exponentially with budget (Section~\ref{sec:adjacency}:
+$0.9317$ against the cap $0.2550$ at $(32,2)$, budget $1000$, disjoint
+$99\%$ intervals).  The earlier ``every tested chaining strategy decays
+as $n^{-1.8}$ to $n^{-1.9}$'' reading is superseded; the probe behind
+it never implemented its product-test branch (a measurement bug
+recorded in the corpus).  What remains open: (a) the budget scaling of
+the adjacency constant (Open Problem~\ref{op:adjacency}); (b) whether
+degree-$2$ chains add anything over the degree-$1$ confirmation chain
+--- budget-honest AND-scans are \emph{worse} than single variables,
+and AND-split chains certify far more rarely ($4.00\%$ versus
+$91.83\%$ certificate rate at $(32,2)$, budget $1000$); (c) a cap
+theorem for the adaptive degree-$1$ class at intermediate budgets,
+between Theorem~\ref{thm:B}'s $e=o(n)$ regime and the unbounded floor
+(Theorem~\ref{thm:floor}).
+\end{openproblem}
+
+\begin{openproblem}[the budgeted certification floor]\label{op:floor}
+What is the optimal error $\mathrm{err}(e)$ of adaptive degree-$1$
+trees with $e$ queries, as a function of $e$?  Unbounded, the answer
+is exact: $\mathrm{err}^*=2^{-\Theta(d^2)}$, attained by the
+non-adaptive counting tree (Theorem~\ref{thm:floor}); the earlier
+conjecture of a $2^{-\Theta(d)}$ floor, with the two-phase tree as its
+extremal witness, is false.  The line-count certificates that attain
+the floor are inert below $e\asymp n$ (Section~\ref{sec:budget}), and
+Theorem~\ref{thm:B} caps the class at $\max(q,f)(1+o(1))$ for
+$e=o(n)$; the question is whether the truth interpolates or some
+$e=d\log k$ tree beats Theorem~\ref{thm:B}'s cap, which is the content
+Theorem~\ref{thm:chi}'s hypothesis needs at $p=2$.  An affirmative
+budgeted floor would combine with Open Problem~\ref{op:main} to
+complete the $p=2$ core of the $\AC[2]$-Frege program.  Three
+sub-questions: (a) the exact Bayes program at degree $2$ ---
+Corollary~\ref{cor:fullscan}'s reduction dies there (a monomial answer
+is not an XOR of single answers), so no degree-$\ge2$ analogue of
+Theorem~\ref{thm:floor} is known; (b) against the literal pipeline,
+the best statistical freeness signal obtainable from aggregate
+(full-row or higher-degree) queries within budget, the quantitative
+remnant of Corollary~\ref{cor:closed}; (c) the \emph{parity-locked
+floor constant}: recompute Theorem~\ref{thm:floor}'s constant for the
+parity-locked answer table, in which every free row carries an odd
+count of $1$s ($\Prob[\text{count}=1]=2d/2^{2d-1}$, twice the coin
+model's) and no free row is ever all-zero --- the $2^{-\Theta(d^2)}$
+order survives (Remark~\ref{rem:parityfloor}), the exact constant does
+not, and it is open.
+\end{openproblem}
+
+\begin{openproblem}[the adjacency-budget race]\label{op:adjacency}
+The confirmation chain's certificate rate is
+$\approx1-e^{-cB}$ at budget $B$, with $c\approx1/400$ per query
+measured at both $(32,2)$ and $(64,4)$ (Remark~\ref{rem:chainmeasured});
+its error on the exact pipeline decays like $e^{-B/400}$.  Determine
+$c(n,d)$.  The two measured points have nearly equal free densities
+$f$ and hit rates, so the scaling of $c$ in $(n,d)$ is untested; the
+free-density heuristic of the chaining study gives
+$c\sim d^2/n^2$ to $d^3/n^3$ (each read hits a free pair with
+probability $\approx f$, and a free hit then certifies within a few
+neighbor reads), under which the budget needed to push the error below
+$\gamma$ scales as $(n^3/d^3)\log(1/\gamma)$: polynomial in $n$,
+polylogarithmic in $1/\gamma$.  The stakes are exact: if
+$e'=d\log k$ queries suffice at the program's parameters
+$d=(\log k)^{O(l)}$, the printed chi-hypothesis of
+Theorem~\ref{thm:chi} is \textbf{false} and the $p=2$ route via
+Theorem~\ref{thm:chi} closes; if $c$ decays polynomially in $n$, the
+hypothesis survives with the confirmation chain as its strongest known
+witness.  This is the sharpest open problem of the session: the
+budgeted certification floor must cover a trichotomy of certificate
+mechanisms --- parity (dead on the pipeline,
+Corollary~\ref{cor:closed}), counting (inert within polylog budget,
+Section~\ref{sec:budget}), and adjacency (alive; this problem).
+\end{openproblem}
+
+\begin{openproblem}[the odd-characteristic analogue]\label{op:oddprime}
+Fix an odd prime $p$ (any $p\ge3$).  The reduction chain of
+\cite{Kra26} is characteristic-uniform (Theorems 2.2, 3.2, 3.3,
+Definition 4.3, and Theorem 6.1 there are all stated for an arbitrary
+prime), and the free-answer alphabet grows to all of $\F_p$: killed
+lines still answer determinedly, free single variables answer uniform
+$p$-ary dies, so a fraction $\frac{p-2}{p}$ of free single-variable
+answers are self-certifying and the single-variable lane is open at
+odd $p$ in a way it is not at $p=2$.  Determine whether, for every
+$(d,e')$-tree $T'$ with $d=(\log k)^{O(l)}$ and
+$e'=O(\log n)+O(d\log n)$,
+\[
+\Prob_{\rho,P}\bigl[\chi(P,\rho)=1\bigr]\;\ge\;k^{-O(1)},
+\]
+the hypothesis of Theorem~\ref{thm:chi} at characteristic $p$.  A
+positive answer at any $k(n)\ge n^{\omega(1)}$ yields, via the
+Extended Nullstellensatz equivalence, $k$-step lower bounds for
+$\AC^0[p]$-Frege refutations of $\PHPn$: the first super-polynomial
+lower bound for the full $\AC^0[p]$-Frege system at that
+characteristic, and the first lower bound of any kind for odd-$p$
+$\AC^0[p]$-Frege proofs of the pigeonhole principle; the odd-$p$
+parity-resolution lane is strictly less crowded (no dag-like
+Res$(\mathrm{lin}_p)$ pigeonhole bound of any kind exists for odd
+$p$, only tree-like and fragment results).  A negative answer (a tree
+with error $<k^{-O(1)}$) refutes $\Omega(n,d)$ at that $p$ and
+redirects the program, exactly as at $p=2$.  Caveat: the $p$-ary
+two-phase tree's proposed error $p^{-(2d+1)}$ is flagged
+\emph{analysis} in the corpus; it inherits the phase-$2$ coin-branch
+issue corrected in Theorem~\ref{thm:twophase} (the certified row's
+sum being nonzero does not prevent the all-zero configuration), and
+its literal error needs the same recomputation before any use.
+\end{openproblem}
+
+\section*{Acknowledgements}
+The corpus owner supplied the research environment and the verification
+scripts.  All computational claims are reproducible from the session's
+exact channel samplers, from the registered run of
+\texttt{cert\_floor\_check.py} (exact enumeration, Bayes audit, and
+Monte Carlo, $31$\,s), from the chaining study's registered run
+(\texttt{chi\_and\_chain.py}: $600$ simulations per cell, Wilson
+$99\%$ intervals, asserted certifications, $52{,}800$ simulations,
+seed $20261003$), and from the kernel-level verification
+(\texttt{kernel\_structure.py}: $18$ checks and the one-kernel,
+parity-locking, and degree-$2$ classifications, $100{,}000$ design
+samples per law).
+
+\begin{thebibliography}{99}
+
+\bibitem{Ajtai94}
+M.~Ajtai.
+\newblock The complexity of the pigeonhole principle.
+\newblock \emph{Combinatorica} 14(4):417--433, 1994.
+
+\bibitem{BIKPPS97}
+S.~R.~Buss, R.~Impagliazzo, J.~Kraj\'i\v{c}ek, P.~Pudl\'ak,
+A.~A.~Razborov, and J.~Sgall.
+\newblock Proof complexity in algebraic proof systems.
+\newblock \emph{Journal of the ACM} 44(1):166--191, 1997.
+
+\bibitem{CookReckhow79}
+S.~A.~Cook and R.~A.~Reckhow.
+\newblock The relative efficiency of propositional proof systems.
+\newblock \emph{Journal of Symbolic Logic} 44(1):36--50, 1979.
+
+\bibitem{DubhashiRanjan98}
+D.~Dubhashi and D.~Ranjan.
+\newblock Balls and bins: a study in negative dependence.
+\newblock \emph{Random Structures \& Algorithms} 13(2):99--124, 1998.
+
+\bibitem{Haken85}
+A.~Haken.
+\newblock The intractability of resolution.
+\newblock \emph{Theoretical Computer Science} 39:297--308, 1985.
+
+\bibitem{JoagDevProschan83}
+K.~Joag-Dev and F.~Proschan.
+\newblock Negative association of random variables, with applications.
+\newblock \emph{The Annals of Statistics} 11(1):286--295, 1983.
+
+\bibitem{Kra19}
+J.~Kraj\'i\v{c}ek.
+\newblock \emph{Proof Complexity}.
+\newblock Encyclopedia of Mathematics and its Applications 170, Cambridge
+University Press, 2019.
+
+\bibitem{Kra26}
+J.~Kraj\'i\v{c}ek.
+\newblock Pseudo-solutions of polynomial systems and the lower bound
+problem for $\AC^0[p]$-Frege systems.
+\newblock arXiv:2609.35927, September 2026.
+
+\bibitem{randomcnf26}
+Super-linear lower bounds for random $3$-CNFs in bounded-depth Frege.
+\newblock arXiv:2403.02275, 2024--2026.
+
+\bibitem{resxor26}
+An exponential lower bound for the bit pigeonhole principle in
+unrestricted dag-like resolution over parities.
+\newblock arXiv:2609.23015, 2026; Lean~4 formalization.
+
+\bibitem{Smolensky87}
+R.~Smolensky.
+\newblock Algebraic methods in the theory of lower bounds for Boolean
+circuit complexity.
+\newblock In \emph{Proceedings of the 19th Annual ACM Symposium on
+Theory of Computing (STOC)}, pages 77--82, 1987.
+
+\end{thebibliography}
+
+\end{document}
