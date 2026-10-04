@@ -1879,3 +1879,70 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   scan order - fixed order is biased.
 - ALL WAVE-1 RESEARCH AGENTS HAVE REPORTED. The deferred single-statement
   consolidation (one current statement of the proved results) is now unblocked.
+- regeneration agent DONE (GUIDANCE item 4, part 2): 14 scripts re-run, ZERO
+  MISMATCH - digit-exact for every deterministic/seeded quantity, drift only
+  inside mandated fast-mode CIs. Source pins landed: SHA-256 + byte counts for
+  2609.35927v2, 2510.08814v2, 2512.11820v5, 2609.23015v1 in bibliography.md.
+  Agent's "missing mixture_cap.md" observation was stale (landed at 77e9456).
+- The deferred single-statement consolidation is unblocked: dispatching the
+  current-results consolidation agent.
+- current_results.md DONE (GUIDANCE item 6 consolidation): 742 lines, 15
+  proved/measured entries with verification status and regime, 7 retractions
+  (one line each + correction pointers), 5 open problems in current form, 10
+  falsification conditions. No source inconsistencies found; four naming
+  collisions disambiguated by citation; one deliberate non-merge flagged
+  (full-class constant vs sharpened certificate form exist as separate
+  statements in the sources). Committed and pushed.
+- GUIDANCE scorecard: items 1, 2, 3, 6 (consolidation + monitoring reduction),
+  7, 8 fully addressed; item 4 (gate) done for lake budget + regeneration +
+  source pins; item 5 partially - labeling discipline recorded and applied,
+  not yet lint-enforced mechanically. The one action outside this corpus's
+  control: expert confirmation of the Definitions 3.1/4.3 reading (the note
+  is ready; sending is the owner's decision).
+
+### 2026-10-04 (cont.) - three agents dispatched per GOAL.md (fresh cycle)
+1. deg5-theory: degree-5 column classes (orbit arithmetic, not echelons),
+   degree-5 star rules, post5, certificate search, Theorem 3''' attempt, and
+   the general-d induction assessment (does Theorem A + monotonicity suffice?)
+   -> docs/deg5_theory.md + experiments/chi_deg5_check.py
+2. cls-cnt: prove or further reduce the two named general-d lemmas (CLS:
+   diagonal variation + no exotic relations; CNT: tight adaptive completion
+   counting) that O5's general-d statement reduces to -> docs/cls_cnt.md
+3. proved-registry: mechanical PROVED enforcement (GUIDANCE item 5, the
+   recorded honest gap) - proved_registry.py + corpus_lint checks 8/9
+   (anchor resolution + label hygiene tripwire)
+- In flight: 3 agents. The standing external dependency is unchanged: expert
+  confirmation of the Definitions 3.1/4.3 reading (note_to_author.md is a
+  question draft; sending is the owner's decision).
+- proved-registry agent DONE: GUIDANCE item 5's mechanical enforcement is in
+  place. proved_registry.py: 15 claims (CR-2.1..CR-2.15), anchors verified
+  15/15 pre-registration; corpus_lint check 8 (60 items: forward anchor+current-
+  results traceability, converse REQUIRED_CLAIMS parity) and check 9 (153
+  statements, heuristic tripwire) both PASS; negative testing fires on broken
+  anchors, title drift, deleted claims, and unlabeled PROVED lines. One
+  deviation surfaced honestly: check 9's "statement position" = enclosing
+  markdown section (the per-line rule false-fired 94x on one-sentence-per-line
+  style), plus the "enumerat" stem addition. Lint PASS. Committed and pushed.
+
+### 2026-10-04 (cont.) - deg5-theory agent: degree-5 slice; all-degrees induction reduces to ONE lemma
+- Deliverables: docs/deg5_theory.md + experiments/chi_deg5_check.py (21 s, ALL
+  PASS). Theorem 3''' [ASSEMBLY, two inherited JDP flags]: cap with q5* = max
+  over the family, SAME boundary d^2 log k = o(n) (cap 0.0816 ALIVE at
+  (4095,5), e=80).
+- Degree-5 classes PROVED: three-class partition holds; six-pattern alias
+  reduction system (x^5 -> x through x^2 y z w -> x y z w), machine-checked at
+  (10,5); counts 125,446,882 fixed-0 + 21,356,390 varying = C(114,5) exactly.
+  BONUS: a sparse degree-<=3 sweep at (10,5) (234,136 columns, 3 s) verifies the
+  partition by sweep at d = 5 - first sweep evidence beyond d <= 3.
+- Theorem B5 star rules PROVED; REL-5 adds one star class. post5 closed form
+  digit-exact at three points; no asymptotic lift; Conjecture NAL stated for
+  all k. Certificate inventory does not grow; the mass chain is now a
+  GENERAL-k proof.
+- THE STRUCTURAL RESULT: the all-degrees induction reduces to exactly ONE
+  missing lemma - SPARSE-d (general-d relation-inventory completeness, i.e.
+  general-d CLS). Theorem A + monotonicity close induction steps (1)-(5) at
+  every degree; step (6) needs SPARSE-d, open at degree >= 4. The cls-cnt
+  agent is working on CLS right now - the two threads interlock.
+- PROCESS SLIP: committed while lint was failing on the in-flight cls-cnt
+  script; fixed immediately (pending entry) and pushed. Same pattern as before:
+  in-flight sibling scripts need the pending mechanism proactively.
