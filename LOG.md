@@ -1793,3 +1793,25 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
 - O5: closed for d <= 3; reduced to Lemma CLS + Lemma CNT at general d.
 - Consolidated: proof_complexity.md ADDENDUM 7; GOAL.md section 6 O5 status;
   lemma_m.md committed and pushed separately (fe505d5).
+
+### 2026-10-04 (cont.) - odd-p-theory agent: O6 alive; T_p refuted (THIRTEENTH correction-class event)
+- Deliverables: docs/odd_p_theory.md + experiments/chi_odd_p_check.py (78 s
+  registered run, ALL PASS, p=2 regressions digit-exact).
+- Channel law PROVED at every p: free rows exactly-locked to sum = 1 (equality
+  axiom); free columns iid uniform (injectivity is an inequality); row queries
+  dead, column queries alive at every p.
+- Certificates: ones -> nonzeros everywhere; NEW self-certification at p > 2
+  (answer not in {0,1} certifies the pair free, 1 query, rate f(p-2)/p);
+  adjacency/Z/wedge/K_j survive with the same proofs; full-scan success exactly
+  1 at every p; zero soundness violations over 11,760 restrictions.
+- Posteriors [PROVED, digit-exact at three points]: every p=2 form transfers by
+  the substitution 1/2 -> 1/p (q_p, post0, q_p^ne0, column posterior, q_and,p,
+  post_p(k) still maximized at k=0).
+- Theorem 3'' analogue PROVED (modulo the two inherited JDP steps): cap at
+  q_p* + P_sc + P_adj + P_K + P_blk + o(1); K_j error dominant term
+  binom(2d, p-1) p^{1-2pd}, EXACTLY ZERO for p >= 2d+1; boundary
+  err* = k^{-Theta(d^2/n)} unchanged.
+- THIRTEENTH correction-class event: p_family.md Proposed T_p REFUTED at every
+  p (phase-1 row scan dead); surviving analogue = K_j column tree. Correction
+  note appended to p_family.md; GOAL.md section 6 O6 status updated.
+- Three instrument corrections recorded in the doc's instrument notes.

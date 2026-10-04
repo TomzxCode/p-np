@@ -192,3 +192,9 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   O5 closes outright for d <= 3 and is reduced to Lemma CLS + Lemma CNT at
   general d. Theorem 3's constant repaired q -> q2* = max(q, q_and_exact);
   the d^2 ~ n boundary is unmoved (proof_complexity.md ADDENDUM 7).
+- O6 status (2026-10-04): ALIVE in the printed regime with the same
+  d^2 log k = o(n) boundary at degree <= 2 (docs/odd_p_theory.md: Theorem 3''
+  analogue both directions). p_family.md's Proposed T_p refuted (row scan dead
+  at every p); the surviving analogue is the K_j column tree, with the new
+  self-certification mechanism (answer not in {0,1} certifies free, 1 query)
+  joining the inventory at p > 2.

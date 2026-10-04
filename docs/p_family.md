@@ -367,3 +367,18 @@ at $p \ne 2$; any odd-$p$ $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ PHP or BPH
 unrestricted level (the odd-$p$ analogue of the TR23-187 / TR25-118 / Braun sequence); any
 verification or refutation of Proposed Theorem $T_p$; any claimed tree achieving error
 $< k^{-O(1)}$ against $\Omega(n,d)$ at any characteristic.
+
+## CORRECTION (2026-10-04, odd-p-theory agent): Proposed Theorem T_p refuted; the
+## surviving odd-p analogue is the K_j column tree
+
+T_p's phase-1 row scan is DEAD at every p: the row axiom is an equality over
+F_p, so designs kill Q_i exactly (answer 0 on all pigeons), exactly as at p=2
+(the file's own ANALYSIS flag anticipated this). The surviving analogue is the
+K_j COLUMN tree: free-hole columns are unconstrained (injectivity is an
+inequality), and its error at odd p is
+sum_{s = 2d+1 mod p} binom(2d, s) p^{2d(s-1)} / p^{(2d+1)(2d-1)},
+dominant term binom(2d, p-1) p^{1-2pd}, and EXACTLY ZERO for p >= 2d+1 (the
+certificate never fails when the die is large relative to the row length).
+Full recompute: docs/odd_p_theory.md (channel law, star rules, self-
+certification mechanism, Theorem 3'' analogue, O6 verdict: ALIVE, boundary
+d^2 log k = o(n) at degree <= 2).
