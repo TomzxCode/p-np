@@ -1009,3 +1009,16 @@ kernel work lives at (6,3)/(outer 31,3) and exact-pipeline work at outer (7,3)
    degree-3 agent replaced it with exact kernel-projection machinery. The
    recorded degree-2 classification verdicts (computed on reduced echelons) are
    unaffected; subsequent kernel work should use the projection machinery.
+
+## ADDENDUM 6 (2026-10-04, err-form-route agent): the route of record is Theorem R
+
+The err-form assembly is now a complete, self-contained conditional proof:
+err_form_route.md Theorem R. Premise (A) = the all-degrees budgeted err-floor
+(= O2; slices proved: degree <= 2 Corollary 3.1, degree <= 3 Theorem 3';
+open: degree >= 4). Regime conditions (B1)/(B2) are printed; the two assembly
+lemmas (ENS padding Lemma P, solution monotonicity Lemma M) are proved in the
+document. Supersedes chi_transfer.md Theorem 4 (constant-direction correction,
+repaired via Lemma P + accuracy tuning). The printed (3) remains false as
+printed and strictly stronger than the route's premise where it holds. Every
+hypothesis of Theorem R maps 1:1 to a corpus open problem; the route's sole
+mathematical premise is O2.

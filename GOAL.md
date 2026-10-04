@@ -123,8 +123,9 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
 - Second front: the odd-p analogue (O6, p_family.md; T_p needs the parity-locked
   recompute).
 - Route note of record: the PRINTED Theorem 6.1(3) is false as printed
-  (chi_transfer.md Theorem 3); the live route is the err-form assembly
-  (chi_transfer.md Theorem 4), whose premise is exactly O2.
+  (chi_transfer.md Theorem 3); the live route is Theorem R of
+  docs/err_form_route.md (the err-form assembly, complete and conditional: sole
+  mathematical premise is O2; supersedes the chi_transfer.md Theorem 4 sketch).
 
 ## 7. Environment constraints (learned, still binding)
 

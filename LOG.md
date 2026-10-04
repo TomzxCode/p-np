@@ -1546,3 +1546,143 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   total. Queued: williams_ladder, deg3_theory, chi_transfer (dead briefs) +
   kernel_structure, and_chain, thmT_verify, thmB_stress, algebraic_rung, README
   (wave-2 remainder).
+
+### 2026-10-04 (cont.) - git established; clues.md converted
+- Discovered the corpus repo already existed (origin = github.com/TomzxCode/p-np,
+  initial commit 8d1869b pushed); amended my mislabeled second commit's message
+  (unpushed) and pushed: LaTeX wave-1 conversions + GOAL.md commit-push
+  instructions + checker .git exclusion.
+- clues.md conversion DONE: 104 spans, all 5 needles verbatim, PASS. Committed and
+  pushed (staging only clues.md - p_family and magnification_gap agents still
+  in flight; their files stay unstaged until they finish and pass the gate).
+- Standing practice now in force per GOAL.md: verify_corpus PASS -> commit with a
+  descriptive message -> push, after every consolidated turn.
+- magnification_gap.md conversion DONE: PASS (398 checks), needles verbatim,
+  verbatim quotations untouched. Committed and pushed (single-file staging).
+- p_family.md conversion DONE: 324 spans, PASS (run twice), 369 lines unchanged,
+  all 6 'characteristic-uniform' occurrences intact; agent self-caught a missing
+  closing delimiter pre-verification. Committed and pushed (single-file staging).
+- Wave 2 continued (5 dispatched, one agent per file): williams_ladder (retry),
+  deg3_theory (retry), chi_transfer (retry), kernel_structure, and_chain. Running
+  total: 8 conversion agents. Still queued: thmT_verify, thmB_stress,
+  algebraic_rung, README. GOAL.md check-count refreshed (~398).
+- cert_floor retry died on rate limit at 8 concurrent (the recorded threshold).
+  Re-queued (top of queue). Holding all dispatches until the running count
+  drains below 7. Running: open_problems, deg2_theory, williams_ladder,
+  deg3_theory, chi_transfer, kernel_structure, and_chain. Queue: cert_floor,
+  thmT_verify, thmB_stress, algebraic_rung, README.
+- and_chain died on rate limit. Re-queued behind cert_floor. Running: 6
+  (open_problems, deg2_theory, williams_ladder, deg3_theory, chi_transfer,
+  kernel_structure). Queue order: cert_floor, and_chain, thmT_verify,
+  thmB_stress, algebraic_rung, README. Next dispatch on the next completion.
+- open_problems died on rate limit (third casualty in this window; the limiter is
+  hot even at 5-6 concurrent). Re-queued. Holding ALL redispatches until the
+  running set drains to <= 3 or a completion arrives. Running: 5 (deg2_theory,
+  williams_ladder, deg3_theory, chi_transfer, kernel_structure). Queue order:
+  cert_floor, open_problems, and_chain, thmT_verify, thmB_stress,
+  algebraic_rung, README.
+- williams_ladder retry died (4th casualty this window). The limiter is biting at
+  every concurrency level - possibly an account-wide quota window. Hard hold:
+  no dispatches until the running set (deg2_theory, deg3_theory, chi_transfer,
+  kernel_structure) drains further; then ONE at a time. Queue order:
+  cert_floor, open_problems, and_chain, williams_ladder, thmT_verify,
+  thmB_stress, algebraic_rung, README.
+- kernel_structure died on rate limit (queued). deg2_theory "completed" SILENTLY
+  with ZERO conversions (file untouched; checker PASS unchanged) - re-queued with
+  an explicit no-silent-completion instruction added to the brief template going
+  forward. cert_floor (3rd attempt) dispatched at low concurrency (2 running).
+  Queue: deg2_theory, open_problems, and_chain, williams_ladder, kernel_structure,
+  thmT_verify, thmB_stress, algebraic_rung, README.
+- deg3_theory.md conversion DONE: PASS (398 checks), post3/star-sum/alias forms in
+  LaTeX, registered-run output kept ASCII, delimiter balance verified. Committed
+  and pushed (single-file staging).
+- chi_transfer.md conversion DONE: PASS (398 checks), including the quoted
+  arXiv passages and the displayed tagged equations (Sec 5 (2), Theorem 6.1 (3));
+  markdown-table cells use |lvert...rvert to protect the table. 497-line structure
+  preserved. Committed and pushed (single-file staging).
+- cert_floor.md conversion DONE (3rd attempt): ~120 expressions across 30 edits;
+  found and repaired an unbalanced \$-span left by the rate-limit-killed earlier
+  attempt (lesson: killed conversion attempts can half-write - conversion agents
+  must scan for pre-existing damage; this one did). Theorem F needle line kept
+  ASCII. PASS (398). Committed and pushed.
+- cert_floor.md conversion DONE (committed/pushed ca60ebe): ~120 expressions; the
+  agent also repaired an unbalanced span left by the rate-limit-killed earlier
+  attempt (lesson recorded: killed conversion attempts can half-write; scan for
+  pre-existing damage).
+- Dispatched next two queue items: deg2_theory (redo after the silent no-op) and
+  open_problems (retry). Queue remainder: and_chain, williams_ladder,
+  kernel_structure, thmT_verify, thmB_stress, algebraic_rung, README.
+- open_problems.md conversion DONE: the prior rate-limit-killed attempt had
+  already converted ~340 spans before dying (second confirmed half-write case);
+  this pass added the final 6 (arrow tokens, delta-cap, Q-shift). PASS (398).
+  Committed and pushed. Queue lesson now firm: after a rate-limit death, the
+  file may be MOSTLY converted - dispatch a completion-sweep agent, not a
+  from-scratch conversion.
+- and_chain.md conversion DONE: 45 spans, PASS (398); tables/calibration output
+  and measured decimals kept ASCII. Committed and pushed.
+- williams_ladder.md conversion DONE: 39 sites (the prior dead attempt had
+  converted lines 8-45 and died cleanly; the sweep completed 46-145). All four
+  needles verbatim; verbatim ToC quotes untouched. PASS (398). Committed and
+  pushed.
+- deg2_theory.md conversion DONE (redo after the silent no-op): 462 spans, every
+  line even-delimitered, PASS (398). Committed and pushed.
+- Owner directive: move the instruction log out of GOAL.md. Executed: created
+  instruction_log.md (verbatim, dated; also backfills the elan-move, lean-library
+  question, directory-reorganization, and 1-agent-per-file directives that came
+  after GOAL.md was compiled); GOAL.md section 8 is now a pointer; the header
+  maintenance rule now names both files.
+- thmT_verify.md conversion DONE: 42 spans, PASS (401 checks - count grew with
+  instruction_log.md now scanned). Tables/registered-run blocks ASCII; needles
+  verbatim. The grep -c '$' false-positive lesson recorded (use grep -Fc).
+  Committed and pushed.
+- kernel_structure.md conversion DONE: 53 edits (~90 expressions), all 9 sections;
+  the prior dead attempt had converted only the preamble; no unbalanced spans.
+  PASS (401). Committed and pushed.
+- thmB_stress.md conversion DONE: 203 units (23 regions), PASS (401); the three
+  result tables and the quoted script-output column name kept ASCII. Committed
+  and pushed.
+- algebraic_rung.md conversion DONE: 29 expressions, PASS (401); the agent
+  correctly located the 2^65/2^2079 needles in proof_complexity.md (not this
+  file) and confirmed the pinned needle sentence intact. Committed and pushed.
+- Owner: "Continue research work, don't just wait on the tex-ifying." Dispatched
+  3 research agents on the open core:
+  1. deg4-theory: degree-4 kernel classification, alias classes, star sum rules,
+     exact post4, new-certificate search, cap extension (the O2 main event)
+     -> docs/deg4_theory.md + experiments/chi_deg4_check.py
+  2. mixture-cap: GAP B' - exhaustive enumeration of the PRINTED degree-2 class
+     (F_2 mixtures) max per-hit posterior; does Theorem 3's cap survive as-is
+     or with a repaired constant -> docs/mixture_cap.md + experiments/chi_mixture_cap.py
+  3. err-form-route: complete, self-contained proof of the err-form assembly
+     (chi_transfer Theorem 4), every printed hypothesis surfaced as an explicit
+     conditional -> docs/err_form_route.md
+- Concurrent with the README conversion agent (1). Total 4 in flight.
+- README.md conversion DONE: 60 spans, all 17 verify needles verified intact (the
+  agent read the checker's tables directly rather than trusting the brief's
+  partial list - correct behavior). PASS (401). Committed and pushed.
+- LATEX CONVERSION CAMPAIGN COMPLETE: 20 files converted, one agent per file,
+  every file verify-first committed and pushed. Working records (proof_complexity
+  correction blocks, LOG.md, monitors, Mermaid labels) stay ASCII per convention.
+  Research agents (deg4-theory, mixture-cap, err-form-route) remain in flight.
+
+### 2026-10-04 (cont.) - err-form-route agent: Theorem R (the route of record)
+- Deliverable: docs/err_form_route.md (730 lines, 31 quote anchors re-verified
+  against a fresh byte-identical fetch of arXiv:2609.35927v2).
+- Theorem R: complete conditional proof - premise (A) the all-degrees budgeted
+  err-floor; regime (B1) k >= n^3/2, (B2) 2 <= d0 <= n/2 (both printed);
+  conclusion quoted verbatim from Theorem 6.1. Proof chain: Theorem 2.2 at
+  accuracy h* -> Lemma P (ENS padding) -> Theorem 3.2 denial -> Def 3.1
+  conditions 1-2 (via Theorem 4.1 + Cor 4.2) -> condition 3 via (A) + Lemma 4.4
+  -> Lemma M (monotonicity) -> contradiction.
+- ELEVENTH correction-class event: [CORRECTION] to chi_transfer.md Theorem 4 -
+  the gamma/S^{-1} constant direction was wrong and the S' matching unprinted;
+  repaired by Lemma P padding + h* tuning (route closes unconditionally for
+  every fixed C). Plus a [REFINEMENT]: Def 3.1 condition 2 via unrestricted
+  closure (printed Thm 4.1(2)), not the unprinted multiplication closure.
+- Reconciliation: printed (3) implies the route premise but not conversely
+  (defect unbounded); the trivial row-sum tree falsifies (3) universally at
+  growing d and kills the paper's Omega(1) hope at k = 2^{n^delta} for all
+  delta > 0 in the printed regime.
+- Checklist maps 1:1: (A) = O2 (degree-2/3 slices proved; degree >= 4 open =
+  O2(i)); O2(iii) moot for the route; assembly lemmas proved, not hypotheses.
+- Consolidated: chi_transfer.md correction note; proof_complexity.md ADDENDUM 6;
+  (GOAL.md section 6 route pointer next).

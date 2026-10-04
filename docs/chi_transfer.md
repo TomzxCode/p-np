@@ -495,3 +495,18 @@ Corollary 3.1 and the full degree-$d_0$ quantifier remaining O2's open core (i).
 The paper's closing hope that (3) holds with $\Omega(1)$ appears to overlook the
 determined-query/padding collapse; a note to the author along the lines of
 note_to_author.md's discipline is the natural follow-up.
+
+## CORRECTION (2026-10-04, err-form-route agent): Theorem 4's constant matching
+
+Theorem 4 above ("gamma = k^{-C} with C large enough that gamma >= S^{-1}") has
+the constant direction wrong, and matching to Theorem 3.2's threshold S'^{-1}
+would need an unprinted lower bound on S'. The corrected assembly is Theorem R
+of err_form_route.md: pad the extension-polynomial count up to
+S^* = k^{c_S + C} (Lemma P, proved there) and re-run Theorem 2.2 at accuracy
+h^* tuned to S^* (Theorem 2.2 takes any h >= 1). The route then closes
+unconditionally for every fixed C. Theorem 4's structure and quantity (P2) are
+unchanged; only the constant bookkeeping is superseded. A REFINEMENT also
+landed: Def 3.1 condition 2 is proved via (fg)^rho in V(n,d0)^rho (unrestricted
+closure, printed Theorem 4.1(2)), not via closure of V(n,d)^rho under
+multiplication (not printed). Use err_form_route.md Theorem R as the route of
+record.
