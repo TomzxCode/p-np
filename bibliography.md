@@ -110,9 +110,11 @@ this file should update the `correct-as-of` date per entry.
 
 - [L] Joag-Dev and Proschan (1983), Annals of Statistics 11(1):286-295 - negative
   association. Used in: proof_complexity.md (Lemma B.1), paper/.
-- [L] Dubhashi and Ranjan (1998), Random Structures and Algorithms 13(2):99-124 -
-  negative association (venue corrected from an earlier note's "Algorithmica").
-  Used in: proof_complexity.md, paper/.
+- [DROPPED] Dubhashi and Ranjan (1998), Random Structures and Algorithms
+  13(2):99-124 - DROPPED 2026-10-04 (jdp_demod.md): the full text contains no
+  without-replacement content, so the corpus's citation was mis-anchored; the
+  affected steps are discharged elementarily in Lemma D1/D3
+  (proof_complexity.md ADDENDUM 8). Kept here for the record.
 - [L] Cook-Reckhow (1979) - proof-system polynomial boundedness iff NP = coNP.
   [L] Baker-Gill-Solovay (1975) - relativization. [L] Razborov-Rudich (1997) -
   natural proofs. [L] Aaronson-Wigderson (2008) - algebrization. [L] Tardos

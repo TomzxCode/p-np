@@ -1815,3 +1815,24 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   p (phase-1 row scan dead); surviving analogue = K_j column tree. Correction
   note appended to p_family.md; GOAL.md section 6 O6 status updated.
 - Three instrument corrections recorded in the doc's instrument notes.
+
+### 2026-10-04 (cont.) - jdp-demod agent: FOURTEENTH correction-class event; GAP D closed
+- Deliverable: docs/jdp_demod.md (622 lines; 12 citation sites audited + 5
+  verified clean; exact-Fraction verification reproducing thmB_stress values
+  digit-for-digit).
+- GAP D DISCHARGED: Theorem 3's modulo-JDP flags killed by Lemma D1 (four-line
+  atom-conditioning proof of the depletion bound); adjacency rate justified
+  (D2); inclusion-family NA proved elementarily (D3). Zero black-box citations
+  remain in Theorem 3's proof.
+- [CORRECTION] Lemma B.1 step (2): the pair-product family {P_i H_j} is NOT NA
+  (exact counterexample Cov = +19/1008 at (8,1), full enumeration of
+  1,693,440 outcomes). Statement stands (disjoint-pair reading, verified
+  35/35); proof re-based on D1/D3; the written NA claim retracted.
+- [CITATION CORRECTION] Dubhashi-Ranjan dropped (mis-anchored; no
+  without-replacement content). JDP internal theorem numbers UNVERIFIED
+  (paywalled; nothing rests on them).
+- Sharpenings: distant-evidence "depresses" -> "capped at f_e"; printed P_K
+  constant Theta(1)-optimistic (shape unaffected); Theorem 3' flag discharged;
+  deep-zero-run residue stays OPEN (deg3 item 3).
+- Consolidated: proof_complexity.md ADDENDUM 8; bibliography.md [DROPPED] entry;
+  GOAL.md section 6 GAP D closed.

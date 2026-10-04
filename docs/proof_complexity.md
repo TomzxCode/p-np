@@ -1062,3 +1062,36 @@ constant repair are PROVED (exact support enumeration over the full kernel
 coset, 1442 alias-aware block-free windows, zero violations, at the
 kernel-classified points (4,2)/(6,3)); the general-d reduction is INFERRED
 pending Lemma CLS/CNT.
+
+## ADDENDUM 8 (2026-10-04, jdp-demod agent; adjudicated: the FOURTEENTH correction-class
+## event - Lemma B.1's step (2) NA instance is FALSE; the proof is re-based
+## elementarily)
+
+jdp_demod.md audited every NA/JDP citation in Theorem 3's orbit (12 sites +
+5 verified clean) and discharged them all by route (b): elementary proofs, no
+black-box citations.
+
+1. LEMMA D1 (atom conditioning): the depletion bound Pr[p in F | E] <= f_e is
+   proved in four lines from the status-atom factorization - no NA needed.
+   This kills both modulo-JDP flags in Theorem 3.
+2. LEMMA D2 (own-coordinate conditioning): the adjacency rate
+   q(2d-1)/(2(n-1)) justified with explicit pool-perturbation constants.
+3. LEMMA D3: the inclusion families {P_i}, {H_j} and their union are NA,
+   proved elementarily (count reduction + monotone couplings + Chebyshev
+   iid-swap) - Lemma B.1's step (1) citations become decorative.
+4. [CORRECTION] Lemma B.1's step (2) is a FALSE INSTANCE: the pair-product
+   family {P_i H_j} is NOT negatively associated - exact counterexample
+   Cov = +19/1008 at in-regime (8,1), enumerated over all 1,693,440 outcomes.
+   The corpus's Reading B falsification (thmB_stress.md) is the numerical
+   shadow of the same fact. Lemma B.1's repaired (disjoint-pair) statement
+   stands - verified 35/35 numerically - but its proof is RE-BASED on Lemma D1
+   (+ D3): the written step (2) NA claim is retracted.
+5. [CITATION CORRECTION] Dubhashi-Ranjan (1998) contains no without-replacement
+   content (full text fetched); the anchor is dropped from the corpus's
+   citations. JDP's internal theorem numbers are UNVERIFIED (paywalled);
+   nothing mathematical rests on them.
+6. Sharpenings: Theorem 3's "distant evidence only depresses" becomes "capped
+   at the depleted base rate f_e" (exact depression fails); the printed P_K
+   exponential constant is Theta(1)-optimistic vs the honest union form (cap
+   shape unaffected). Theorem 3' discharges its distant-evidence flag; the
+   deep-zero-run multi-class residue stays OPEN (pre-existing, deg3 item 3).

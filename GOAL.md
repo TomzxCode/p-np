@@ -198,3 +198,8 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   at every p); the surviving analogue is the K_j column tree, with the new
   self-certification mechanism (answer not in {0,1} certifies free, 1 query)
   joining the inventory at p > 2.
+- GAP D CLOSED (2026-10-04): Theorem 3's NA citations discharged elementarily
+  (Lemmas D1/D2/D3, docs/jdp_demod.md). Lemma B.1's proof re-based on D1/D3;
+  its step (2) NA instance retracted as FALSE (exact counterexample). The
+  Dubhashi-Ranjan anchor dropped (mis-anchored). Fourteenth correction-class
+  event (proof_complexity.md ADDENDUM 8).
