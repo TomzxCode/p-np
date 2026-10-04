@@ -231,3 +231,7 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   F_2 mixtures covered only at d=2. Plus: boundary constant (d^2 = Theta(n)),
   e = Theta(n) regime, Conjecture E5. Theorem 3'/3''/3''' survive verbatim at
   their degrees.
+- MIXTURE-d status (2026-10-04): CLOSED at d <= 3 (Theorem M3-D,
+  docs/mixture3.md; same boundary; self-exclusion extends verbatim). Open at
+  d >= 4. Instrument notes: wedge soundness (Lemma S3's distinct-hole-cells
+  condition is load-bearing); chi_mixture_cap.py vh-role caveat in MEMORY.md.

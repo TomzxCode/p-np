@@ -1997,3 +1997,34 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   dangling reference from lemma_m.md's correction note (the inventory
   enlargement was previously recorded only in lemma_m's tail and this LOG).
 - Committed and pushed (all_degrees.md + ADDENDUM 11 + GOAL + LOG).
+- Two agents dispatched on the named open gaps (GOAL section 6):
+  1. inv3: INV-d at t=3 - the single mathematical gap in the all-degrees
+     induction. Formalize INV(3), prove/disprove at general d via a structural
+     S-polynomial case analysis over the five-family inventory, machine-verify
+     at (4,2)/(6,3)/(8,3) -> docs/inv3.md + experiments/chi_inv3_check.py
+  2. mixture3: MIXTURE-d at d=3 - does Theorem M-A's self-exclusion extend to
+     degree-3 mixtures; exact posterior max over the degree-<=3 printed class;
+     repaired cap or characterized gap -> docs/mixture3.md +
+     experiments/chi_mixture3.py
+- In flight: 2 agents. Everything else in the corpus is consolidated, gated,
+  and pushed.
+- inv3 agent #1 ended SILENTLY with no deliverables (true no-op; no rate-limit
+  error). Re-dispatched with the explicit no-silence requirement (final message
+  must state deliverable paths or the exact blocker; partial work acceptable to
+  report). Running: mixture3, inv3 (retry).
+
+### 2026-10-04 (cont.) - mixture3 agent: MIXTURE-d closed at d <= 3
+- Deliverables: docs/mixture3.md + experiments/chi_mixture3.py (registered,
+  deterministic, reruns byte-identical) + MEMORY.md (vh-role caveat in
+  chi_mixture_cap.py; headline d=2 results unaffected).
+- Theorem M3-D: Theorem 3' repaired over the FULL printed degree-3 class;
+  constant q3*_mix > q3* finite-n only (decaying to ratio 1.000000 by
+  (1023,3)); SAME aliveness condition. Self-exclusion extends verbatim; no new
+  single-query certificates (0/1474); mixture-Z folds at equal budget.
+- Structural finding: the support-4 per-rho law {0, 1/2} breaks at degree 3
+  (completed degree-3 star with determined RHS) - pinning why the analysis
+  truncates at support <= 3.
+- Soundness instrument note: naive wedge phrasing unsound; Lemma S3's distinct-
+  hole-cells condition is load-bearing (corpus form already correct).
+- MIXTURE-d: closed at d <= 3, open at d >= 4. ADDENDUM 12 appended to
+  proof_complexity.md; GOAL section 6 updated.

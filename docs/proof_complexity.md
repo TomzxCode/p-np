@@ -1172,3 +1172,22 @@ section existed; it is created here to resolve that reference.)
    (iii) the boundary constant at d^2 = Theta(n); (iv) e = Theta(n). See
    docs/all_degrees.md (Theorem 3-gen, Section 5.3 falsification conditions,
    including the minimal-codeword probe for V-bar at (4,2)/(6,3)).
+
+## ADDENDUM 12 (2026-10-04, mixture3 agent): MIXTURE-d CLOSED at d <= 3
+
+Theorem M3-D repairs Theorem 3' over the FULL printed degree-3 class
+(arbitrary F_2 mixtures of degree-<=3 monomials and variables): constant
+q3*_mix > q3* (finite-n only: +0.0169 at (15,3), +0.0048 at (31,3),
++5.2e-5 at (63,3), ratio 1.000000 by (1023,3)), SAME aliveness condition
+d^2 log k = o(n). The d=2 self-exclusion argument (Theorem M-A) extends
+verbatim: every term through the output pair has it as a factor; a killed
+factor zeroes the restricted product regardless of design. No new
+single-query certificates (0/1474, Theorem M3-B); mixture-Z folds at equal
+budget (M3-E). MIXTURE-d remains open at d >= 4. Supporting findings: the
+degree-3 support-4 per-rho law {0, 1/2} breaks for the first time at support
+4 (completed degree-3 star with determined RHS) - pinning the support-<=3
+truncation; and a SOUNDNESS INSTRUMENT NOTE: the naive "two triples sharing a
+pigeon" wedge phrasing is unsound - the corpus wedge (Lemma S3) correctly
+requires the shared pigeon in distinct hole cells. A slot-alignment caveat in
+chi_mixture_cap.py's virtual vh roles is recorded in MEMORY.md (headline d=2
+results unaffected; chi_mixture3.py reimplements the roles correctly).
