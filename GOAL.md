@@ -2,8 +2,9 @@
 
 This file compiles every standing instruction the corpus owner has given. It is
 the resume-point for any future session: read it, then README.md, then LOG.md's
-tail. Maintenance: when the owner issues a new standing instruction, append it
-here (dated) and note the change in LOG.md.
+tail. Maintenance: when the owner issues a new standing instruction, update the
+relevant section here, append the verbatim entry to instruction_log.md, and
+note the change in LOG.md.
 
 ## 1. The objective
 
@@ -65,7 +66,8 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
 - LOG.md: timestamped audit trail, append-only, orchestrator-only. Every
   dispatch, finding, correction, screen, and incident gets an entry.
 - verify_corpus.py (corpus root) is the machine gate: run it before declaring
-  any turn's consolidation complete; it must PASS (currently 393 checks).
+  any turn's consolidation complete; it must PASS (the count grows with the
+  corpus; ~398 checks as of 2026-10-04).
 - Deliverables of record and their homes:
   * Route maps (docs/): williams_ladder.md, magnification_gap.md,
     algebraic_rung.md, proof_complexity.md (correction blocks and ADDENDA are
@@ -134,25 +136,9 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
 - Provider rate limits bite above ~8 concurrent agents; queue, probe, drain.
 - Prefer /tmp/opencode for external temp files.
 
-## 8. Owner instruction log (verbatim, dated)
+## 8. Owner instruction log
 
-- 2026-10-03: "Prove or disprove P != NP." (objective, repeated as the standing
-  continuation directive each cycle).
-- 2026-10-03: "Reset the continuation budget and set an infinite one. Then
-  continue working on the problem. Use as many agents as possible to work on
-  parts of the problem in parallel."
-- 2026-10-03: "Stop thinking and distribute the work among subagents."
-- 2026-10-03: "You should be running more parallel agents."
-- 2026-10-04: "Generate a diagram of the theorems/proofs you've identified and
-  what they build on and where there are currently gaps."
-- 2026-10-04: "Those should be in mermaid blocks."
-- 2026-10-04: "Create a file tracking all relevant bibliography."
-- 2026-10-04: "Take all the instructions I gave and turn them into a GOAL.md
-  file." (this file)
-- 2026-10-04: "You can use the $math$ syntax in markdown files to use latex
-  expressions." (adopted: LaTeX math in presentation documents; ASCII stays in
-  Mermaid labels and LOG entries)
-- 2026-10-04: "Add instructions to commit and push whenever relevant." (adopted:
-  GOAL.md section 4 - verify then commit with a descriptive message and push
-  after every consolidated turn; append-only history; toolchain artifacts
-  gitignored)
+Moved to instruction_log.md (corpus root) on 2026-10-04. That file holds the
+verbatim, dated history of every owner instruction; this file holds the
+compiled, normative version. New instructions: update the section above,
+append the verbatim entry there.
