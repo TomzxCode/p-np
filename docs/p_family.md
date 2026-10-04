@@ -1,14 +1,14 @@
 # The p > 2 map: AC0[p]-Frege and Res(lin_p) beyond characteristic 2 (mapped 2026-10-03)
 
-Purpose: map the known state of AC0[p]-Frege and Res(lin_p)-type systems for p != 2, the
-pigeonhole lower-bound landscape per characteristic, and whether the corpus's p = 2
+Purpose: map the known state of AC0[p]-Frege and $\mathrm{Res}(\mathrm{lin}_p)$-type systems for $p \ne 2$, the
+pigeonhole lower-bound landscape per characteristic, and whether the corpus's $p = 2$
 certification phenomenon (the Krajicek chi-task pipeline of arXiv:2609.35927, see
-`proof_complexity.md` and `two_phase_tree.md`) has a p > 2 analogue worth formalizing as
+`proof_complexity.md` and `two_phase_tree.md`) has a $p > 2$ analogue worth formalizing as
 Open Problem O6. Method: websearch + webfetch of primary sources (arXiv abstracts and
 HTML full texts, ECCC reports, LIPIcs/Springer pages) on 2026-10-03; the full HTML text
 of arXiv:2609.35927v2 was read for question 3. No corpus files were edited; LOG.md was
 not touched. Everything below is literature mapping except where marked ANALYSIS (the
-p > 2 channel derivations in section 4, which extend this corpus's proved p = 2 results
+$p > 2$ channel derivations in section 4, which extend this corpus's proved $p = 2$ results
 and are flagged as not yet computationally verified).
 
 ## 1. Q1: AC0[p]-Frege lower bounds: the strongest known statements, per characteristic (2026-10-03)
@@ -17,7 +17,7 @@ The headline fact is characteristic-uniform: for the FULL AC0[p]-Frege system th
 super-polynomial lower bound on any explicit tautology family, for ANY prime p, tree-like
 or DAG-like. Krajicek states the problem for a fixed arbitrary prime p and calls it a
 problem that "runs through proof complexity over thirty years" (arXiv:2609.35927v2,
-Introduction, https://arxiv.org/html/2609.35927v2). At p = 2 the same status is stated in
+Introduction, https://arxiv.org/html/2609.35927v2). At $p = 2$ the same status is stated in
 Garlik-Kolodziejczyk, "Some subsystems of constant-depth Frege with parity" (Ann. Pure
 Appl. Logic, 2018; PDF: https://www.mimuw.edu.pl/~lak/jansparity.pdf, slides:
 https://www.dcs.warwick.ac.uk/~igorcarb/events/oxford-complexity-day/slides/Michal.pdf):
@@ -28,36 +28,36 @@ objective is a superpolynomial lower bound for ordinary PHP in every fixed-depth
 AC0[p]-Frege system. That objective remains open" (scope note of arXiv:2609.23015,
 whitepaper: https://raw.githubusercontent.com/kbr-/math-research/3979e0cc0a75dde9b845df7ec8869d033dfcd8d4/publications/bit-php-resolution-over-parities/whitepaper.pdf).
 
-Known lower bounds BELOW the full system (the subsystem ladder, all at p = 2 unless noted):
+Known lower bounds BELOW the full system (the subsystem ladder, all at $p = 2$ unless noted):
 
 - AC0-Frege plus counting AXIOMS: exponential lower bounds for PHP in AC0-Frege with
-  parity (Count_2) axioms, Beame-Riis, "More on the relative strength of counting
+  parity ($\mathrm{Count}_2$) axioms, Beame-Riis, "More on the relative strength of counting
   principles", DIMACS Series 39 (1997/98) 13-35, doi 10.1090/dimacs/039/02 (as cited for
-  this exact statement by Garlik-Kolodziejczyk 2018); Count_q independence from Count_p
+  this exact statement by Garlik-Kolodziejczyk 2018); $\mathrm{Count}_q$ independence from $\mathrm{Count}_p$
   for distinct primes by polynomial-size constant-depth Frege proofs, Ajtai, STOC 1994,
   doi 10.1145/195058.195207, with the exponential versions and the composite-q extension
   in Beame-Impagliazzo-Krajicek-Pitassi-Pudlak, "Lower bounds on Hilbert's Nullstellensatz
   and propositional proofs", Proc. LMS (3) 73 (1996) 1-26 (referred from the bibliography
-  of arXiv:2609.35927, ref [2]). Generalizing to every characteristic p: counting mod q
-  for gcd(p, q) = 1 is hard in the mod-p-axioms subsystem, so this rung has known bounds
-  at EVERY p, but always for the wrong-principle (axiom) version, not for gates.
-- Krajicek's PK_d^c(MOD_p)-type systems (p = 2): exponential lower bounds for PHP in
-  tree-like PK^c_d(+) and for Count_3 in dag-like PK^c_d(+) (Krajicek 1997, "Lower bounds
+  of arXiv:2609.35927, ref [2]). Generalizing to every characteristic $p$: counting mod $q$
+  for $\gcd(p, q) = 1$ is hard in the mod-p-axioms subsystem, so this rung has known bounds
+  at EVERY $p$, but always for the wrong-principle (axiom) version, not for gates.
+- Krajicek's $\mathrm{PK}^c_d(\mathrm{MOD}_p)$-type systems ($p = 2$): exponential lower bounds for PHP in
+  tree-like $\mathrm{PK}^c_d(+)$ and for $\mathrm{Count}_3$ in dag-like $\mathrm{PK}^c_d(+) (Krajicek 1997, "Lower bounds
   for a proof system with an exponential speed-up over constant-depth Frege systems and
   over polynomial calculus", STACS 1997, doi 10.1007/bfb0029951; as summarized in
   Garlik-Kolodziejczyk 2018). Garlik-Kolodziejczyk then SEPARATED these subsystems from
-  the full system: dag-like PK^O(1)_O(1)(+) is superpolynomially weaker than AC0[2]-Frege
+  the full system: dag-like $\mathrm{PK}^{O(1)}_{O(1)}(+)$ is superpolynomially weaker than AC0[2]-Frege
   on De Morgan formulas (adapting Impagliazzo-Segerlind, "Counting axioms do not
   polynomially simulate counting gates", FOCS 2001, doi 10.1109/sfcs.2001.959894), and
-  tree-like PK^O(1)_O(1)(+) is quasipolynomially but not polynomially equivalent to
+  tree-like $\mathrm{PK}^{O(1)}_{O(1)}(+)$ is quasipolynomially but not polynomially equivalent to
   AC0-Frege with parity axioms; their open problem: a superquasipolynomial separation
   between AC0[2]-Frege and a subsystem containing AC0-Frege with parity axioms on
   parity-free formulas (Garlik-Kolodziejczyk 2018). So the entire known ladder sits
   strictly below AC0[2]-Frege.
 - Conditional tree-like bounds with modular connectives: exponential lower bounds for
-  tree-like PK*[r] with constant-depth cuts, under plausible ACC0[r] circuit hardness
-  assumptions, with PHP-based hard families, and the note that size-s constant-depth
-  PK*[r] proofs of PHP(f) imply size-s ACC0[r]-Frege proofs of PHP; Maciel-Nguyen-Pitassi,
+  tree-like $\mathrm{PK}^*[r]$ with constant-depth cuts, under plausible ACC0[r] circuit hardness
+  assumptions, with PHP-based hard families, and the note that size-$s$ constant-depth
+  $\mathrm{PK}^*[r]$ proofs of $\mathrm{PHP}(f)$ imply size-$s$ ACC0[r]-Frege proofs of PHP; Maciel-Nguyen-Pitassi,
   "Lifting lower bounds for tree-like proofs", Computational Complexity 23 (2013) 585-636,
   doi 10.1007/s00037-013-0064-x (conditional separation between different moduli included).
   This is the strongest tree-like-with-modular-connectives statement known, and it is
@@ -74,33 +74,33 @@ Known lower bounds BELOW the full system (the subsystem ladder, all at p = 2 unl
   bound on an explicit family, and the abstract is stated for AC0[p]-Frege without
   restricting p.
 
-Frontier summary per p (verified 2026-10-03): identical at every prime p. No lower bound
+Frontier summary per $p$ (verified 2026-10-03): identical at every prime $p$. No lower bound
 of any super-polynomial strength is known for the full system at any characteristic, nor
-any exponential bound even tree-like; the canonical hard candidate is PHP at every p; the
+any exponential bound even tree-like; the canonical hard candidate is PHP at every $p$; the
 pseudo-solution reduction (Krajicek Proc. AMS 152(11) 2024, pp. 4881-4892, and
 arXiv:2609.35927) is the only live programmatic route and is characteristic-uniform (see
-section 3). The 2026 Res(+) breakthrough does not lift: "For nested extension axioms, as
+section 3). The 2026 $\mathrm{Res}(+)$ breakthrough does not lift: "For nested extension axioms, as
 they arise from AC0[p]-Frege proofs, we know of no corresponding removal step", and "the
 AC0[p]-Frege lower-bound problem remains open" (arXiv:2609.23015, HTML v2,
-https://arxiv.org/abs/2609.23015). Reading: the odd-p case of the full problem has
-received strictly less attention than p = 2 but is exactly as open, and no structural
-obstruction peculiar to odd p appears anywhere in the literature mapped here.
+https://arxiv.org/abs/2609.23015). Reading: the odd-$p$ case of the full problem has
+received strictly less attention than $p = 2$ but is exactly as open, and no structural
+obstruction peculiar to odd $p$ appears anywhere in the literature mapped here.
 
 ## 2. Q2: Res(lin_p): known lower bounds by characteristic, and the PHP/BPHP status (2026-10-03)
 
-Definitions and lineage. Res(lin_R) operates with disjunctions of linear equations over a
-ring R with Boolean variables: introduced over Z by Raz-Tzameret 2008 ("Resolution over
+Definitions and lineage. $\mathrm{Res}(\mathrm{lin}_R)$ operates with disjunctions of linear equations over a
+ring $R$ with Boolean variables: introduced over $\mathbb{Z}$ by Raz-Tzameret 2008 ("Resolution over
 linear equations and multilinear proofs",
 https://www.sciencedirect.com/science/article/pii/S0168007208000614); its characteristic-
-two version Res(+) (clauses of affine equations over F_2) by Itsykson-Sokolov ("Resolution
+two version $\mathrm{Res}(+)$ (clauses of affine equations over $\mathbb{F}_2$) by Itsykson-Sokolov ("Resolution
 over linear equations modulo two", Ann. Pure Appl. Logic 171(1), 2020, doi
 10.1016/j.apal.2019.102722; earlier version "Lower bounds for splittings by linear
 combinations", https://logic.pdmi.ras.ru/~dmitrits/papers/splitting.pdf); the general
 ring/field theory by Part-Tzameret ("Resolution with Counting: Dag-Like Lower Bounds and
 Different Moduli", ECCC TR18-117, ITCS 2020, Computational Complexity 30:8, 2021, doi
-10.1007/s00037-020-00202-x, arXiv:1806.09383). Res(+) sits immediately below AC0[2]-Frege
-on the corpus's ladder; Res(lin_Fp) is its analogue at characteristic p, and no
-super-polynomial lower bound for unrestricted DAG-like Res(lin_R) over any FINITE field
+10.1007/s00037-020-00202-x, arXiv:1806.09383). $\mathrm{Res}(+)$ sits immediately below AC0[2]-Frege
+on the corpus's ladder; $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ is its analogue at characteristic $p$, and no
+super-polynomial lower bound for unrestricted DAG-like $\mathrm{Res}(\mathrm{lin}_R)$ over any FINITE field
 was known before 2026 (Part-Tzameret 2021: the system "captures a 'minimal' extension of
 resolution with counting gates for which no super-polynomial lower bounds are known").
 
@@ -108,90 +108,90 @@ The p = 2 lane (complete restricted ladder, 2010-2026):
 
 - Tree-like: exponential lower bounds for 2-fold Tseitin and an elementary exponential
   bound for unary PHP linear splitting trees (Itsykson-Sokolov, splitting paper above);
-  PHP_n^m tree-like size >= 2^{n-1} and tight space >= n-1 via Prover-Delayer games on
+  $\mathrm{PHP}_n^m$ tree-like size $\ge 2^{n-1}$ and tight space $\ge n-1$ via Prover-Delayer games on
   "extensible formulas" (Gryaznov-Ovcharov-Riazanov, ACM ToCT 16(3), 2024, 15:1-15:15,
   doi 10.1145/3675415, arXiv:2404.08370); the tree-like cluster also includes CMSS23
   (Chattopadhyay-Mande-Sanyal-Sherif) and Beame-Koroth per the related-work list of
-  ECCC TR25-118 (https://eccc.weizmann.ac.il/report/2025/118/download). Tree-like Res(lin_2)
-  is exponentially weaker than general Res(lin_2) (Itsykson-Sokolov, per the account in
+  ECCC TR25-118 (https://eccc.weizmann.ac.il/report/2025/118/download). Tree-like $\mathrm{Res}(\mathrm{lin}_2)$
+  is exponentially weaker than general $\mathrm{Res}(\mathrm{lin}_2)$ (Itsykson-Sokolov, per the account in
   Bhattacharya-Chattopadhyay-Dvorak, CCC 2024, doi 10.4230/LIPIcs.CCC.2024.23).
-- Regular fragments: regular (top-regular) Res(+) introduced via read-once linear branching
+- Regular fragments: regular (top-regular) $\mathrm{Res}(+)$ introduced via read-once linear branching
   programs (Gryaznov-Pudlak-Talebanfard, CCC 2022, per Braun's [GPT22] and the CCC 2024
-  paper's [10]); the first super-polynomial fragment bound: regular Res(+) refutations of
-  BPHP_n^{n+1} have size >= 2^{Omega(n^{1/3}/log n)}, also yielding the strongly-read-once
-  LBP lower bound resolving the GPT22 open question, plus tree-like weak BPHP >=
-  2^{Omega(n)} and a width-Omega(n) bound for unrestricted DAG-like Res(+)
+  paper's [10]); the first super-polynomial fragment bound: regular $\mathrm{Res}(+)$ refutations of
+  $\mathrm{BPHP}_n^{n+1}$ have size $\ge 2^{\Omega(n^{1/3}/\log n)}$, also yielding the strongly-read-once
+  LBP lower bound resolving the GPT22 open question, plus tree-like weak $\mathrm{BPHP} \ge$
+  $2^{\Omega(n)}$ and a width-$\Omega(n)$ bound for unrestricted DAG-like $\mathrm{Res}(+)$
   (Efremenko-Garlik-Itsykson, ECCC TR23-187, STOC 2024, SICOMP 54(4):887-915, 2025,
-  https://eccc.weizmann.ac.il/report/2023/187/); bottom-regular Res(+) separated
-  exponentially from general Res(+) (Bhattacharya-Chattopadhyay-Dvorak, CCC 2024, arXiv:
+  https://eccc.weizmann.ac.il/report/2023/187/); bottom-regular $\mathrm{Res}(+)$ separated
+  exponentially from general $\mathrm{Res}(+)$ (Bhattacharya-Chattopadhyay-Dvorak, CCC 2024, arXiv:
   2402.04364).
-- Bounded-depth DAG-like: the first bounds applying to general (non-regular) Res(+) are
-  size-depth tradeoffs: exponential size or depth Omega(n log log N) (Alekseev-Itsykson,
-  STOC 2025, pp. 584-595, doi 10.1145/3717823.3718150), depth pushed to Omega(N log N)
+- Bounded-depth DAG-like: the first bounds applying to general (non-regular) $\mathrm{Res}(+)$ are
+  size-depth tradeoffs: exponential size or depth $\Omega(n \log \log N)$ (Alekseev-Itsykson,
+  STOC 2025, pp. 584-595, doi 10.1145/3717823.3718150), depth pushed to $\Omega(N \log N)$
   (Efremenko-Itsykson, cited in TR25-118), supercritical size-depth tradeoffs
   (Chattopadhyay-Dvorak, CCC 2025, doi 10.4230/LIPIcs.CCC.2025.24; Itsykson-Knop, ITCS
   2026, doi 10.4230/LIPIcs.ITCS.2026.81); for PHP-type formulas specifically:
-  BPHP_m_n proofs of depth D need size exp(Omega(n^3/D^2)), hence exponential size below
-  depth O(n^{1.5-eps}) (Byramji-Impagliazzo, ECCC TR25-118, 2025), extended to
-  BPHP_n^{n+1} at depth N^{2-eps}, t-collision BPHP at depth N^{2-1/t-eps}, and a lifting
+  $\mathrm{BPHP}_{m,n}$ proofs of depth $D$ need size $\exp(\Omega(n^3/D^2))$, hence exponential size below
+  depth $O(n^{1.5-\varepsilon})$ (Byramji-Impagliazzo, ECCC TR25-118, 2025), extended to
+  $\mathrm{BPHP}_n^{n+1}$ at depth $N^{2-\varepsilon}$, t-collision BPHP at depth $N^{2-1/t-\varepsilon}$, and a lifting
   theorem with constant-size gadgets (Byramji-Impagliazzo, arXiv:2511.20023, the expanded
   posting of the same line, https://arxiv.org/abs/2511.20023; a merged STOC 2026 paper
-  [BCBI26] per Braun's account); resolution-width lifts give depth Omega(w^2/log S) and
-  size Omega(w^2), including polynomial-size formulas easy for resolution but needing
-  superpolynomial-size Res(+) refutations below depth o(n^2/log^4 n) (Itsykson-Podolskii-
+  [BCBI26] per Braun's account); resolution-width lifts give depth $\Omega(w^2/\log S)$ and
+  size $\Omega(w^2)$, including polynomial-size formulas easy for resolution but needing
+  superpolynomial-size $\mathrm{Res}(+)$ refutations below depth $o(n^2/\log^4 n)$ (Itsykson-Podolskii-
   Shekhovtsov, ECCC TR26-018, CCC 2026, doi 10.4230/LIPIcs.CCC.2026.13); polynomial-depth
   bounds for constrained BPHP (Alekseev-Gaevoy, ECCC TR26-007, partly conditional).
-- UNRESTRICTED DAG-like: BPHP_n^{n+1} (n = 2^l holes, n+1 pigeons) needs more than
-  exp(n/(32768 l^2)) = 2^{Omega(n/log^2 n)} clauses for l >= 32, no regularity or depth
-  restriction, i.e. 2^{L^{1/3-o(1)}} for the formula size L = Theta(n^3 log n), Lean 4-
-  formalized, with an explicit statement that the theorem "concerns Res(+) only", "does
-  not address unary PHP in Res(+)", and that the extension-variable method gives no
+- UNRESTRICTED DAG-like: $\mathrm{BPHP}_n^{n+1}$ ($n = 2^l$ holes, $n+1$ pigeons) needs more than
+  $\exp(n/(32768 l^2)) = 2^{\Omega(n/\log^2 n)}$ clauses for $l \ge 32$, no regularity or depth
+  restriction, i.e. $2^{L^{1/3-o(1)}}$ for the formula size $L = \Theta(n^3 \log n)$, Lean 4-
+  formalized, with an explicit statement that the theorem "concerns $\mathrm{Res}(+)$ only", "does
+  not address unary PHP in $\mathrm{Res}(+)$", and that the extension-variable method gives no
   removal step for the nested extension axioms of AC0[p]-Frege (Braun, arXiv:2609.23015).
   This is the bound already catalogued in `proof_complexity.md` lines 10-18.
 
-The odd-p (general finite field F_q) lane:
+The odd-$p$ (general finite field $\mathbb{F}_q$) lane:
 
-- Tree-like, every field: exponential lower bounds for tree-like Res(lin_F) refutations
-  of the pigeonhole principle for EVERY field F; for Tseitin mod q in tree-like
-  Res(lin_Fp) for every pair of distinct primes p != q (2^{Omega(dn)} on d-regular
-  expanders); random k-CNFs exponential for tree-like Res(lin_Fp) for every prime p;
-  via a size-width relation for tree-like Res(lin_F) over every field plus translation to
-  polynomial calculus over F (Part-Tzameret 2021, Corollaries 45-47 and Theorem 43-44).
-  Khaniki extends the tree-like bounds to Res*_F(PC_d) for d up to sublinear: Tseitin mod
-  q (char(F) != q), random k-CNFs, PHP, and Counting mod q (ECCC TR20-034, ACM ToCL
+- Tree-like, every field: exponential lower bounds for tree-like $\mathrm{Res}(\mathrm{lin}_F)$ refutations
+  of the pigeonhole principle for EVERY field $F$; for Tseitin mod $q$ in tree-like
+  $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ for every pair of distinct primes $p \ne q$ ($2^{\Omega(dn)}$ on d-regular
+  expanders); random k-CNFs exponential for tree-like $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ for every prime $p$;
+  via a size-width relation for tree-like $\mathrm{Res}(\mathrm{lin}_F)$ over every field plus translation to
+  polynomial calculus over $F$ (Part-Tzameret 2021, Corollaries 45-47 and Theorem 43-44).
+  Khaniki extends the tree-like bounds to $\mathrm{Res}^*_F(\mathrm{PC}_d)$ for $d$ up to sublinear: Tseitin mod
+  $q$ ($\mathrm{char}(F) \ne q$), random k-CNFs, PHP, and Counting mod $q$ (ECCC TR20-034, ACM ToCL
   23(3), 2022, https://eccc.weizmann.ac.il/report/2020/034/).
 - DAG-like over finite fields: the first nontrivial bounds of any kind are Khaniki's
-  ALMOST QUADRATIC bounds for DAG-like Res(PC_d/F), d = 1 included, over every finite
-  field F, for Tseitin mod q (char(F) != q) and random k-CNFs; caveat noted at the
-  frontier: "the rules considered there differ from the formulation of Res(+) used here"
+  ALMOST QUADRATIC bounds for DAG-like $\mathrm{Res}(\mathrm{PC}_d/F)$, $d = 1$ included, over every finite
+  field $F$, for Tseitin mod $q$ ($\mathrm{char}(F) \ne q$) and random k-CNFs; caveat noted at the
+  frontier: "the rules considered there differ from the formulation of $\mathrm{Res}(+)$ used here"
   (Khaniki TR20-034/ToCL 2022; the caveat quoted in Braun arXiv:2609.23015). Then Part's
-  ECC-based bounds, restricted to char >= 5: for (s,r)-robust vector subset-sum instances
-  (rowspace of A an error-correcting code of distance >= s), 2^{Omega(r)} size lower
-  bounds for a DAG-like FRAGMENT (BinRegDags_Fq); tree-like Res(lin_Fq) and LinTrees_Fq
-  size >= 2^{Omega(((q+1) ln q)^{-1/3} d^{1/5})} for every instance whose matrix generates
-  a code of distance d, for every finite field F_q with q = q(n); random instances are
-  (n/3, Omega((n/(q+1) ln q)^{1/3}))-robust and algebraic geometry codes give explicit
+  ECC-based bounds, restricted to $\mathrm{char} \ge 5$: for ($s,r$)-robust vector subset-sum instances
+  (rowspace of $A$ an error-correcting code of distance $\ge s$), $2^{\Omega(r)}$ size lower
+  bounds for a DAG-like FRAGMENT ($\mathrm{BinRegDags}_{\mathbb{F}_q}$); tree-like $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_q})$ and $\mathrm{LinTrees}_{\mathbb{F}_q}$
+  size $\ge 2^{\Omega(((q+1) \ln q)^{-1/3} d^{1/5})}$ for every instance whose matrix generates
+  a code of distance $d$, for every finite field $\mathbb{F}_q$ with $q = q(n)$; random instances are
+  ($n/3$, $\Omega((n/(q+1) \ln q)^{1/3})$)-robust and algebraic geometry codes give explicit
   instances (Fedor Part, "Lower Bounds for Subset Sum in Resolution with Modular
   Counting", arXiv:2202.08214, v1 2022, v3 2026, https://arxiv.org/abs/2202.08214).
-- UNRESTRICTED DAG-like Res(lin_Fp) lower bounds for PHP or BPHP at ANY p, including
-  depth-restricted or regular versions: NONE known for odd p. The odd-p lane is two to
-  three restriction-levels behind p = 2 (no analogue of the bottom-regular, bounded-depth,
+- UNRESTRICTED DAG-like $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ lower bounds for PHP or BPHP at ANY $p$, including
+  depth-restricted or regular versions: NONE known for odd $p$. The odd-$p$ lane is two to
+  three restriction-levels behind $p = 2$ (no analogue of the bottom-regular, bounded-depth,
   or unrestricted BPHP bounds exists in any odd characteristic).
 
-PHP/BPHP lower bounds in Res(lin_p), the precise table (2026-10-03):
+PHP/BPHP lower bounds in $\mathrm{Res}(\mathrm{lin}_p)$, the precise table (2026-10-03):
 
-- p = 2, bit encoding (BPHP): known at every restriction level, tree-like (TR23-187),
-  regular (2^{Omega(n^{1/3}/log n)}, TR23-187), bounded depth (TR25-118, arXiv:2511.20023),
-  and unrestricted (Braun 2^{Omega(n/log^2 n)}, arXiv:2609.23015). DONE.
-- p = 2, unary encoding (the standard PHP_n that arXiv:2609.35927 itself uses): tree-like
-  known (Itsykson-Sokolov; GOR24 2^{n-1}); UNRESTRICTED DAG-like OPEN (Braun explicitly
-  disclaims unary PHP). So even at p = 2 the unrestricted DAG-like status of the paper's
+- $p = 2$, bit encoding (BPHP): known at every restriction level, tree-like (TR23-187),
+  regular ($2^{\Omega(n^{1/3}/\log n)}$, TR23-187), bounded depth (TR25-118, arXiv:2511.20023),
+  and unrestricted (Braun $2^{\Omega(n/\log^2 n)}$, arXiv:2609.23015). DONE.
+- $p = 2$, unary encoding (the standard $\mathrm{PHP}_n$ that arXiv:2609.35927 itself uses): tree-like
+  known (Itsykson-Sokolov; GOR24 $2^{n-1}$); UNRESTRICTED DAG-like OPEN (Braun explicitly
+  disclaims unary PHP). So even at $p = 2$ the unrestricted DAG-like status of the paper's
   own system is open.
-- odd p, unary PHP: tree-like known for every field (Part-Tzameret 2021); DAG-like: NO
+- odd $p$, unary PHP: tree-like known for every field (Part-Tzameret 2021); DAG-like: NO
   lower bound of any kind known, and no polynomial-size upper bound either (the
   Raz-Tzameret polynomial-size PHP refutations over char-0 rings do not transfer to
   finite fields; Part-Tzameret Theorem 15 covers char 0 only).
-- odd p, BPHP: no results found at any level (the bit-encoding instance has not been
+- odd $p$, BPHP: no results found at any level (the bit-encoding instance has not been
   studied at odd characteristic).
 
 Instance-space split by characteristic (structural, cited): the canonical coNP-complete

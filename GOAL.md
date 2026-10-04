@@ -53,7 +53,12 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
   (standing ledger: nine correction-class events + one quantifier repair so
   far). Retractions stay visible (corpus convention: correction blocks and
   RETRACTED markers in place).
-- ascii math only; one sentence per line; no em-dashes; no banned terms.
+- ascii style: one sentence per line; no em-dashes; no banned terms.
+- Math (owner instruction, 2026-10-04): markdown renders `$...$` / `$$...$$`
+  LaTeX. Use it for math in presentation documents (theorem map prose, README,
+  open problems, audits); plain ASCII math remains the norm inside Mermaid node
+  labels (no TeX there) and inside LOG.md working entries. If a conversion would
+  alter a verify_corpus.py needle string, update the needle in the same change.
 
 ## 4. Corpus conventions
 
@@ -80,6 +85,14 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
   * Experiments (experiments/): every script, run-backed; mutual imports stay
     same-dir (razborov_check.py is the shared F_2 machinery).
   * Machine gate: verify_corpus.py (corpus root); Lean artifacts: lean_channel/.
+- Commit and push (owner instruction, 2026-10-04): whenever relevant - i.e.,
+  after every consolidated turn (agent results integrated, corrections applied,
+  reorganizations, paper or doc updates), run verify_corpus.py first; commit
+  only a PASSING state, with a descriptive message naming the substantive
+  change; push to the remote immediately after committing. Exclusions live in
+  .gitignore (the mathlib4 clone and .lake are multi-GB rebuildable toolchain
+  state; never force-add them). Never amend or rewrite pushed history - the
+  LOG.md audit trail and git history are both append-only disciplines.
 - The corpus owner's two reserved decisions: nothing is sent or posted anywhere
   (note_to_author.md is a draft; communication is the owner's call), and no
   public claims are made on the owner's behalf.
@@ -136,3 +149,10 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
 - 2026-10-04: "Create a file tracking all relevant bibliography."
 - 2026-10-04: "Take all the instructions I gave and turn them into a GOAL.md
   file." (this file)
+- 2026-10-04: "You can use the $math$ syntax in markdown files to use latex
+  expressions." (adopted: LaTeX math in presentation documents; ASCII stays in
+  Mermaid labels and LOG entries)
+- 2026-10-04: "Add instructions to commit and push whenever relevant." (adopted:
+  GOAL.md section 4 - verify then commit with a descriptive message and push
+  after every consolidated turn; append-only history; toolchain artifacts
+  gitignored)

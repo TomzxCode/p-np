@@ -1499,3 +1499,50 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   (/home/tomzx/pnp/lean_channel) still valid. docs updated (FEASIBILITY.md
   working-environment section rewritten; GOAL.md section 7 now forbids
   reinstalling elan into /tmp).
+- Owner instruction adopted: markdown files render $...$ LaTeX. Convention added
+  to GOAL.md (LaTeX in presentation documents; ASCII stays in Mermaid labels and
+  LOG entries; update verify_corpus needles in the same change if affected).
+  theorem_map.md prose converted as the first demonstration (Mermaid labels stay
+  ASCII).
+
+### 2026-10-04 (cont.) - LaTeX conversion wave 1: 1 agent per file (owner directive)
+- 8 files dispatched (presentation layer, one agent each): open_problems,
+  goertzel_audit, edwards_audit, p_family, clues, failure_modes, note_to_author,
+  two_phase_tree. Each agent: convert prose math to $...$ LaTeX, protect
+  verify_corpus needles, end with verify_corpus.py PASS.
+- note_to_author.md DONE: 93 conversions, checker PASS (396 checks). Title needle
+  preserved; parameter symbols converted ($p$, $n$, $d$, ...) - flagged to owner
+  as reversible.
+- failure_modes agent died on rate limit at 8-concurrent; redispatched as the
+  probe (recorded policy).
+- Working records stay ASCII per convention: proof_complexity.md correction
+  blocks, LOG.md, monitors, Mermaid labels.
+- Wave 2 queued (same per-file rule): two_phase_tree if not already counted,
+  cert_floor, deg2_theory, deg3_theory, chi_transfer, kernel_structure, and_chain,
+  thmT_verify, thmB_stress, williams_ladder, magnification_gap, algebraic_rung,
+  README.
+- failure_modes.md DONE (retry): 7 conversions, PASS (397 checks); all 5 needles
+  verbatim.
+- Wave 2 dispatched (6 of 12 queued, one agent per file): cert_floor (keep one
+  literal "2^{-Theta(d^2)}" + Theorem F needle), deg2_theory, deg3_theory,
+  chi_transfer, williams_ladder (4 protected needles), magnification_gap
+  ("2*eps - delta"/"2*eps + o(1)" protected). Wave 2 remainder queued:
+  kernel_structure, and_chain, thmT_verify, thmB_stress, algebraic_rung, README.
+- goertzel_audit.md DONE: 114 math spans converted, PASS (397 checks), line count
+  unchanged; verdict needle and all protected strings intact.
+- Running: 11 conversion agents (wave 1 remainder: open_problems, edwards_audit,
+  p_family, clues, two_phase_tree; wave 2 first half: cert_floor, deg2_theory,
+  deg3_theory, chi_transfer, williams_ladder, magnification_gap). Wave 2 second
+  half queued (6 files) pending concurrency drain.
+- Rate-limit casualties (4): cert_floor, williams_ladder, deg3_theory,
+  chi_transfer - all queued for redispatch when concurrency drains below ~6.
+  Still running: open_problems, edwards_audit, p_family, clues, two_phase_tree,
+  deg2_theory, magnification_gap (7). Queue after those: the 4 dead briefs + 6
+  wave-2 remainder (kernel_structure, and_chain, thmT_verify, thmB_stress,
+  algebraic_rung, README).
+- two_phase_tree.md DONE: 109 conversions, PASS (397); the err* formula line kept
+  ASCII (needle) plus all correction-block markers and measured data points.
+- cert_floor probe redispatched (1 of 4 queued dead briefs). Running: 7 agents
+  total. Queued: williams_ladder, deg3_theory, chi_transfer (dead briefs) +
+  kernel_structure, and_chain, thmT_verify, thmB_stress, algebraic_rung, README
+  (wave-2 remainder).

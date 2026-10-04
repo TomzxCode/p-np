@@ -253,7 +253,7 @@ def check_references(docs: list[Path], report: Report) -> None:
         p.name: p
         for p in CORPUS.rglob("*")
         if p.is_file()
-        and not {"lean_channel", "__pycache__", ".lake", "mathlib4"}.intersection(
+        and not {"lean_channel", "__pycache__", ".lake", "mathlib4", ".git"}.intersection(
             p.parts
         )
     }
