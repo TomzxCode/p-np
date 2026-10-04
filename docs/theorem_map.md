@@ -86,18 +86,26 @@ flowchart TD
     classDef ext fill:#e3f2fd,stroke:#0d47a1,color:#0d47a1
 ```
 
-## 3. Open gaps and the conditional route (updated for chi-transfer)
+## 3. Open gaps and the conditional route (updated for the newest wave, 2026-10-04)
 
 ```mermaid
 flowchart TD
     COR31["Cor 3.1: degree-2 slice proved"]:::proved
-    GAPD3["GAP A: degree >= 4 extension<br/>degrees 2 AND 3 proved (Theorem 3',<br/>deg3_theory.md: same d^2 ~ n boundary;<br/>wedge + Z certificates; star sum rules)"]:::gap
+    GAPD3["GAP A: the all-degrees quantifier<br/>cap assemblies at degrees 2, 3, 4, 5<br/>(Theorems 3, 3', 3'', 3'''; same d^2 ~ n boundary<br/>through degree 5); general-d standing<br/>= INV(d) at t >= 3"]:::gap
     GAPB["GAP B: RESOLVED (chi_transfer.md)<br/>printed (3) unusable under our quantifier reading [INFERRED]<br/>(trivial row-sum tree: err >= 1/2 but<br/>chi = (1-f) p^-e' = k^-Theta(d));<br/>transfer reversed: (P3) <= (P2)"]:::resolved
-    MIX["GAP B': Theorem 3's query classes are a<br/>proper subset of the printed degree-2 class<br/>(F_2 mixtures; likely shallow repair)"]:::gap
-    GAPLM["GAP C: Lemma M (O5) degree-2<br/>monomial semantics transfer"]:::gap
+    MIX["GAP B': RESOLVED (ADDENDUM 10, Theorem M-D)<br/>full printed degree-2 class covered;<br/>constant repair q2*, same boundary"]:::resolved
+    GAPLM["GAP C: Lemma M (O5) transfer - CLOSED at d <= 3;<br/>general d closed in regime by CLS + CNT<br/>(five-family inventory supersedes E_star)"]:::resolved
     GAPJDP["GAP D: de-modularize JDP steps"]:::gap
     GAPCST["GAP E: exact exponent constants<br/>cap ~0.32 vs witness 0.06 at (128,2)"]:::gap
     GAPO6["GAP F: O6 odd-p analogue"]:::gap
+    CLSCNT["CLS + CNT closed at general d in regime<br/>(Q-A dimension identity at (4,2) and (6,3);<br/>headline form tight; adaptive in-regime modulo B2)"]:::proved
+    INVFAM["Inventory corrected: fresh-bit windows exclude<br/>five families row, star, DS, UU, OFF + catch-all<br/>supersedes Lemma M's refined E_star"]:::proved
+    TH3GD["Theorem 3 upgraded to general d in regime<br/>d^2 log k = o(n); modulo cor:coin base + B2<br/>+ L-CLASS absorbed"]:::proved
+    MIX3["MIXTURE-3 CLOSED (Theorem M3-D): constant repair<br/>q3_mix, finite-n only, same boundary;<br/>MIXTURE-d OPEN at d >= 4"]:::resolved
+    TB["RETRACTED: Lemma TB, the truncated-Buchberger lemma,<br/>false as stated (counterexample G = x^2, xy+1, t = 2);<br/>t = 2 conclusion survives on the repaired engine"]:::retr
+    INV3["DOWNGRADED: INV(3) t = 3 closure at d = 4<br/>engine output, unverified (lcm > t pairs never<br/>examined; a timed-out pass still reports closure)"]:::retr
+    INVD["INV(d): inventory completeness through degree d<br/>PROVED at d = 2; OPEN at every t >= 3 layer<br/>the single mathematical gap of O2"]:::gap
+    GEN3["Theorem 3-gen: all-degrees budgeted cap<br/>assembly PROVED at d = 2; INFERRED at general d<br/>(premise INV(d) open at t >= 3)"]:::cond
     ROUTE["The err-form route (chi_transfer.md Thm 4):<br/>Def 3.1 + Lemma 4.4 + Thms 2.2/3.2/3.3<br/>applied to the BUDGETED ERR-FLOOR (O2)<br/>- the printed (3) is replaced by this"]:::cond
     OBJ["Super-poly AC0[2]-Frege PHP bounds<br/>- a rung toward P != NP<br/>(Cook-Reckhow: not the separation itself)"]:::goal
 
@@ -113,8 +121,19 @@ flowchart TD
     GAPD3 --> ROUTE
     ROUTE -->|"if O2 proved at all degrees"| OBJ
     GAPO6 -.->|second front| OBJ
+    CLSCNT --> INVFAM
+    CLSCNT --> TH3GD
+    INVFAM --> TH3GD
+    TB -.-> INV3
+    INV3 -.->|premise unproven| GEN3
+    INVD --> GEN3
+    MIX3 -.->|scope closed at d <= 3| GEN3
+    GAPD3 --> INVD
+    TH3GD --> ROUTE
+    GEN3 --> ROUTE
 
     classDef proved fill:#e8f5e9,stroke:#1b5e20,color:#1b5e20
+    classDef retr fill:#ffebee,stroke:#b71c1c,color:#b71c1c,stroke-dasharray: 5 5
     classDef gap fill:#fff8e1,stroke:#f57f17,color:#795548,stroke-dasharray: 5 5
     classDef resolved fill:#e0f2f1,stroke:#00695c,color:#00695c
     classDef cond fill:#fff3e0,stroke:#e65100,color:#e65100
@@ -123,19 +142,39 @@ flowchart TD
 
 ## Notes
 
-- Settled to date, in one line: the budgeted err-floor at degrees 2 and 3 is
-  $\mathrm{err}^*(d,\, d\log k) = k^{-\Theta(d^2/n)}$, keeping the printed
-  $\chi$-hypothesis alive while $d^2 \log k = o(n)$ (Corollary 3.1; Theorem 3$'$).
+- Settled to date, in one line: the budgeted err-floor
+  $\mathrm{err}^*(d,\, d\log k) = k^{-\Theta(d^2/n)}$ keeps the printed
+  $\chi$-hypothesis alive while $d^2 \log k = o(n)$; two-sided at degree 2 at
+  general $d$ in regime (Theorem 3 upgraded, current_results.md section 2.18),
+  and at degrees 3, 4, 5 as per-degree assemblies (Theorems 3', 3'', 3'''); under
+  INV(d) the boundary is degree-independent at every $d$ (Theorem 3-gen, INFERRED
+  at general $d$).
+- The fresh-bit window inventory is the corrected five-family one (row, star, DS,
+  UU, OFF + catch-all; cls_cnt.md section 4), superseding Lemma M's refined
+  E_star; no recorded constant moved (the Delta terms are dominated), and the
+  frozen channel_spec.md needs its dated amendment (cls_cnt.md correction 2).
 - The retraction chain, end to end: Theorem T's artifact law -> Prop D -> the
-  $2^{-\Theta(d)}$ floor -> the ~4x parity-lock expectation -> the printed (3).
-  Each is kept in LOG.md with full provenance; the four theorem-level ghosts
-  appear in diagrams 1-2, the printed-(3) kill in diagram 3.
+  $2^{-\Theta(d)}$ floor -> the ~4x parity-lock expectation -> the printed (3)
+  -> Lemma TB (false as stated; the $t = 2$ conclusion survives on the repaired
+  engine) -> the INV(3) $t = 3$/$d = 4$ closure (engine output, unverified).
+  The four theorem-level ghosts appear in diagrams 1-2, the printed-(3) kill and
+  the two newest links in diagram 3; all links carry provenance in LOG.md
+  (including the 2026-10-04 eighteenth-event entry covering the two newest),
+  with the per-claim records in current_results.md section 3 and the source
+  documents.
 - GAP B resolved NEGATIVELY for the printed route and POSITIVELY for the corpus:
-  the printed (3) is unprovable by any err-cap (reversed transfer) and false as
-  printed; the err-form assembly is both correct and exactly what O2 targets.
-- GAP A (degree $\geq 3$) is the single remaining load-bearing gap: with it, the
-  err-form route's premise is a proved theorem in the program's polylog regime.
+  under the corpus's quantifier reading [INFERENCE, downgraded per GUIDANCE
+  2026-10-04 - the printed (3) is a hypothesis about the paper's own constructed
+  tree, so it cannot be "false as printed"; the reading gap is the finding], the
+  printed (3) is unprovable by any err-cap (reversed transfer); the err-form
+  assembly is both correct and exactly what O2 targets.
+- The single mathematical gap is now INV-d at $t \ge 3$: INV(3)'s $t = 3$ engine
+  closure at $d = 4$ is downgraded, so Theorem 3-gen stays INFERRED at general
+  $d$; MIXTURE-d at $d \ge 4$ is the remaining scope gap against O2's literal
+  quantifier (closed at $d \le 3$).
 - Validation: mmdc unavailable (disk 437 MB free at write time); each block
   passed the structural check (declared endpoints, quote balance, subgraph
   matching). `flowchart` renders on GitHub; no front matter is used inside the
-  fences (some renderers reject YAML in fenced blocks).
+  fences (some renderers reject YAML in fenced blocks). Diagram 3 was extended
+  for the newest wave on 2026-10-04 (quote balance and endpoint declarations
+  re-checked by hand, same method).

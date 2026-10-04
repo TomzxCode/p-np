@@ -1,6 +1,8 @@
 # Current results: the one current statement of the corpus
 
-Consolidation deliverable, 2026-10-04. This file is the single current statement of
+Consolidation deliverable, 2026-10-04; second pass the same day, folding in the
+newest wave (all_degrees.md, cls_cnt.md, inv3.md, mixture3.md, deg5_theory.md)
+with the two retractions of section 3. This file is the single current statement of
 every proved or measured result the corpus holds.
 It supersedes the layered correction history, which remains in the source documents
 and in LOG.md for provenance.
@@ -9,7 +11,8 @@ characteristic $p$.
 Route maps, claim forensics, monitors, the bibliography, and the theorem map keep
 their own homes (GOAL.md section 4); this file does not replace them.
 Labels are PROVED (with the proof kind: written proof, machine-checked, or
-enumerated) or MEASURED, nothing else.
+enumerated), MEASURED, or INFERRED (a downstream conclusion whose named premise
+is open), nothing else.
 Every number matches regeneration_2026-10-04.md or the cited source document.
 
 ## 1. Semantics
@@ -77,8 +80,8 @@ $912{,}978 + 302{,}472 = 1{,}215{,}450 = \binom{75}{4}$).
 
 Regime of validity.
 Unconditional at the verified kernel points (outer $d \le 3$).
-The general-$d$ degree-2 statements carry Lemma CLS and the adaptive counting
-carries Lemma CNT (section 4).
+The general-$d$ degree-2 statements carry Lemma CLS and Lemma CNT, closed in
+regime by the newest wave (sections 2.16 and 2.17).
 Odd-$p$ degree $\ge 3$ is not covered (section 4, O6).
 
 Label: PROVED (machine-checked, plus written proofs per clause as listed).
@@ -101,6 +104,12 @@ $(4,2)$, $(6,3)$ and exact at the $(8,4)$ degree-$\le 2$ slice (0/72 singles
 determined, 2016/2016 matching-2 varying); enumerated support: all 4200 matching
 triples vary at $(6,3)$, all 211,680 matching-4 columns are varying-valued at
 $(8,4)$.
+Newest wave (deg5_theory.md section 2): the base re-verified at the $(10,5)$
+degree-$\le 2$ slice (0/110 singles determined, 4950/4950 matching-2 varying),
+the star-row steps $Q_p \cdot g_k$ witnessed legal for $k = 2, 3, 4$, and the
+matching-3 link confirmed by the sparse degree-$\le 3$ sweep at $(10,5)$
+(118,800/118,800 varying); matching-4 and matching-5 rest on the proved
+induction.
 
 Regime of validity.
 $p = 2$, all $d$.
@@ -109,6 +118,9 @@ been re-run, so odd-$p$ degree $\ge 3$ statements remain open (section 4, O6).
 The base's general-$d$ standing rests on the corpus's completion lemma (cor:coin)
 plus the verified slices; a self-contained elementary proof is a flagged small gap
 (deg4_theory.md section 7 item 1).
+The degree-5 slice consumes Theorem A at $k = 5$ (section 2.20), and the
+general-$d$ transfer and all-degrees assembly consume it at every $k$ (sections
+2.16 and 2.21); the base caveat is inherited at every use.
 
 Label: PROVED (written induction, machine-checked base).
 
@@ -130,9 +142,23 @@ same-line products answer 0, diagonals are fresh fair bits independent of
 everything), not the earlier product-semantics stipulation: on a free triangle
 $\{x_{ab}, x_{cd}, x_{ab}x_{cd}\}$ the true law is uniform on 8 patterns and the
 product law lives on 4, TV $= 1/2$, with no completion event needed.
-The block-free identification: on every alias-aware block-free window (no completed
-free row, no completed star, no completed $K_j$ column) the pipeline's projected
-answer law equals the fresh-bit law exactly.
+The block-free identification, current final form: on every alias-aware
+block-free window (one containing no completed relation of the FIVE-family
+inventory {row, star, DS, UU, OFF}, plus no full $K_j$-column set when linear
+forms are allowed) the pipeline's projected answer law equals the fresh-bit law
+exactly.
+INVENTORY CORRECTION (2026-10-04, cls_cnt.md section 4; ADDENDUM 11): the
+three-family inventory $\{E_{row}, E_{star}, E_K\}$ that this entry originally
+stated is INCOMPLETE - the double star DS, the crossed-star pair UU, and the
+cross grid OFF (sums of reduced star rows, all machine-verified in $V$ at
+$(4,2)$ and $(6,3)$) pin windows that fire no single inventoried event.
+The correction supersedes lemma_m.md's refined $E_{star}$ (its target-single
+requirement broke closure under sums; the original target-free Lemma REL
+definition was safe), re-interprets the recorded sweep evidence (1192/1192,
+250/250) as sampling evidence, moves no recorded measurement, and leaves
+$\varepsilon$ at $\varepsilon_{full} = (1 + o(1))\,\varepsilon_{headline}$
+(section 2.17); the catch-all class absorbs the residual L-CLASS classification
+(section 2.16).
 
 Proof location.
 lemma_m.md sections 2-3.
@@ -149,13 +175,15 @@ kernel coset, 1192/1192 alias-aware block-free windows at $(4,2)$ and 250/250 at
 $(6,3)$, sizes 2 to 10 coordinates.
 
 Regime of validity.
-Unconditional at $d \le 3$ modulo the counting convention CNT; at general $d$ the
-statement carries the open lemmas CLS and CNT (section 4).
+Unconditional at $d \le 3$; at general $d$ the two lemmas this entry was reduced
+to (CLS, CNT) are closed in regime (sections 2.16 and 2.17), so the general-$d$
+form holds in regime modulo their named caveats (the cor:coin base, B2, and the
+engine-validity caveat of section 2.16).
 Exact for $e < 2d$; vacuous at $e = \Theta(n)$, where the transfer question is open
 (O2's intermediate-budget item).
 
-Label: PROVED (written and machine-checked at $d \le 3$; the general-$d$ form
-carries two named open lemmas).
+Label: PROVED (written and machine-checked at $d \le 3$; the general-$d$ form is
+closed in regime by sections 2.16 and 2.17, modulo their named caveats).
 
 ### 2.4 Propositions A and C (the single-variable non-adaptive theory)
 
@@ -319,6 +347,9 @@ aliveness are unaffected (jdp_demod.md section 6).
 The corpus states the full-class cap (Theorem M-D) and the sharpened certificate
 form (Theorem E4) as two separate recorded statements; their constants have not
 been merged into one displayed cap in any source document.
+The general-$d$ standing of this cap in regime is section 2.18 (newest wave); the
+mixture coverage here is the $d = 2$ instance of the MIXTURE-d line, closed at
+$d \le 3$ (section 2.19).
 
 Proof location.
 deg2_theory.md Theorem 3 and Corollary 3.1; constant repair in lemma_m.md section 4
@@ -602,6 +633,296 @@ which does not feed the growing $d_0$.
 
 Label: PROVED (written conditional proof; premise open).
 
+### 2.16 Lemma CLS at general $d$ (the degree-2 relation inventory)
+
+Statement.
+Lemma CLS (lemma_m.md section 3.3's naming) in its two halves, current final form.
+(i) Every diagonal degree-2 column (every matching-2 column) varies at general
+$d$, and is marginally fair by the balance lemma: the matching hierarchy of
+section 2.2 with base = the completion lemma cor:coin and step = the star-row
+argument (cls_cnt.md section 2).
+(ii) The algebraic core Q-A: the determined relations of degree $\le 2$ are
+generated exactly by the inventoried families, in dimension form
+$(V \oplus \langle e_0\rangle) \cap S_{\le 2} = V_{\le 2} \oplus \langle e_0\rangle$
+with $V_{\le 2} = \mathrm{span}\{Q_i,\ Q_i x_{ab},\ b_{ij},\ C,\ H\}$
+(cls_cnt.md section 3.1).
+The route is a d-uniform degree-truncated Buchberger argument: every
+S-polynomial of a generator pair with lcm-degree $\le 2$ reduces to zero within
+degree $\le 2$, via the master identities M1, M2, M3, I1, M5 (universal ring
+identities at every $d \ge 2$; cls_cnt.md section 3.3).
+Together with the covering theorem (every support of a nonzero element of the
+varying-coordinate projection contains a full row, a full star, a DS, a UU, an
+OFF, or a catch-all-class support; cls_cnt.md section 4.2) this is the repaired
+block-free identification of section 2.3 at general $d$.
+
+Proof location.
+cls_cnt.md sections 2-4; ADDENDUM 11.
+
+Verification status.
+The master identities are machine-checked at all position instances of the
+$5 \times 4$ and $7 \times 6$ rectangles, and the generic sweep checks every
+lcm-$\le 2$ pair mechanically (465 and 1225 S-polynomials).
+The dimension identity is machine-verified exactly at $(4,2)$
+($\dim(V \cap S_{\le 2}) = 165$) and at $(6,3)$ with degree-3 shifts present
+($\dim = 511$; rank off $S_{\le 2}$ 11,599).
+Engine caveat of record: the sweep's engine lemma (Lemma TB, cls_cnt.md section
+3.2) is FALSE as stated (section 3); the $t = 2$ conclusion is re-proved by the
+repaired completion engine (degree-capped Buchberger completion with
+machine-enforced span neutrality) at $5 \times 4$ and $7 \times 6$, and is
+separately anchored by the exact $(6,3)$ dimension computation (cls_cnt.md
+closing correction note; inv3.md section 3.2).
+The replacement engine-validity lemma (genuine multivariate-division/Groebner
+theory for the dehomogenized problem) is the named open repair (inv3.md
+DOWNGRADE block; GUIDANCE.md priority 1); the classification Lemma L-CLASS is
+open and absorbed by the catch-all.
+
+Regime of validity.
+Unconditional at $d \le 3$ (the machine anchors, including the $(6,3)$ exact
+dimension check).
+The general-$d$ form carries the cor:coin base caveat (section 2.2) and the
+engine-validity caveat above; the five-family inventory supersedes the
+three-family inventory the lemma's statement originally accompanied (section
+2.3).
+
+Label: PROVED (written d-uniform argument, machine-checked identities and exact
+dimension anchors; unconditional at $d \le 3$; the general-$d$ engine lemma is a
+named open repair).
+
+### 2.17 Lemma CNT (the completion count at general $d$)
+
+Statement.
+The probability that a budget-$e$ window contains the support of any relation of
+the five-family inventory obeys $\varepsilon_{full}(e,n,d) = (1 + o(1))\,
+\varepsilon_{headline}$ at every fixed $d \ge 2$ with $e = o(n)$, where
+$\varepsilon_{headline} = \frac{A}{2}\big[(e/n)^{2d} + (2e/(n-1))^{2d-1}\big]$
+and $A = (2d+1)/(n+1)$ (cls_cnt.md section 5.1).
+The enlarged inventory (DS, UU, OFF, catch-all) contributes only dominated
+$\Delta$ terms, absorbed by the multiplicative $(1 + o(1))$.
+The headline form is tight: a deliberate star probe matches it up to factorial
+slack and a deliberate DS probe matches $\Delta_{DS}$ (cls_cnt.md section 5.2).
+Non-adaptive: PROVED over the full inventory.
+Adaptive (Proposition CNT-A): $P[E_{full}] \le \varepsilon_{full}(e,n,d)\,
+\exp(2ed/n) + O(e/n)$; B1 (the per-answer classification) is proved, B2 (the
+distortion product) is reduced and closes in regime for any polynomial loss, so
+in the regime $d^2 \log k = o(n)$ the distortion is $1 + o(1)$ and the
+non-adaptive bound is the operative adaptive form.
+The minimum varying-support size over the whole inventory is $2d$, achieved only
+by rows and degree-2 stars, so at $e < 2d$ no event can fire and the transfer is
+exact.
+
+Proof location.
+cls_cnt.md sections 5.1-5.3 (the bound, tightness, Proposition CNT-A, lemmas B1
+and B2); the degree-$k$ extension in all_degrees.md sections 2.2 and 2.4.
+
+Verification status.
+Written proof; the $\Delta$-dominance table machine-checked at six printed
+points (at $(128,2)$, $e = 32$: headline $2.6 \times 10^{-3}$ against all
+$\Delta$ terms $\le 2 \times 10^{-7}$).
+
+Regime of validity.
+$p = 2$, degree $\le 2$ (degree-$k$ form in all_degrees.md), general $d$,
+$e = o(n)$; the adaptive form in regime modulo B2; the exact adaptive constant
+at the boundary $d^2 = \Theta(n)$ is open and the headline form is operative
+there, exactly as for Lemma REL.
+
+Label: PROVED (written; non-adaptive over the full inventory, headline tight;
+adaptive in-regime modulo named lemma B2).
+
+### 2.18 Theorem 3 at general $d$ in regime (the degree-2 slice of O2, upgraded)
+
+Statement.
+Theorem 3 (section 2.8) stands at general $d$: its step (6) is closed at general
+$d$ by sections 2.16 and 2.17, so at $p = 2$, general $d$, budget $e = o(n)$
+with $d^2 \log k = o(n)$, every adaptive degree-$\le 2$ tree satisfies the same
+cap and the same sharpened certificate form
+$$\mathrm{success}(T) \le \chi(e) + (1 - \chi(e))\,(q_2^* + A(e))\,(1 + O(e/n) + o(1)),$$
+with $q_2^* = \max(q,\ q_{\mathrm{and\_exact}},\ q_{\mathrm{mix}})$
+(all_degrees.md section 3.1).
+No constant shifts: $q$, $q_{\mathrm{and\_exact}}$, $q_{\mathrm{mix}}$, the
+regime line $c(c-1) \ge 2d^2(4d^2 - 1)$, and $\chi(e)$ are
+inventory-independent (the posteriors are computed on block-free windows and
+the covering theorem preserves the fresh-bit identification on them); the
+$o(1)$ now absorbs $\varepsilon_{full}$ instead of the three-family
+$\varepsilon$, still $o(1)$ in regime.
+MIXTURE-d caveat in the regime line (all_degrees.md section 5.2 item 2, updated
+by ADDENDUM 12): the cap family covers monomial queries plus linear forms, and
+arbitrary $\mathbb{F}_2$ mixtures are covered only at $d \le 3$ (sections 2.8
+and 2.19); O2's literal quantifier at $d \ge 4$ therefore retains the MIXTURE-d
+scope gap.
+
+Proof location.
+all_degrees.md section 3.1, on cls_cnt.md sections 3, 5, and 6 and the degree-2
+machinery of section 2.8 unchanged.
+
+Verification status.
+Written assembly; the consumed lemmas are sections 2.16 and 2.17; the
+constant-invariance check is cls_cnt.md section 6 and all_degrees.md section
+3.1.
+
+Regime of validity.
+$p = 2$, degree $\le 2$, general $d$, $e = o(n)$, $d^2 \log k = o(n)$, modulo
+the three named caveats (the cor:coin base; B2 in-regime; L-CLASS absorbed by
+the catch-all); unconditional at $d \le 3$; this is the strongest all-$d$ slice
+of O2 and it is new with the newest wave.
+
+Label: PROVED (written assembly at general $d$ in regime, with the named
+caveats; unconditional at $d \le 3$).
+
+### 2.19 Theorem M3-D (MIXTURE-3; MIXTURE-d closed at $d \le 3$)
+
+Statement.
+Every adaptive tree of budget $e$ using arbitrary $\mathbb{F}_2^{\le 3}$ queries
+(the full printed degree-$\le 3$ class; normal form: a constant, singles,
+non-degenerate diagonals, matching triples) satisfies
+$$\mathrm{success}(T) \le \min\big(1,\ q_3^{\mathrm{mix}}(n,d) +
+P_{\mathrm{adj,mix3}}(e) + P_K(e) + P_{\mathrm{wedge}}(e) + P_Z(e) +
+P_{\mathrm{blk3}}(e) + O(e/n) + o(1)\big),$$
+with $q_3^{\mathrm{mix}} = q_3^* + \epsilon_3$, $\epsilon_3 > 0$ at every
+measured point and finite-$n$ only: $+0.0169$ absolute at $(15,3)$, $+0.0048$ at
+$(31,3)$, $+5.2 \times 10^{-5}$ at $(63,3)$, and
+$\mathrm{max}/\mathrm{post}_3 = 1.000000$ by $(1023,3)$ (mixture3.md Theorem
+M3-A).
+The maximizers are monomial-star mixtures through the output pair (the degree-2
+star-3M family through $n \sim 31$, disjoint triple-stars beyond).
+Mechanism: the killed-branch self-exclusion of Theorem M-A extends verbatim
+(Theorem M3-1; the killed-branch answer-1 mass is exactly 0 for every
+through-output configuration, machine-checked); no new single-query certificates
+(Theorem M3-B, 0 of 1,474 enumerated configurations); the degree-3 mixture Z
+form folds a covered certificate at equal budget (Proposition M3-E).
+Aliveness (Corollary M3-D1): error $\ge k^{-O(1)}$ exactly when
+$d^2 \log k = o(n)$, the same condition as the covered class.
+Budgeted verdict (measured): at $(15,3)$ no mixture strategy beats the covered
+champions at any tested budget; the dominant covered champion is the $K_j$
+column parity queried as one linear-form query per column (0.986 at budget 30),
+and the $(7,3)$ mixture win at budget 10 is the $c = 1$ degeneracy, gone by
+budget 30.
+Consequence: the MIXTURE-d scope gap is closed at $d \in \{2, 3\}$ with
+constant-only repairs and is open at $d \ge 4$ (mixture3.md section 10; ADDENDUM
+12).
+
+Proof location.
+mixture3.md sections 1-7 and 9-10 (Theorems M3-1, M3-2, M3-A, M3-B, Proposition
+M3-E, Theorem M3-D, Corollary M3-D1); ADDENDUM 12.
+
+Verification status.
+Written assembly with exactly the modulo set of Theorem 3' plus two marked
+inherited pieces (the rate-weighted elevation sup is measured at degree 2 and
+not separately re-measured at degree 3; the two-query mixture certificate
+classification beyond the folded families is conjectured); dual-engine
+validation digit-exact (4,648 queries x 2 answers over all 56 restrictions at
+$(7,3)$, 0 mismatches) and sampled at $(15,3)$ within 5-sigma; exact rational
+grid over twelve $(n,d)$ points.
+
+Regime of validity.
+$p = 2$, degree $\le 3$, $e = o(n)$; the scan is support-$\le 3$ exhaustive with
+sampled wider families, and dominance beyond support 3 is conjectured (the
+per-$\rho$ law first leaves $\{0, 1/2\}$ at support 4, mixture3.md section
+2.2).
+
+Label: PROVED (written assembly; one measured constant inside the mixture term;
+marked pieces as listed).
+
+### 2.20 Theorem 3''' (the degree-5 budgeted cap; assembly at the machine points)
+
+Statement.
+Every adaptive tree of budget $e$ over degree-$\le 5$ monomial queries and
+linear forms satisfies
+$$\mathrm{success}(T) \le \min(1,\ q_5^* + P_{\mathrm{adj}} + P_K +
+P_{\mathrm{cert5}} + P_{\mathrm{blk5}} + o(1)),$$
+with $q_5^* = \max(q,\ q_{\mathrm{and\_exact}},\ \mathrm{post}_3,\
+\mathrm{post}_4,\ \mathrm{post}_5)$, $P_{\mathrm{cert5}} \le e \cdot P_5 =
+o(P_K)$, and $P_{\mathrm{blk5}} \le e/(n - 2d - 4)$ (deg5_theory.md section
+6.1).
+The mass chain $P_{k+1} < P_k$ is now proved at general $k$ (Proposition M5,
+strict event inclusion), upgrading the deg4 measured chain.
+$\mathrm{post}_5 = (b_0 + 4b_1 + 6b_2 + 4b_3)/(2b_5 + b_0 + 5b_1 + 10b_2 +
+10b_3 + 5b_4)$ is digit-exact at $(11,5)$ ($46/47$), $(12,5)$ ($703/733$),
+$(13,5)$ ($18362/19517$, 624,624 restrictions); all single-pass posteriors
+through $k = 5$ share the leading form $2d^2/n$ (Conjecture NAL proved for
+$k \le 5$); the finite-$n$ purity lift peaks at $1.1297 \times
+q_{\mathrm{and\_exact}}$ at $(255,5)$ and vanishes as $\Theta(d^2/n^2)$.
+The degree-5 classification (fixed-0 line-pair, alias with the six-pattern
+reduction system, matching-5 varying by Theorem A at $k = 5$) is proved, with
+the partition identity $125{,}446{,}882 + 21{,}356{,}390 = 146{,}803{,}272 =
+\binom{114}{5}$ exact at $(10,5)$, and a sparse degree-$\le 3$ sweep at $(10,5)$
+(234,136 columns; 100,156 determined, all inventoried) verifying the partition
+by sweep for degree $\le 3$ at $d = 5$, the first sweep beyond $d \le 3$.
+The chi-hypothesis stays alive exactly when $d^2 \log k = o(n)$: the boundary is
+degree-independent through degree 5; measured cap at $(4095,5)$, $e = 80$:
+0.0816, alive.
+General-$d$ status NOT upgraded: the cap form is stated and its constants are
+inventory-independent, but the proof at general $d$ consumes INV(5); REL-5's "no
+other class" is exactly the open SPARSE-d/INV-d lemma, and the completion engine
+whose $t = 3$ closure at $d = 4$ would have fed INV(3) is downgraded (section 3;
+section 2.21).
+
+Proof location.
+deg5_theory.md sections 2-6 (Lemmas W5 and A5, Theorem A at $k = 5$, Theorem B5,
+REL-5, Theorem C5, Proposition M5, Theorem 3''', Corollary 3.4); general-$d$
+status per all_degrees.md section 3.2.
+
+Verification status.
+Written assembly with the two inherited JDP composition flags; registered run
+chi_deg5_check.py (21 s, all pass): the Theorem-A base at the $(10,5)$ slice,
+alias and star witnesses, the sparse sweep, digit-exact posteriors, the mass
+chain at ten grid points, and the F1-certain search at $(11,5)$ (unexplained 0).
+
+Regime of validity.
+$p = 2$, degree $\le 5$; an assembly at the machine points and a printed form at
+general $d$ modulo INV(5).
+
+Label: PROVED (written assembly with machine-checked and enumerated pieces at
+$d = 5$); the general-$d$ form is INFERRED (premise INV(5) open).
+
+### 2.21 Theorem 3-gen (the all-degrees budgeted cap; conditional) and the INV(d) premise
+
+Statement.
+Fix $p = 2$, $d \ge 2$, $k \ge 2$ with $\log k \ge 1$, and budget $e = d\log k$.
+Assume INV(d) (inventory completeness through degree $d$: the Q-A identity
+$(V \oplus \langle e_0\rangle) \cap S_{\le t} = V_{\le t} \oplus \langle
+e_0\rangle$ at every $t \le d$, plus the covering of every support by a full
+row, a degree-$j$ star, a DS, a UU, an OFF, or a catch-all support;
+all_degrees.md section 4.1) and B2.
+Then every adaptive tree of budget $e$ whose queries are degree-$\le d$
+monomials or linear forms satisfies the explicit cap of Theorem 3-gen (with
+$q_d^* = \max(q,\ q_{\mathrm{and\_exact}},\ \mathrm{post}_3, \ldots,
+\mathrm{post}_d)$ and the degree-$d$ completion bound $\varepsilon^{(d)}$), and
+if $d^2 \log k = o(n)$ then $\mathrm{err}(T) \ge 1/2 - o_d(1) \ge k^{-O(1)}$;
+with the degree-1 witness the two-sided form $\mathrm{err}^*(d, d\log k) =
+k^{-\Theta(d^2/n)}$ holds at every fixed $d$ granting INV(d) (all_degrees.md
+sections 4.2-4.3).
+Premise status: INV(2) is PROVED at general $d$ (sections 2.16 and 2.17); at
+$d = 3$ the $t = 3$ layer is a tautology ($V = V_{\le 3}$) and step (6a) is
+closed by the $(6,3)$ full sweep, independent of the downgraded engine; INV(d)
+for $d \ge 4$ is OPEN at every $t \ge 3$ layer.
+The one closure claimed beyond the sweeps (INV(3)(i) at $d = 4$, via the
+degree-truncated completion engine) is DOWNGRADED to engine output, unverified
+(section 3; inv3.md DOWNGRADE block), so nothing downstream of it is established:
+Theorem 3-gen's premise is OPEN at $t \ge 3$, and inv3.md's tightened premise
+table ("INV(4) has only its $t = 4$ layer open") is not consumed.
+Everything downstream of the downgraded INV(3) is therefore INFERRED at best:
+the all-degrees assembly is proved as a conditional, and its condition is the
+corpus's single mathematical gap (all_degrees.md section 5.2 item 1).
+
+Proof location.
+all_degrees.md sections 4.1-4.3 (the assembly, every step labeled) and section 5
+(the final O2 status); premise downgrade per inv3.md and GUIDANCE.md priority 1.
+
+Verification status.
+Written assembly with each step labeled (transfer; certificate-free leaves;
+certificate charge; completion charge; assembly; regime arithmetic; witness
+side), each proved modulo its named lemma; the premise is the open content,
+machine-verified at the swept points ($(6,3)$ full; $(8,4)$ and $(10,5)$
+degree-$\le 2$; $(10,5)$ degree-$\le 3$).
+
+Regime of validity.
+$p = 2$, every fixed $d$ granting INV(d); unconditional at $d = 2$ modulo the
+standing cor:coin caveat and B2; conditional at every $d \ge 3$ in the $t \ge 3$
+layers.
+
+Label: PROVED (written assembly at $d = 2$); INFERRED at general $d$ (the
+premise INV(d) is open at $t \ge 3$).
+
 ## 3. Retracted and superseded statements
 
 - Theorem T's artifact law (the two-phase tree's error exactly $2^{-(2d+1)}$,
@@ -644,6 +965,31 @@ Label: PROVED (written conditional proof; premise open).
   derived from this corpus; removed everywhere.
   Correction record: GUIDANCE.md item 1; GOAL.md section 1; LOG.md 2026-10-04
   (the clues.md position statement downgraded).
+- Lemma TB (the truncated-Buchberger reduction lemma, cls_cnt.md section 3.2: if
+  every S-polynomial of a pair whose leading-monomial lcm has degree $\le t$
+  reduces to zero within degree $\le t$, then $I \cap S_{\le t} = W_t$): FALSE as
+  stated.
+  Counterexample: $G = \{x^2,\ xy + 1\}$ over $\mathbb{F}_2[x,y]$, $t = 2$: the
+  only pair has lcm-degree $3 > 2$, so the hypothesis is vacuous, yet
+  $1 \in I \cap S_{\le 2}$ and $1 \notin W_2$ (the xy-coefficient argument proves
+  the negation).
+  The $t = 2$ CONCLUSION of the cls-cnt record survives: re-proved by the repaired
+  completion engine at $5 \times 4$ and $7 \times 6$, and separately confirmed by
+  the exact dimension computation at $(6,3)$ (sections 2.16 and 2.17).
+  Correction record: cls_cnt.md section 3.2 correction block and its closing
+  correction note; inv3.md sections 2.3-2.4; ADDENDUM 13; GUIDANCE.md priority 2.
+- The INV(3) $t = 3$, $d = 4$ closure (inv3.md's "INV(3)(i) PROVED at $d = 4$
+  [MV]" via the degree-truncated Buchberger completion engine): DOWNGRADED to
+  engine output, unverified.
+  Reviewer-verified defects: the engine never examines pairs with lcm-degree
+  $> t$, whose S-polynomials can have degree $\le t$ (so the exotics that would
+  refute the claim are invisible to it); the verification pass can time out
+  mid-scan and still report closure; "all pairs" is overstated; and the "four
+  independent configurations" are conjugate or overlapping (orders A and C by
+  variable relabeling; G and G' span the same $W_t$).
+  Nothing downstream is consumed (section 2.21); the $t = 2$ conclusion survives
+  independently.
+  Correction record: inv3.md DOWNGRADE block (2026-10-04); GUIDANCE.md priority 1.
 
 ## 4. Open problems (current forms)
 
@@ -651,24 +997,37 @@ Label: PROVED (written conditional proof; premise open).
   Is there a constant $C$ such that every budgeted adaptive tree ($e = d\log k$
   queries, degree $\le d$ over $\mathbb{F}_2$) in the $\Omega(n,d)$ pipeline at
   $p = 2$ errs with probability $\ge k^{-C}$?
-  Degrees 2, 3, and 4 are proved (Theorems 3, 3', 3''; the same $d^2 \sim n$
-  boundary at every degree through 4).
-  The open quantifier is degree $\ge 5$, consuming the degree-4 template (star
-  classes, alias identities, mass monotonicity), with Theorem A as the general-$d$
-  tool; the failure mode to rule out is a new determined-relation class with
-  sub-$\Theta(n)$ completion cost (deg4_theory.md section 6 forward note).
-  Sub-items: the exponent constants (Conjecture E5 below), intermediate budgets
-  $e = \Theta(n)$ (deg2_theory.md open item 3), and the multi-class deep-zero-run
-  composition (deg3_theory.md open item 3).
-- Lemma CLS and Lemma CNT (the general-$d$ degree-2 transfer).
-  CLS: every diagonal degree-2 column varies, and every determined relation among
-  degree-$\le 2$ coordinates is generated by the inventoried families (row
-  parities, star rows, same-line pins, Boolean alias, $e_0$); verified exactly
-  through restricted $(6,3)$.
-  CNT: the tight adaptive completion count behind $\varepsilon(e,n,d)$; the
-  non-adaptive case is proved.
-  Closing both closes Lemma M at general $d$ and with it O5 (lemma_m.md sections
-  3.3 and 5).
+  The cap side is assembled at every fixed degree granting INV(d) (Theorem 3-gen,
+  section 2.21): degrees 2 through 5 are proved at their degrees (Theorems 3, 3',
+  3'', 3'''; the same $d^2 \sim n$ boundary through degree 5), degree 2 stands at
+  general $d$ in regime (section 2.18), and under INV(d) the boundary is
+  degree-independent at every $d$.
+  The open core, in order (all_degrees.md section 5.2): (i) INV-d at $t \ge 3$,
+  the single mathematical gap (the $t = 3$ engine closure at $d = 4$ is
+  downgraded, section 3; the honest next target is a correct engine lemma or an
+  independently audited computation at a feasible rectangle); (ii) MIXTURE-d at
+  $d \ge 4$ (closed at $d \le 3$, section 2.19); (iii) the boundary constant at
+  $d^2 = \Theta(n)$; (iv) intermediate budgets $e = \Theta(n)$ (deg2_theory.md
+  open item 3); (v) the exponent constants (Conjecture E5 below).
+  Sub-items: the multi-class deep-zero-run composition (deg3_theory.md open
+  item 3) and the standing small items (the cor:coin base; NAL at $k \ge 6$; the
+  degree-$\ge 3$ write-out of the B1/B2 bookkeeping).
+  Failure mode of record, restated on support sizes (cls_cnt.md correction 5;
+  all_degrees.md section 3.2): a relation class whose minimal support is small
+  ($\Theta(d)$) and transcript-identifiable and not a supersupport of an
+  inventoried configuration; the deg4 forward note's "no sub-$\Theta(n)$
+  completion cost" is false in form (the DS/UU supports are $\Theta(d)$) and
+  harmless in regime, and the induction tracks support sizes, not query costs.
+- Lemma CLS and Lemma CNT (the general-$d$ degree-2 transfer): CLOSED in regime
+  (sections 2.16 and 2.17; this entry supersedes their former open listing here).
+  CLS: every diagonal degree-2 column varies at general $d$, and Q-A holds with
+  the machine anchors at $(4,2)$ and $(6,3)$; the general-$d$ engine lemma is the
+  named open repair (section 3).
+  CNT: the headline form is tight, the non-adaptive bound is proved over the full
+  five-family inventory, and the adaptive case is closed in regime modulo B2.
+  Residuals, folded into O2's open core: Lemma L-CLASS (the minimal-support
+  classification beyond the five families, harmless for counting), B2's exact
+  form, and the boundary constant at $d^2 = \Theta(n)$.
   Naming note: odd_p_theory.md uses "Lemma CNT" for its nonzero-count law; the two
   are unrelated.
 - O6 at degree $\ge 3$, odd $p$.
@@ -701,8 +1060,21 @@ Label: PROVED (written conditional proof; premise open).
 - A value-determined diagonal degree-2 column at some $d$, or an exotic relation on
   an alias-aware block-free window, would falsify Lemma CLS and force a
   recomputation of the degree-2 constants there.
-- An adaptive tree completing a row or star with probability materially above
-  $\varepsilon(e,n,d)$ would falsify Lemma CNT's counting.
+- An adaptive tree whose completion probability exceeds $\varepsilon_{full}(e,n,d)\,
+  e^{2ed/n} + O(e/n)$ over the five-family inventory would falsify Proposition
+  CNT-A or lemma B2 (cls_cnt.md section 5.3).
+- A window at $(4,2)$ or $(6,3)$ whose true law deviates from fresh-bit and whose
+  support contains none of the five families would falsify the covering theorem
+  and with it INV-2 (searchable now by minimal-codeword enumeration of
+  $\overline{V}$, dimensions 166 and 512).
+- A $\ge 3$-star cancellation chain whose minimal support is small ($\Theta(d)$)
+  and transcript-identifiable and not a supersupport of any pair configuration
+  would create a sub-$\Theta(n)$ completion mechanism and break
+  $P_{\mathrm{blk}}$ at that degree: the corpus's named O2 failure mode, located
+  inside INV-d (all_degrees.md section 5.3).
+- A degree-$\ge 4$ mixture tree beating the monomial-class cap at a measured point
+  would show MIXTURE-d bites and reopen the scope item with content (closed at
+  $d \le 3$, section 2.19).
 - An $F_p$ audit finding $L(Q_i^\rho) \ne 0$ at any pigeon or any $p$ would
   collapse the characteristic-uniform channel law and force O6's redevelopment from
   scratch.
@@ -723,8 +1095,13 @@ Label: PROVED (written conditional proof; premise open).
 
 ## 6. Consolidation note
 
-No inconsistency between sources was found during this consolidation; nothing was
-stopped, and nothing was repaired silently.
+This pass folds the newest wave (all_degrees.md, cls_cnt.md, inv3.md,
+mixture3.md, deg5_theory.md) into sections 2, 4, and 5, and adds the two
+retractions of section 3; nothing was repaired silently.
+No live inconsistency between sources was found; the one sequencing artifact is
+that all_degrees.md's MIXTURE-d line (written before mixture3.md) says the
+mixture class is covered only at $d = 2$, superseded by the dated ADDENDUM 12
+and stated here in the resolved form (closed at $d \le 3$, section 2.19).
 Every number above was taken from regeneration_2026-10-04.md or from the cited
 source document.
 Editorial notes, not inconsistencies: the labels "Theorem B" (the proof_complexity.md
@@ -733,10 +1110,15 @@ parity tree versus the err_form_route.md route theorem), "Theorem 3''" (the
 deg4_theory.md cap versus the odd_p_theory.md cap), and "Lemma CNT" (the lemma_m.md
 completion count versus the odd_p_theory.md nonzero-count law) each name two
 distinct objects; this file disambiguates by citation.
+The newest wave adds "Theorem 3'''" (the deg5_theory.md cap, a third distinct
+object in that family) and makes "Lemma CNT" name the cls_cnt.md completion count
+of section 2.17, still distinct from odd_p_theory.md's law.
 One channel-scope item not listed in section 3 because it is proved on its own
 channel: cert_floor.md Theorem R (the rows-and-columns parity tree) is proved for
 the coin channel and has no true-pipeline existence (its $Q_i$ half answers 0
 determinedly there); its surviving half is Theorem 4 (deg2_theory.md section 10
 item 3).
-Maintenance: when a result lands or dies, update this file together with
-docs/theorem_map.md, so the one current statement and the map stay in sync.
+Maintenance: sections 2.16-2.21 were added together with their PROVED_CLAIMS and
+REQUIRED_CLAIMS entries in proved_registry.py in the same change; when a result
+lands or dies, update this file together with docs/theorem_map.md, so the one
+current statement and the map stay in sync.

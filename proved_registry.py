@@ -177,6 +177,65 @@ PROVED_CLAIMS: list[tuple[str, str, str, str, str]] = [
         "Theorem R (err-form route)",
         WRITTEN_PROOF,
     ),
+    (
+        "CR-2.16",
+        r"Lemma CLS at general $d$ (the degree-2 relation inventory) - diagonal"
+        r" variation via Theorem A plus the Q-A dimension identity by the"
+        r" d-uniform degree-truncated Buchberger argument with master identities"
+        r" M1-M5, I1; the general-d engine lemma (Lemma TB) is a named open"
+        r" repair; unconditional at d <= 3.",
+        "cls_cnt.md",
+        "CLS(ii) core: the degree-2 slice of the relation space",
+        WRITTEN_PROOF,
+    ),
+    (
+        "CR-2.17",
+        r"Lemma CNT (the completion count at general $d$) - the headline form"
+        r" tight, the non-adaptive bound proved over the full five-family"
+        r" inventory, the adaptive case closed in regime modulo B2 (Proposition"
+        r" CNT-A).",
+        "cls_cnt.md",
+        "Proposition CNT-A",
+        WRITTEN_PROOF,
+    ),
+    (
+        "CR-2.18",
+        r"Theorem 3 at general $d$ in regime (the degree-2 slice of O2,"
+        r" upgraded) - the section 2.8 cap and certificate form at general d"
+        r" with d^2 log k = o(n), modulo cor:coin base, B2, and L-CLASS"
+        r" absorbed; the MIXTURE-d scope caveat stated in the regime line.",
+        "all_degrees.md",
+        "Theorem 3's step (6) is closed at general",
+        WRITTEN_PROOF,
+    ),
+    (
+        "CR-2.19",
+        r"Theorem M3-D (MIXTURE-3; MIXTURE-d closed at $d \le 3$) - the full"
+        r" printed degree-<=3 class covered with the constant repaired to"
+        r" q3_mix (finite-n lift only) and the same aliveness condition.",
+        "mixture3.md",
+        "Theorem M3-D (repaired Theorem 3' over the FULL printed degree-",
+        WRITTEN_PROOF,
+    ),
+    (
+        "CR-2.20",
+        r"Theorem 3''' (the degree-5 budgeted cap; assembly at the machine"
+        r" points) - the q_5* cap with Proposition M5's general-k mass chain;"
+        r" the general-d status is NOT upgraded (consumes INV(5)).",
+        "deg5_theory.md",
+        "Theorem 3''' (budgeted cap, true channel",
+        WRITTEN_PROOF,
+    ),
+    (
+        "CR-2.21",
+        r"Theorem 3-gen (the all-degrees budgeted cap; conditional) and the"
+        r" INV(d) premise - the all-degrees assembly proved at d = 2 and"
+        r" INFERRED at general d: the premise INV(d) is open at every t >= 3"
+        r" layer, the inv3 t=3/d=4 closure being downgraded engine output.",
+        "all_degrees.md",
+        "Theorem 3-gen (all-degrees budgeted cap)",
+        WRITTEN_PROOF,
+    ),
 ]
 
 # (section number, entry title) mirroring the section-2 entry headers of
@@ -198,4 +257,10 @@ REQUIRED_CLAIMS: list[tuple[str, str]] = [
     ("2.13", r"The GAP E bracket (the exact budgeted optimum, computed)"),
     ("2.14", r"The odd-$p$ transfer (degree $\le 2$ at every characteristic)"),
     ("2.15", r"Theorem R (the err-form route; conditional)"),
+    ("2.16", r"Lemma CLS at general $d$ (the degree-2 relation inventory)"),
+    ("2.17", r"Lemma CNT (the completion count at general $d$)"),
+    ("2.18", r"Theorem 3 at general $d$ in regime (the degree-2 slice of O2, upgraded)"),
+    ("2.19", r"Theorem M3-D (MIXTURE-3; MIXTURE-d closed at $d \le 3$)"),
+    ("2.20", r"Theorem 3''' (the degree-5 budgeted cap; assembly at the machine points)"),
+    ("2.21", r"Theorem 3-gen (the all-degrees budgeted cap; conditional) and the INV(d) premise"),
 ]
