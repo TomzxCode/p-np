@@ -4,8 +4,9 @@ Three focused diagrams: (1) foundations and the coin-channel layer, (2) the
 true-pipeline theory, (3) the open gaps and the conditional route. Green = proved
 and computation-verified; red dashed = retractions with provenance; yellow dashed =
 open gaps; the route to the objective runs through Theorem 6.1's err-form assembly
-(chi_transfer.md Theorem 4), since the printed $\chi$-hypothesis (3) is false as
-printed. Full retraction provenance in LOG.md; references in bibliography.md.
+(chi_transfer.md Theorem 4), since the printed $\chi$-hypothesis (3) is unusable
+under the corpus's quantifier reading [INFERENCE; downgraded per GUIDANCE
+2026-10-04]. Full retraction provenance in LOG.md; references in bibliography.md.
 
 ## 1. Foundations and the coin-channel layer
 
