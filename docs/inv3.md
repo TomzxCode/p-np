@@ -1,5 +1,37 @@
 # INV(3): the t = 3 degree-truncated Buchberger over the enlarged inventory
 
+# INV-d at t=3 theory document
+
+> ======================================================================
+> DOWNGRADED 2026-10-04 (second review, GUIDANCE.md priority 1; verified
+> independently by the reviewer). The t=3, d=4 claim below is ENGINE
+> OUTPUT, UNVERIFIED, and must not be consumed by current_results.md,
+> theorem_map.md, or any downstream statement until the completion
+> argument is re-proved on a correct lemma (genuine multivariate
+> division / Groebner theory for the dehomogenized problem) or replaced
+> by a direct, independently audited computation at a feasible
+> rectangle. Specific defects, all reviewer-verified:
+>   (a) Lemma TB (cls_cnt.md section 3.2) is FALSE as stated:
+>       counterexample G = {x^2, xy+1} over F_2[x,y], t = 2 - the only
+>       pair has lcm-degree 3 > 2, so the hypothesis is vacuous, yet
+>       1 in I cap S_<=2 and 1 not in W_2 (the document's own
+>       xy-coefficient argument proves the negation).
+>   (b) The engine never examines pairs with lcm-degree > t
+>       (chi_inv3_check.py:412-415, 484-486), but their S-polynomials can
+>       have degree <= t (a star row paired with a disjoint degree-2 row
+>       leaves a degree-3 residue) - those residues are invisible to the
+>       run, so it cannot detect the exotics that would refute the claim.
+>   (c) The verification pass can time out mid-scan and still report
+>       closure (:481, 495-496, 507).
+>   (d) "All pairs" is overstated: only lcm <= t pairs are checked; and
+>       the "four independent configurations" are conjugate/overlapping
+>       (orders A and C by variable relabeling; G and G' span the same
+>       W_t and share the neutrality echelon).
+> SURVIVES: the t=2 conclusion - separately confirmed by the exact
+> dimension computation in chi_cls_cnt_check.py at (6,3).
+> ======================================================================
+
+
 Result of the theory agent (2026-10-04). Status: analysis, not peer-reviewed.
 Task: formalize INV(3) (the generator set $G_3$ and the claim
 $(V \oplus \langle e_0\rangle) \cap S_{\le 3} = V_{\le 3} \oplus \langle e_0\rangle$),

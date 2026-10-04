@@ -143,9 +143,9 @@ export PATH=/tmp/opencode/elan/toolchains/leanprover--lean4---v4.34.1/bin:$PATH
 lake build
 ```
 
-(elan lives under /tmp/opencode, which is session-scoped; a fresh machine would
-install elan normally. ~6 GB free disk is needed during the mathlib cache download,
-~5 GB at rest.)
+(elan moved to /home/tomzx/.elan on 2026-10-04 - see the Working environment
+section above; this historical note predates the move. ~6 GB free disk is needed
+during the mathlib cache download, ~5 GB at rest.)
 
 ## Notes on other files in this directory
 

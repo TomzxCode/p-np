@@ -2048,3 +2048,40 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
 - Consolidated: proof_complexity.md ADDENDUM 13; cls_cnt.md correction note;
   GOAL section 6 INV status. AGENTS.md banned-terms update noted (avoid
   "load-bearing real" variants in new prose).
+- Two agents dispatched (GOAL section 6 continuation):
+  1. inv3-11x10: memory-aware attempt at the d=5 completion rung (bitset rows,
+     profile-first; the wall is reported as a finding if hit) ->
+     docs/inv3.md extension + chi_inv3_check.py registered check
+  2. mixture4: MIXTURE-d at degree 4 (self-exclusion vs the support-4 {0,1/2}
+     breakdown; posterior max; cap extension) -> docs/mixture4.md +
+     experiments/chi_mixture4.py
+- In flight: 2 agents. The queue beyond them: nothing pending - the remaining
+  open items (INV(4) t=4 layer, boundary constant, e=Theta(n), Conjecture E5)
+  need either the 11x10 result as input or are sharpening questions.
+
+### 2026-10-04 (cont.) - SECOND GUIDANCE review processed; inv3 DOWNGRADED (eighteenth correction-class event)
+- The owner supplied an updated GUIDANCE.md (second review) whose headline,
+  independently verified: the inv3 t=3/d=4 claim is UNSOUND. Lemma TB is false
+  as stated (counterexample G = {x^2, xy+1}, t=2: hypothesis vacuous, yet
+  1 in I cap S_<=2 and 1 not in W_2); the engine never examines lcm>t pairs
+  whose S-polys can land in degree <= t (star + disjoint degree-2 row residue);
+  the verification pass can time out mid-scan while reporting closure; the
+  "independent configurations" are conjugate/overlapping. The t=2 conclusion
+  SURVIVES (independent exact dimension computation at (6,3)).
+- ACTIONS TAKEN: inv3.md DOWNGRADE block inserted (t=3/d=4 claim = engine
+  output, unverified; do not consume); cls_cnt.md section 3.2 label corrected
+  (Lemma TB false as stated; t=2 conclusion survives via the independent
+  dimension computation); GOAL section 6 INV status downgraded (INV(3) at
+  d >= 3 REOPENED pending a correct engine or an audited direct computation);
+  GOAL section 1 reframed per the second review (a study of a finite algebraic
+  obstruction; STOP RULES adopted: 11x10 memory-walled + no cheaper certificate
+  => write up as a bounded negative result); FEASIBILITY.md stale elan note
+  fixed; paper FROZEN at its 2026-10-03 content state (freeze note in
+  paper/CHANGES.md).
+- DISPATCHED: adversarial engine gate (feed known-false identities, assert
+  flagged; certify a repaired engine) + reconciliation agent (fold the newest
+  wave into current_results.md and theorem_map.md, inv3 EXCLUDED).
+- This is the EIGHTEENTH correction-class event. The count and the pattern are
+  the point: the second review's bottom line (artifact promoted to proof before
+  verification; PASS gate blind to it) is adopted as the standing critique, and
+  the adversarial gate is the structural response.

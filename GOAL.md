@@ -22,11 +22,18 @@ P vs NP investigation, and no fractional confidence in P != NP is claimed
 anywhere in the corpus (the earlier "93%" line was a subjective prior, removed
 per guidance).
 
-Purpose of record (priority 2 of the guidance, adopted): a small contribution -
-a careful note on the p=2 restriction of Krajicek's reduction - CONTINGENT on an
-expert confirming the reading of Definitions 3.1 and 4.3 (see
-docs/note_to_author.md, rewritten as a reading-check question). Until that
-confirmation, everything here is a learning log and survey.
+Purpose of record (GUIDANCE second review, priorities 2 and 6, adopted): this
+corpus is A STUDY OF A FINITE ALGEBRAIC OBSTRUCTION - the truncated-Buchberger
+completion question INV(d) on increasing rectangles - plus a survey and
+learning record. It is not a path to P != NP, and the effort is sized
+accordingly. STOP RULES for the algebra program (adopted verbatim from
+GUIDANCE priority 6): if the next rung (11x10) is memory-walled and no cheaper
+certificate appears, write the program up as a bounded negative result and
+stop. No new rectangle is attempted without the previous rung's engine passing
+the adversarial validation (GUIDANCE priority 3). The reading-check note
+(docs/note_to_author.md, question form; sending is the owner's decision)
+remains the highest-value external action: every claim in this corpus depends
+on a reading no expert has confirmed.
 
 ## 2. Operating mode: maximum parallel agents
 
@@ -235,10 +242,14 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   docs/mixture3.md; same boundary; self-exclusion extends verbatim). Open at
   d >= 4. Instrument notes: wedge soundness (Lemma S3's distinct-hole-cells
   condition is load-bearing); chi_mixture_cap.py vh-role caveat in MEMORY.md.
-- INV status (2026-10-04, docs/inv3.md): INV(3)(i) PROVED at d=4 [MV, stronger
-  ideal identity I cap S_<=3 = W_3]; REDUCED at d >= 5 to one finite completion
-  run per rectangle (next rung 11x10 memory-walled). The t=3 identity is
-  NECESSARY at d >= 3 (disproved at 4 holes with an explicit exotic). The
-  cls_cnt t=2 engine consumed a false reduction hypothesis - conclusion
-  re-proved by the repaired engine (seventeenth correction-class event,
-  proof_complexity.md ADDENDUM 13). INV(4): only the t=4 layer open.
+- INV status (DOWNGRADED 2026-10-04 per GUIDANCE second review): the inv3
+  t=3/d=4 claim is ENGINE OUTPUT, UNVERIFIED - Lemma TB is false as stated
+  (counterexample G = {x^2, xy+1}, t=2), the engine never examines lcm > t
+  pairs whose S-polys can land in degree <= t, the verification pass can time
+  out mid-scan while reporting closure, and the "independent configurations"
+  are conjugate/overlapping. The t=2 conclusion SURVIVES (independent exact
+  dimension computation at (6,3)). INV(3) at d >= 3 is REOPENED pending a
+  correct engine (genuine multivariate division for the dehomogenized
+  problem) or an independently audited direct computation. An adversarial
+  engine-validation agent is dispatched (feed known-false identities, assert
+  flagged).

@@ -121,6 +121,18 @@ for the graded argument).
 
 ### 3.2 The degree-truncated Buchberger lemma
 
+> [2026-10-04 CORRECTION, second review - verified independently]: Lemma TB
+> below is FALSE as stated. Counterexample: G = {x^2, xy+1} over F_2[x,y],
+> t = 2. The only pair has lcm-degree 3 > 2, so the hypothesis is vacuous,
+> yet 1 in I cap S_<=2 and 1 not in W_2 (the xy-coefficient argument below
+> proves the negation). The proof sketch's flaw: when the representation's
+> top degree exceeds t, the multiplied reduction steps are not bounded by t.
+> The t=2 CONCLUSION of this document survives - separately confirmed by the
+> exact dimension computation in chi_cls_cnt_check.py at (6,3) - and the
+> repaired engine (degree-capped completion with machine-enforced span
+> neutrality) is the record: docs/inv3.md + the adversarial validation
+> dispatched per GUIDANCE priority 3.
+
 Lemma TB. Let $J = \langle G \rangle \subseteq R$ and fix $t \ge 0$.
 Suppose every S-polynomial $S(g_1, g_2)$ of a pair $g_1, g_2 \in G$ whose
 leading-monomial lcm $M$ satisfies $\deg M \le t$ reduces to $0$ by steps

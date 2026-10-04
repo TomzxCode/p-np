@@ -471,12 +471,11 @@ def enum_configs(kmax=3):
                         keep = [('M', 0, 1), ('M', 2, 3), ('M', 4, 5)]
                     else:
                         keep = [('M', 0, 1), ('M', 2, 3), ('V', 0)]
-                    pool = [g for g in pool if g in keep]
-                    if t in (5, 6):
-                        combos = [tuple(keep)] if len(pool) == len(keep) \
-                            else []
-                    else:
-                        combos = list(combinations(pool, 2))
+                    fams = [[('M', 0, 1), ('M', 2, 3), ('V', 0)],
+                            [('M', 0, 1), ('M', 0, 2), ('M', 0, 3)]] \
+                        if t == 4 else [[('M', 0, 1), ('M', 2, 3), ('M', 4, 5)]]
+                    combos = [tuple(f) for f in fams
+                              if all(g in set(pool) for g in f)]
                     for sub in combos:
                         for const in (0, 1):
                             best = None
@@ -1169,8 +1168,8 @@ def main() -> None:
     for (const, terms, geo) in configs:
         tables.append((const, terms, geo, status_table(geo, terms, const)))
         if (const == 0 and len(terms) == 3 and all(t[0] == 'M' for t in terms)
-                and len({t[1] for t in terms}) == 1
-                and len({(geo[t[1]], geo[t[2]]) for t in terms}) == 3 + 1):
+                and terms[0][1] == terms[1][1] == terms[2][1]
+                and len({t[2] for t in terms}) == 3):
             star_idx = len(tables) - 1
         if (const == 0 and len(terms) == 2 and all(t[0] == 'M' for t in terms)
                 and terms[0][1] == terms[1][1]

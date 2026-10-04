@@ -10,3 +10,10 @@ pipeline (class b needs the all-zero free row that forced row XOR = 1 forbids;
 of the coin channel (valid below per-row cost Theta(n) per Lemma REL); the open
 remnant is the budgeted all-degrees floor, degree-<=2 form settled at
 err*(d, d log k) = k^{-Theta(d^2/n)}. Recompiled clean (exit 0).
+
+FREEZE NOTE (2026-10-04, per GUIDANCE second review): this paper is frozen at
+its 2026-10-03 content state. Newer corpus results (degree-4/5 caps, the
+degree-truncated Buchberger program, MIXTURE-3, the err-form route, the
+inventory enlargement) are NOT incorporated and live in docs/. A future
+revision should fold them in only after the INV(d) engine question is
+resolved (see docs/inv3.md's downgrade block and GUIDANCE priority 1).
