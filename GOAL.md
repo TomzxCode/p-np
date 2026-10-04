@@ -187,3 +187,8 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   rules on it.
 - Do not delete or rewrite GUIDANCE.md. Extend it in place with dated addenda
   as recommendations are resolved, so the review stays a single living document.
+
+- O5 status (2026-10-04): Lemma M PROVED (fresh-bit channel identification);
+  O5 closes outright for d <= 3 and is reduced to Lemma CLS + Lemma CNT at
+  general d. Theorem 3's constant repaired q -> q2* = max(q, q_and_exact);
+  the d^2 ~ n boundary is unmoved (proof_complexity.md ADDENDUM 7).

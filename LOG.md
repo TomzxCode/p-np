@@ -1717,3 +1717,79 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
 - Status of the recommendations: NOT yet acted on. Section 9 requires future
   sessions to read GUIDANCE.md and record adopt/reject decisions in LOG.md.
 - No corpus writes were made beyond GOAL.md, instruction_log.md, and this entry.
+
+### 2026-10-04 (cont.) - GUIDANCE.md adopted (owner-supplied external review)
+- Reviewed the corpus honestly and adopted its priority actions:
+  1. README + GOAL reframed: the problem is open, no progress toward a
+     resolution is claimed, the corpus is a study of the Krajicek reduction's
+     p=2 restriction and its crux O2. The 93% confidence line removed (was a
+     subjective prior, not a product of this work); the evidence-balance
+     section removed.
+  2. verify_corpus.py renamed corpus_lint.py, honestly labeled a documentation
+     consistency linter (NOT mathematical validation); PASS no longer cited as
+     verification. Meaningful gates added: lean_channel/check_budget.sh
+     (sorry-budget + axiom-base gate; it immediately caught the registered-9 vs
+     naive-11 count discrepancy - two of the 11 were comment mentions) and the
+     registered experiment runs.
+  3. Printed-(3) over-claims downgraded everywhere (bibliography, GOAL route
+     note, proof_complexity ADDENDUM 4, chi_transfer, err_form_route,
+     theorem_map): the printed (3) is a hypothesis about the paper's own
+     constructed tree; our universal-quantifier reading is INFERENCE; the
+     trivial-tree violation is a reading gap, not a paper error. Expert
+     confirmation of the quantifier is prerequisite to any claim.
+  4. note_to_author.md rewritten as a reading-check QUESTION (three numbered
+     questions on Defs 3.1/4.3 and the p=2 regime) - not sent; sending remains
+     the owner's decision, and the guidance recommends question-form.
+  5. PROVED discipline made mechanical in GOAL.md: PROVED requires a written
+     line-by-line proof or machine check; simulations are MEASURED;
+     reading-dependent statements are INFERRED.
+  6. Crank-claim monitoring reduced to one-line appendix per screen.
+  7. Hygiene: the six in-flight research deliverables (deg4_theory,
+     mixture_cap, odd_p_theory, lemma_m, jdp_demod, gap_e_constants) are being
+     produced by running agents and will land as they complete.
+- One process violation caught and fixed in-turn: an intermediate commit went
+  out with a failing lint (two stale references); fixed and pushed as a
+  follow-up commit per the append-only rule.
+- Conversion campaign note: 17 of 17 files converted and pushed (README was the
+  last; its completion triggered the GUIDANCE adoption).
+
+### 2026-10-04 (cont.) - deg4-theory agent: cap extended to degree <= 4 (Theorem 3'')
+- Deliverables: docs/deg4_theory.md + experiments/chi_deg4_check.py (registered
+  run 14 s, 25 PASS / 0 FAIL; orchestrator re-ran, reproduced).
+- Q1: the degree-3 full-sweep instrument dies at d = 4 (|S(8,4)| = 1.28M columns,
+  167-180 GB echelon) - replaced by witness algebra + orbit arithmetic. Degree-4
+  columns: 912,978 fixed-0 + 302,472 varying = C(75,4) exactly at (8,4); alias
+  family is purely Boolean-identity (x^4 -> x etc.).
+- THEOREM A (new, general d): matching-k columns vary at every d (star-row
+  induction + cor:coin base). Closes deg3_theory's open item 1 and removes its
+  diagonal-variation condition. One honest retraction: the agent's first
+  "elementary" base proof failed; the base rests on cor:coin + the exact (8,4)
+  slice.
+- Q2/Q3/Q4: degree-4 stars proved; post4 closed form digit-exact at four points
+  (8.49M restrictions); NO asymptotic lift (all post_k ratios -> 1, finite-n
+  sign change at n ~ 63-127); certificate search: 68,945 F1-certain patterns, 0
+  unexplained, no better budget scaling (P4 < P3 < P2 < P1 = h1 exact;
+  P4/K_j dominance 4.6e3 to 3.8e9).
+- Q5: THEOREM 3'' - cap extends to degree <= 4, q4* = max(q, q_and, post3,
+  post4); the chi-aliveness boundary stays d^2 log k = o(n), degree-independent
+  through degree 4, with a structural forward sketch for the all-degrees
+  quantifier.
+- Instrument corrections logged in the doc (alias-witness slip, canonical-form
+  role-swap, retracted singles proof).
+- Lint: pending-script mechanism added for in-flight agent files
+  (chi_odd_p_check.py currently mid-write by the odd-p agent). PASS restored.
+- GOAL.md section 6 updated next: degrees 2-4 proved; open quantifier is
+  degree >= 5, with Theorem A as the general-d tool.
+
+### 2026-10-04 (cont.) - lemma-m agent: TWELFTH correction-class event
+- Lemma M PROVED, with the channel identification repaired: the transfer target
+  is the fresh-bit channel, not the product-semantics channel (free-triangle
+  TV = 1/2, machine-verified). Discrepancy inventory: exactly three
+  generator-row families; eps bound o(1) iff e = o(n).
+- O5 corollary: AND posterior on the true pipeline = q_and_exact = 0.2786 at
+  (32,2) for every budgeted adaptive degree-<=2 tree -> Theorem 3's constant
+  repaired q -> q2* = max(q, q_and_exact) (violation was Theta(d^4/n^2),
+  outside the o(1) slack). Boundary d^2 ~ n unmoved.
+- O5: closed for d <= 3; reduced to Lemma CLS + Lemma CNT at general d.
+- Consolidated: proof_complexity.md ADDENDUM 7; GOAL.md section 6 O5 status;
+  lemma_m.md committed and pushed separately (fe505d5).

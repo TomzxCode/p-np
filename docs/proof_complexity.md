@@ -1031,3 +1031,34 @@ repaired via Lemma P + accuracy tuning). The printed (3) remains false as
 printed and strictly stronger than the route's premise where it holds. Every
 hypothesis of Theorem R maps 1:1 to a corpus open problem; the route's sole
 mathematical premise is O2.
+
+## ADDENDUM 7 (2026-10-04, lemma-m agent; adjudicated: the TWELFTH correction-class
+## event - Lemma REL's channel identification repaired; Theorem 3's constant repaired)
+
+lemma_m.md proves Lemma M, with two consequences for existing results:
+
+1. CHANNEL IDENTIFICATION REPAIRED: the transfer target is NOT the stipulated
+   product-semantics channel - on a free triangle {x_ab, x_cd, x_ab x_cd}
+   (three queries) the true pipeline is uniform on 8 patterns while the product
+   law lives on 4 (TV = 1/2, machine-verified). The correct block-free
+   stipulation is the FRESH-BIT channel (diagonals are fresh fair bits
+   independent of their component singles). This repairs deg2_theory.md Lemma
+   REL's final identification. The discrepancy inventory is exactly THREE
+   generator-row families: full free rows (parity lock), completed Q_r x_cd
+   sum-rule stars (proved at every d >= 2), and the K_j full-column relation;
+   eps(e,n,d) <= (1/2) A [(e/n)^{2d} + (2e/(n-1))^{2d-1}], o(1) iff e = o(n).
+2. THEOREM 3 CONSTANT REPAIRED: the per-hit AND posterior on the TRUE pipeline
+   is q_and_exact = (M1+M2)/(2M0+2M1+M2) = 0.2786 at (32,2) (exact; q_and =
+   0.2763 is the independent-mass approximation; q = 0.2632), for EVERY
+   budgeted adaptive degree-<=2 tree. Theorem 3's constant q is therefore
+   repaired to q2* = max(q, q_and_exact) - the printed cap was violated by
+   Theta(d^4/n^2), outside its o(1) slack. The d^2 ~ n boundary is UNMOVED.
+   O5 closes outright for d <= 3 and is REDUCED to two named lemmas at general
+   d (Lemma CLS: general-d diagonal variation, verified to (6,3); Lemma CNT:
+   tight adaptive completion counting).
+
+Per the GUIDANCE labeling discipline: the fresh-bit identification and the
+constant repair are PROVED (exact support enumeration over the full kernel
+coset, 1442 alias-aware block-free windows, zero violations, at the
+kernel-classified points (4,2)/(6,3)); the general-d reduction is INFERRED
+pending Lemma CLS/CNT.
