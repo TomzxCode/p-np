@@ -235,3 +235,10 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   docs/mixture3.md; same boundary; self-exclusion extends verbatim). Open at
   d >= 4. Instrument notes: wedge soundness (Lemma S3's distinct-hole-cells
   condition is load-bearing); chi_mixture_cap.py vh-role caveat in MEMORY.md.
+- INV status (2026-10-04, docs/inv3.md): INV(3)(i) PROVED at d=4 [MV, stronger
+  ideal identity I cap S_<=3 = W_3]; REDUCED at d >= 5 to one finite completion
+  run per rectangle (next rung 11x10 memory-walled). The t=3 identity is
+  NECESSARY at d >= 3 (disproved at 4 holes with an explicit exotic). The
+  cls_cnt t=2 engine consumed a false reduction hypothesis - conclusion
+  re-proved by the repaired engine (seventeenth correction-class event,
+  proof_complexity.md ADDENDUM 13). INV(4): only the t=4 layer open.

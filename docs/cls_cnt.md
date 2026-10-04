@@ -545,3 +545,15 @@ COMPLETE stars (the cancelled common term is a collision, not a fresh
 product) and is therefore $E_{star}$-covered; the genuinely new class is the
 $I1$ combination with $j \ne j'$; (2) `rowspace_intersection` undercounted
 (item 7 above) and was replaced.
+
+## CORRECTION (2026-10-04, inv3 agent): the t=2 Buchberger engine consumed a false
+## reduction hypothesis - conclusion re-proved by the repaired engine
+
+Lemma TB's reduction hypothesis fails for the corpus's own G at t = 2 (live
+witness S(Q_0, C_{0,1,3}) = RS(0,1,3), exhaustively non-reducible). The sweep
+behind this document's t=2 record tested the weaker in-span condition and
+treated it as equivalent to reduction - the equivalence is false (counterexample
+G = {x^2, xy + 1}). The t=2 CONCLUSION (V_<=4 cap S_<=2 = V_<=2 at the recorded
+parameters) is RE-PROVED by the repaired engine (degree-capped completion with
+machine-enforced span neutrality): docs/inv3.md. The section-3 Buchberger
+argument's master identities are unaffected; the engine repair is the record.

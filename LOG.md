@@ -2028,3 +2028,23 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   hole-cells condition is load-bearing (corpus form already correct).
 - MIXTURE-d: closed at d <= 3, open at d >= 4. ADDENDUM 12 appended to
   proof_complexity.md; GOAL section 6 updated.
+
+### 2026-10-04 (cont.) - inv3 retry: SEVENTEENTH correction-class event; INV(3) proved at d=4
+- Deliverables: docs/inv3.md + experiments/chi_inv3_check.py (37 PASS / 0 FAIL,
+  1037 s registered; --fast 119 s).
+- [CORRECTION] the cls_cnt t=2 Buchberger engine consumed a FALSE reduction
+  hypothesis (live witness at t=2; the in-span/reduction equivalence is false,
+  6-line counterexample). The t=2 conclusion is RE-PROVED by the repaired
+  engine (degree-capped completion, machine-enforced span neutrality).
+- INV(3)(i) PROVED at d=4 [MV]: ideal identity I cap S_<=3 = W_3 on the 9x8
+  rectangle (2 variants x 2 orders, identical traces); tautological at d=3;
+  REDUCED at d >= 5 to one finite completion run per rectangle (11x10
+  memory-walled). SHARP THRESHOLD: the t=3 identity DISPROVED at 4 holes (the
+  d >= 3 hypothesis is necessary). (8,4) WALL BYPASSED: degree-4 rows project
+  as unit vectors; dim V_<=3(9x8) = 49,941; e_0 clause closed at d <= 4.
+- Theorem 3-gen premise updated: INV(4) only its t=4 layer open (new content
+  named: pair-pair S-polys, the 1.28M neutrality echelon, degree-4 stars +
+  DS/UU/OFF Delta-terms).
+- Consolidated: proof_complexity.md ADDENDUM 13; cls_cnt.md correction note;
+  GOAL section 6 INV status. AGENTS.md banned-terms update noted (avoid
+  "load-bearing real" variants in new prose).

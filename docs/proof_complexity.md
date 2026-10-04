@@ -1191,3 +1191,37 @@ pigeon" wedge phrasing is unsound - the corpus wedge (Lemma S3) correctly
 requires the shared pigeon in distinct hole cells. A slot-alignment caveat in
 chi_mixture_cap.py's virtual vh roles is recorded in MEMORY.md (headline d=2
 results unaffected; chi_mixture3.py reimplements the roles correctly).
+
+## ADDENDUM 13 (2026-10-04, inv3 agent; adjudicated: the SEVENTEENTH correction-class
+## event - the cls_cnt t=2 Buchberger engine consumed a FALSE reduction hypothesis;
+## its conclusion is re-proved by the repaired engine)
+
+1. [CORRECTION] The t=2 record's engine (Lemma TB in cls_cnt.md) consumes a
+   reduction hypothesis that FAILS for the corpus's own generator set G, already
+   at t = 2: live witness S(Q_0, C_{0,1,3}) = RS(0,1,3), exhaustively
+   non-reducible (3-7 states). The cls-cnt sweep had tested the weaker in-span
+   condition and treated it as equivalent - it is not (6-line counterexample
+   G = {x^2, xy + 1}, where in-span holds yet 1 in I \ W_3). The t=2 CONCLUSION
+   is re-proved by the repaired engine: degree-capped Buchberger completion with
+   machine-enforced span neutrality (every addition and all its <=t shifts
+   verified in W_t; a failure is an exotic relation, i.e. a disproof), with
+   termination by fresh irreducible heads.
+2. INV(3)(i) PROVED at d = 4 [MV]: on the 9x8 rectangle the degree-3 truncated
+   completion closes under 2 generator variants x 2 monomial orders (identical
+   traces: +372 generators, 36 deg-2 + 336 deg-3, verification clean), proving
+   the stronger ideal identity I cap S_<=3 = W_3, hence V_<=4 cap S_<=3 = V_<=3.
+   At d = 3 it holds tautologically (the ideal identity also proved at 6 holes).
+   At general d >= 5: REDUCED to one finite completion run per rectangle under
+   the repaired d-uniform engine; the next rung 11x10 is memory-walled
+   (matching the (10,5) instrument note).
+3. SHARP THRESHOLD [DISPROVED]: at the 4-hole rectangle the t=3 identity FAILS
+   with an explicit exotic (R in W_3 subset I with x_{3,0} R in I cap S_<=3 \
+   W_3) - the d >= 3 hypothesis in INV(3) is NECESSARY, not technical.
+4. THE (8,4) WALL BYPASSED [PROVED]: degree-4 rows project onto S_<=3 as unit
+   vectors (pi_{S_<=3}(V_<=4) = V_<=3 + span{e_m}), giving the new datum
+   dim V_<=3(9x8) = 49,941 and closing the e_0 clause at d <= 4 (modulo the
+   paper's designs-exist theorem).
+5. THEOREM 3-GEN PREMISE UPDATED: INV(4) now has only its t = 4 layer open; the
+   named new content at t = 4 is disjoint pair-pair S-polynomials (no longer
+   exempt), the neutrality echelon hitting the 1.28M wall, and degree-4 stars +
+   DS/UU/OFF analogues entering as Delta-terms.
