@@ -59,6 +59,10 @@ confirmation, everything here is a learning log and survey.
   far). Retractions stay visible (corpus convention: correction blocks and
   RETRACTED markers in place).
 - ascii style: one sentence per line; no em-dashes; no banned terms.
+- PROVED enforcement (GUIDANCE item 5, closed 2026-10-04): mechanical via
+  proved_registry.py + corpus_lint.py checks 8-9 - every PROVED claim in
+  docs/current_results.md must trace to a resolvable proof anchor in its proof
+  document; unlabeled PROVED lines trip the hygiene check.
 - Math (owner instruction, 2026-10-04): markdown renders `$...$` / `$$...$$`
   LaTeX. Use it for math in presentation documents (theorem map prose, README,
   open problems, audits); plain ASCII math remains the norm inside Mermaid node
@@ -212,3 +216,11 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   FULL printed degree-2 class (F_2 mixtures) with the same aliveness condition;
   new monomial-star mixture mechanism (Theorem M-A) folds into the constant.
   All wave-1 research agents have reported.
+  * Current results (docs/current_results.md): the ONE current statement of
+    every proved/measured result, retraction, open problem, and falsification
+    condition. The primary document for any reader; the source documents and
+    their correction blocks remain as provenance.
+  * PROVED registry (proved_registry.py, corpus root): every PROVED claim in
+    docs/current_results.md is registered with its proof anchor and verification
+    kind; corpus_lint.py checks 8-9 enforce traceability mechanically
+    (GUIDANCE item 5 closed 2026-10-04).
