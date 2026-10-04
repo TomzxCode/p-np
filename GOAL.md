@@ -225,3 +225,9 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
     docs/current_results.md is registered with its proof anchor and verification
     kind; corpus_lint.py checks 8-9 enforce traceability mechanically
     (GUIDANCE item 5 closed 2026-10-04).
+- O2 status (2026-10-04, all_degrees.md): Theorem 3 upgraded to general d in
+  regime; Theorem 3-gen stated under INV(d) (proved d=2, machine-verified at
+  swept points, open t >= 3 - the single mathematical gap). NEW GAP MIXTURE-d:
+  F_2 mixtures covered only at d=2. Plus: boundary constant (d^2 = Theta(n)),
+  e = Theta(n) regime, Conjecture E5. Theorem 3'/3''/3''' survive verbatim at
+  their degrees.

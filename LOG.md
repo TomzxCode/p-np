@@ -1981,3 +1981,19 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   header collection + heading-level-aware section boundaries. PASS restored and
   verified. The check-9 vocabulary extension (Buchberger/reduc/identit/
   induction/cor:coin) stands.
+
+### 2026-10-04 (cont.) - all-degrees assembly: Theorem 3-gen stated; MIXTURE-d gap opened
+- Deliverable: docs/all_degrees.md (563 lines). Step (6) over the enlarged
+  inventory: eps constant UNCHANGED (eps_full = (1+o(1)) eps_headline, min
+  varying-support 2d, per-event TV 1/2, exactness threshold e < 2d intact;
+  fixed-d caveat recorded). Slices: Theorem 3 upgraded to general d; 3'/3''/3'''
+  verbatim, general-d status unchanged (t=2 truncation).
+- Theorem 3-gen stated under INV(d): PROVED d=2, MV at swept points, OPEN
+  t >= 3 (the t=3 truncated Buchberger is the concrete next target).
+- [NEW GAP] MIXTURE-d: O2's literal quantifier (arbitrary degree-<=d
+  polynomials) vs mixture coverage at d=2 only. Open core now: INV-d t>=3,
+  MIXTURE-d, boundary constant, e=Theta(n).
+- PROVENANCE FIX: ADDENDUM 11 created in proof_complexity.md to resolve the
+  dangling reference from lemma_m.md's correction note (the inventory
+  enlargement was previously recorded only in lemma_m's tail and this LOG).
+- Committed and pushed (all_degrees.md + ADDENDUM 11 + GOAL + LOG).

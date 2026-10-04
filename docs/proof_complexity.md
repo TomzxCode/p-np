@@ -1143,3 +1143,32 @@ same aliveness condition d^2 log k = o(1)-style (M-D). Findings:
    7172 queries x 2 answers at (7,2).
 Effect on Theorem 3's constant: q2* extends to max(q, q_and_exact, q_mix) with
 q_mix -> q_and_exact; the ADDENDUM 7 repair is the e -> infinity limit of this.
+
+## ADDENDUM 11 (2026-10-04, cls-cnt + all-degrees agents): inventory enlarged to five
+## families; Theorem 3 upgraded to general d; Theorem 3-gen stated; MIXTURE-d gap opened
+
+(This ADDENDUM number was cited from lemma_m.md's correction note before this
+section existed; it is created here to resolve that reference.)
+
+1. EVENT INVENTORY ENLARGED: the fresh-bit window identification now excludes
+   FIVE relation families {row, star, DS, UU, OFF} + catch-all (cls_cnt.md
+   section 4; DS/UU/OFF machine-verified at (4,2)/(6,3); lemma_m's refined
+   E_star missed them - REL's original target-free definition was safe).
+2. CLS PROVED at general d, d-UNIFORM: degree-truncated Buchberger with master
+   identities M1-M5 + I1 (machine-checked at 5x4/7x6 rectangles; machine anchor
+   dim(V cap S_<=2) = 511 = dim V_<=2 at (6,3)). CNT: the headline form is
+   TIGHT (enlarged inventory contributes only dominated Delta terms);
+   non-adaptive PROVED over the full inventory; adaptive closed in-regime
+   modulo bookkeeping lemma B2.
+3. THEOREM 3 UPGRADED to general d in regime (modulo cor:coin base and B2).
+   Theorems 3'/3''/3''' survive verbatim at their degrees (constants are
+   inventory-independent); their general-d proof status does not upgrade
+   (the Buchberger truncation is t = 2).
+4. [NEW GAP] MIXTURE-d: O2's literal quantifier allows arbitrary degree-<=d
+   polynomials; F_2 mixtures are covered only at d = 2 (mixture_cap.md) and
+   genuinely strengthen the adversary at d >= 3. Open.
+5. O2 OPEN CORE now: (i) INV-d at t >= 3 (the single mathematical gap; the
+   t = 3 truncated Buchberger is the concrete next target); (ii) MIXTURE-d;
+   (iii) the boundary constant at d^2 = Theta(n); (iv) e = Theta(n). See
+   docs/all_degrees.md (Theorem 3-gen, Section 5.3 falsification conditions,
+   including the minimal-codeword probe for V-bar at (4,2)/(6,3)).
