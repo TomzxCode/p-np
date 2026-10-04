@@ -474,3 +474,16 @@ avoided). Registered run, all checks pass.
   $(2^{20},64)$, $e = 8192$: $\approx 10^{-272}$; at toy $(32,2)$ with
   $e = 32 = n$ the bound is vacuous (the regime is $e = o(n)$; that point's
   single-pass prediction is covered by the marginal route instead).
+
+## CORRECTION (2026-10-04, cls-cnt agent): the refined E_star created an inventory gap
+
+The refined E_star (with target requirement) in this document is too narrow:
+sums of inventoried rows pin windows that fire no single inventoried event.
+Three machine-verified families at (4,2)/(6,3): the double star DS (XOR of two
+same-target fresh columns = 0, no target needed), the crossed pair UU, and the
+cross grid OFF - all in V, all alias-aware block-free. The original REL-style
+TARGET-FREE event definition was safe. REPAIRED IDENTIFICATION: fresh-bit
+holds iff the window contains none of {row, star, DS, UU, OFF}, with a
+catch-all absorbing the residual classification lemma. See docs/cls_cnt.md
+section 4 (the inventory-correction section) and docs/proof_complexity.md
+ADDENDUM 11.

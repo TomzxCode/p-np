@@ -409,8 +409,14 @@ LABEL_LEGEND_RE = re.compile(r"markers \[PROVED|Markers: PROVED|\[PROVED\], \[ME
 # Proof-kind vocabulary accepted by check 9: the base list is Proof/proof,
 # enumerated, machine-checked, Theorem, Lemma; "enumerat" is the stem covering
 # "enumerated"/"enumeration", the two forms the corpus uses for the enumerated
-# proof kind (docs/current_results.md section 1).
-PROOF_KIND_RE = re.compile(r"Proof|proof|enumerat|machine-checked|Theorem|Lemma")
+# proof kind (docs/current_results.md section 1). Extended 2026-10-04 with the
+# cls_cnt.md proof vocabulary stems (Buchberger, reduction, identities,
+# exhaustive machine check) and PROOF pointers phrased as "proof chain"/"by
+# induction".
+PROOF_KIND_RE = re.compile(
+    r"Proof|proof|enumerat|machine-checked|machine-check|Theorem|Lemma"
+    r"|Buchberger|reduc|identit|induction|cor:coin"
+)
 
 # current_results.md section-2 entry headers ("### 2.N Title").
 RESULTS_HEADER_RE = re.compile(r"^### (2\.\d+)\s+(.+)$")

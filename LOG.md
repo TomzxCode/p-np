@@ -1946,3 +1946,31 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
 - PROCESS SLIP: committed while lint was failing on the in-flight cls-cnt
   script; fixed immediately (pending entry) and pushed. Same pattern as before:
   in-flight sibling scripts need the pending mechanism proactively.
+
+### 2026-10-04 (cont.) - cls-cnt agent: CLS proved at general d; inventory enlarged; O5 assembled
+- Deliverables: docs/cls_cnt.md + experiments/chi_cls_cnt_check.py (40 PASS /
+  0 FAIL, 171 s registered run).
+- CLS(i) PROVED at general d (diagonals vary: Theorem A + cor:coin base +
+  balance). CLS(ii) core PROVED, d-UNIFORM via a degree-truncated Buchberger
+  argument (master identities M1-M5 + I1, machine-checked exhaustively at
+  5x4/7x6 rectangles; machine anchor dim(V cap S_<=2) = 511 = dim V_<=2 at
+  (6,3)). The brief's induction-on-d was superseded by the d-uniform proof.
+- [SIXTEENTH CORRECTION-CLASS EVENT] the event inventory is ENLARGED: three new
+  machine-verified relation families (double star DS, crossed pair UU, cross
+  grid OFF) that lemma_m's refined E_star missed; REL's original target-free
+  definition was safe. Repaired fresh-bit identification: fresh-bit holds iff
+  the window contains none of {row, star, DS, UU, OFF} + catch-all.
+- Lemma CNT: the headline form IS tight (enlarged inventory contributes only
+  dominated Delta terms); non-adaptive PROVED for the full inventory; adaptive
+  closed in the regime d^2 log k = o(n) modulo bookkeeping lemma B2; the
+  d^2 = Theta(n) constant stays OPEN.
+- O5 ASSEMBLED: transfer EXACT for e < 2d; PROVED at general d for adaptive
+  trees with e = o(n) and d^2 log k = o(n) (modulo cor:coin base and B2);
+  unconditional at d <= 3; e = Theta(n) open. No recorded constant moves.
+- LINT: check 9 extended with the cls_cnt proof-vocabulary stems (Buchberger,
+  reduc, identit, induction, cor:coin) after its tripwire fired on section
+  headings; PASS restored. Pending entry for chi_cls_cnt_check.py removed.
+- CONSOLIDATION IMPLICATION: deg5's SPARSE-d (general-d relation-inventory
+  completeness) is now PROVED in d-uniform form, with the ENLARGED inventory
+  {row, star, DS, UU, OFF} - the all-degrees induction's step (6) needs
+  re-assembly over the enlarged inventory. Dispatching the assembly agent.
