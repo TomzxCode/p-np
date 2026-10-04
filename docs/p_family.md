@@ -42,7 +42,7 @@ Known lower bounds BELOW the full system (the subsystem ladder, all at $p = 2$ u
   for $\gcd(p, q) = 1$ is hard in the mod-p-axioms subsystem, so this rung has known bounds
   at EVERY $p$, but always for the wrong-principle (axiom) version, not for gates.
 - Krajicek's $\mathrm{PK}^c_d(\mathrm{MOD}_p)$-type systems ($p = 2$): exponential lower bounds for PHP in
-  tree-like $\mathrm{PK}^c_d(+)$ and for $\mathrm{Count}_3$ in dag-like $\mathrm{PK}^c_d(+) (Krajicek 1997, "Lower bounds
+  tree-like $\mathrm{PK}^c_d(+)$ and for $\mathrm{Count}_3$ in dag-like $\mathrm{PK}^c_d(+)$ (Krajicek 1997, "Lower bounds
   for a proof system with an exponential speed-up over constant-depth Frege systems and
   over polynomial calculus", STACS 1997, doi 10.1007/bfb0029951; as summarized in
   Garlik-Kolodziejczyk 2018). Garlik-Kolodziejczyk then SEPARATED these subsystems from
@@ -104,7 +104,7 @@ super-polynomial lower bound for unrestricted DAG-like $\mathrm{Res}(\mathrm{lin
 was known before 2026 (Part-Tzameret 2021: the system "captures a 'minimal' extension of
 resolution with counting gates for which no super-polynomial lower bounds are known").
 
-The p = 2 lane (complete restricted ladder, 2010-2026):
+The $p = 2$ lane (complete restricted ladder, 2010-2026):
 
 - Tree-like: exponential lower bounds for 2-fold Tseitin and an elementary exponential
   bound for unary PHP linear splitting trees (Itsykson-Sokolov, splitting paper above);
@@ -195,47 +195,47 @@ PHP/BPHP lower bounds in $\mathrm{Res}(\mathrm{lin}_p)$, the precise table (2026
   studied at odd characteristic).
 
 Instance-space split by characteristic (structural, cited): the canonical coNP-complete
-language of 0-1-unsatisfiable linear systems (LinSys_Fq) is coNP-complete for
-char >= 5 and in P for char 2 and 3 (Part-Tzameret 2021, Theorem 5, for char 0 and
-p >= 5; extended to all characteristics except 2 and 3 by Gryaznov, "Notes on Resolution
+language of 0-1-unsatisfiable linear systems ($\mathrm{LinSys}_{\mathbb{F}_q}$) is coNP-complete for
+$\mathrm{char} \ge 5$ and in P for char 2 and 3 (Part-Tzameret 2021, Theorem 5, for char 0 and
+$p \ge 5$; extended to all characteristics except 2 and 3 by Gryaznov, "Notes on Resolution
 over Linear Equations", CSR 2019, doi 10.1007/978-3-030-19955-5_15, as recorded in
-arXiv:2202.08214). Consequence: at odd p >= 5 the Res(lin_Fp) lower-bound program has a
-second hard-instance source (LinSys instances hard unless P = NP) that the p = 2 and
-p = 3 programs lack; there the hard instances must be CNFs with genuinely non-linear
-structure. Reading for the corpus: odd p >= 5 is structurally DIFFERENT from p = 2 in the
-Res(lin) lane (more target instances, and the counting is not parity-collapse), yet
+arXiv:2202.08214). Consequence: at odd $p \ge 5$ the $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ lower-bound program has a
+second hard-instance source (LinSys instances hard unless P = NP) that the $p = 2$ and
+$p = 3$ programs lack; there the hard instances must be CNFs with genuinely non-linear
+structure. Reading for the corpus: odd $p \ge 5$ is structurally DIFFERENT from $p = 2$ in the
+$\mathrm{Res}(\mathrm{lin})$ lane (more target instances, and the counting is not parity-collapse), yet
 empirically no harder - still no unrestricted DAG-like bound anywhere.
 
 ## 3. Q3: is the Krajicek chi-task p-specific? (2026-10-03, full text of arXiv:2609.35927v2)
 
 No. The paper is stated for a fixed arbitrary prime throughout, and it never
-specializes to p = 2 or discusses any characteristic-specific behavior. Verified from the
+specializes to $p = 2$ or discusses any characteristic-specific behavior. Verified from the
 HTML full text (https://arxiv.org/html/2609.35927v2):
 
-- Conventions (before Section 1): "we fix an arbitrary prime p for the rest of the paper".
-- Definition 3.1 ((d, e, gamma)-solutions), Theorem 3.2 (no (d, h + log S, S^{-1})-solution
-  when e^{h/p} >= 2 S^2, i.e. h = O(p log S) = O(log S) at fixed p), and Theorem 3.3
-  (a ((log k)^{O(l)}, O(log k), k^{-O(1)})-solution rules out k-step F_l(MOD_p)-refutations)
-  are all stated over F_p with constants depending "only on FF and p".
-- Definition 4.3 (the candidate Omega(n,d)) fixes n_rho = 2d at EVERY p, with L a degree-d
-  design over F_p; Corollary 4.2 rests on Theorem 4.1, Razborov's PC degree theorem, which
+- Conventions (before Section 1): "we fix an arbitrary prime $p$ for the rest of the paper".
+- Definition 3.1 (($d, e, \gamma$)-solutions), Theorem 3.2 (no ($d, h + \log S, S^{-1}$)-solution
+  when $e^{h/p} \ge 2 S^2$, i.e. $h = O(p \log S) = O(\log S)$ at fixed $p$), and Theorem 3.3
+  (a $((\log k)^{O(l)}, O(\log k), k^{-O(1)})$-solution rules out $k$-step $F_l(\mathrm{MOD}_p)$-refutations)
+  are all stated over $\mathbb{F}_p$ with constants depending "only on FF and $p$".
+- Definition 4.3 (the candidate $\Omega(n,d)$) fixes $n_\rho = 2d$ at EVERY $p$, with $L$ a degree-$d$
+  design over $\mathbb{F}_p$; Corollary 4.2 rests on Theorem 4.1, Razborov's PC degree theorem, which
   holds over every field (Razborov, Computational Complexity 7(4), 1998; Braun's account
   in arXiv:2609.23015: "Razborov's theorem [Raz98] that polynomial calculus refutations of
-  the pigeonhole principle need degree n/2+1 over every field").
+  the pigeonhole principle need degree $n/2+1$ over every field").
 - Lemma 4.4 (reduction of tree conflict-finding to labeling a free pair, via a binary
   search for a conflict pair with a variable monomial) is characteristic-uniform.
-- Lemma 5.1 / 5.2 define Error(rho) = Sum_P chi(P,rho) p^{-dim^rho(P)} and reduce the
-  solution condition to Prob_{rho,P}[chi(P,rho) = 1] at general p.
-- Theorem 6.1 concludes at general p: the chi-hypothesis for all (d, e')-trees with
-  d = (log k)^{O(l)}, e' = O(log n) + O(d log n) implies no k-step F_l(MOD_p)-refutation
-  of -PHP_n. The closing conjecture ("It appears possible that the hypothesis in the
-  theorem holds for k(n) = 2^{n^delta}, for sufficiently small delta > 0, even with the
-  bound in (3) being Omega(1)") carries no p-qualification. The Section 7 UENS-vs-TC0-
-  Frege remark is likewise p-uniform.
-- The only p-dependences in the paper are mechanical: query trees are p-ary; the accuracy
-  condition contains 1/p; the path probabilities carry p^{-dim}; the target system is
-  F_l(MOD_p). There is no remark on p = 2 anywhere, no analysis of the answer channel at
-  any characteristic, and no discussion of search-tree strategy at any p: the paper
+- Lemma 5.1 / 5.2 define $\mathrm{Error}(\rho) = \sum_P \chi(P,\rho) p^{-\dim^\rho(P)}$ and reduce the
+  solution condition to $\mathrm{Prob}_{\rho,P}[\chi(P,\rho) = 1]$ at general $p$.
+- Theorem 6.1 concludes at general $p$: the chi-hypothesis for all ($d, e'$)-trees with
+  $d = (\log k)^{O(l)}$, $e' = O(\log n) + O(d \log n)$ implies no $k$-step $F_l(\mathrm{MOD}_p)$-refutation
+  of $\neg\mathrm{PHP}_n$. The closing conjecture ("It appears possible that the hypothesis in the
+  theorem holds for $k(n) = 2^{n^\delta}$, for sufficiently small $\delta > 0$, even with the
+  bound in (3) being $\Omega(1)$") carries no $p$-qualification. The Section 7 UENS-vs-TC0-
+  Frege remark is likewise $p$-uniform.
+- The only $p$-dependences in the paper are mechanical: query trees are $p$-ary; the accuracy
+  condition contains $1/p$; the path probabilities carry $p^{-\dim}$; the target system is
+  $F_l(\mathrm{MOD}_p)$. There is no remark on $p = 2$ anywhere, no analysis of the answer channel at
+  any characteristic, and no discussion of search-tree strategy at any $p$: the paper
   reduces everything to the probability task and stops.
 
 Two bibliographic precision notes for the corpus. (1) Theorem 3.3 is NEW in
@@ -243,127 +243,127 @@ arXiv:2609.35927: the paper says of it that it "was not stated and proved [in Kr
 2024] formally so we do it now"; the 2024 paper contains the reduction (Theorem 3.2) and
 the explanation after its Theorem 5.2. (2) The corpus's char-2 focus is a SPECIALIZATION
 chosen by this corpus (because the answer channel collapses to coins-vs-determined bits
-at p = 2, enabling the exact channel law of `two_phase_tree.md`), not a restriction of
-the program: Theorem 6.1 would deliver AC0[p]-Frege bounds at ANY fixed p from the same
-chi-task, so an odd-p solution of the probability task would immediately give the first
+at $p = 2$, enabling the exact channel law of `two_phase_tree.md`), not a restriction of
+the program: Theorem 6.1 would deliver AC0[p]-Frege bounds at ANY fixed $p$ from the same
+chi-task, so an odd-$p$ solution of the probability task would immediately give the first
 super-polynomial AC0[p]-Frege lower bound in that odd characteristic.
 
 ## 4. Q4: what replaces the fair coin at p > 2, and does determined-certification survive? (2026-10-03)
 
-This section is ANALYSIS: it extends this corpus's proved p = 2 results (the channel law
-and Theorem T in `two_phase_tree.md`) to general p by inspection of the definitions of
+This section is ANALYSIS: it extends this corpus's proved $p = 2$ results (the channel law
+and Theorem T in `two_phase_tree.md`) to general $p$ by inspection of the definitions of
 arXiv:2609.35927. It has not been verified by computation this session; the harness
-(chi_two_phase.py) needs only the p-ary channel substitution to check it.
+(chi_two_phase.py) needs only the $p$-ary channel substitution to check it.
 
-The channel law at general p. Under Omega(n,d) at characteristic p, with L uniform in
-Des(n,d)^rho (Corollary 4.2 of the paper), a query g answers L(g^rho). By the same
-disjoint-support/kernel-basis reasoning the corpus used at p = 2 (linear algebra, no
-characteristic dependence): killed-unmatched variables restrict to 0, so the answer is
-L(0) = 0 (determined); killed-matched variables restrict to 1, so the answer is L(1) = 1
-(determined); free variables answer uniformly in F_p. So the p = 2 fair coin generalizes
-to a fair p-SIDED DIE on the free region: for a single-variable query on a free pair the
-answer is uniform over F_p, and answers outside {0, 1} (probability (p-2)/p per query to
+The channel law at general $p$. Under $\Omega(n,d)$ at characteristic $p$, with $L$ uniform in
+$\mathrm{Des}(n,d)^\rho$ (Corollary 4.2 of the paper), a query $g$ answers $L(g^\rho)$. By the same
+disjoint-support/kernel-basis reasoning the corpus used at $p = 2$ (linear algebra, no
+characteristic dependence): killed-unmatched variables restrict to $0$, so the answer is
+$L(0) = 0$ (determined); killed-matched variables restrict to $1$, so the answer is $L(1) = 1$
+(determined); free variables answer uniformly in $\mathbb{F}_p$. So the $p = 2$ fair coin generalizes
+to a fair $p$-SIDED DIE on the free region: for a single-variable query on a free pair the
+answer is uniform over $\mathbb{F}_p$, and answers outside $\{0, 1\}$ (probability $(p-2)/p$ per query to
 a free pair) certify freeness DIRECTLY. This matches the corpus's query-race note at
 `proof_complexity.md` lines 205-209.
 
 Certification survives, and in a cleaner form. Query the paper's own axiom polynomial
-Q_i = 1 - Sum_j x_ij (the pigeon axiom, Section 1 of arXiv:2609.35927). An assigned
-pigeon (rho(i) = j) has Q_i^rho = 1 - 1 = 0 DETERMINEDLY at every p; a free pigeon has
-Q_i^rho = -Sum_{j in R} b_ij, a sum of 2d free-row design bits, which is uniform in F_p
-(any single uniform coordinate suffices). Hence at general p the two-phase certification
-tree generalizes verbatim, with hit probability (p-1)/p replacing 1/2:
+$Q_i = 1 - \sum_j x_{ij}$ (the pigeon axiom, Section 1 of arXiv:2609.35927). An assigned
+pigeon ($\rho(i) = j$) has $Q_i^\rho = 1 - 1 = 0$ DETERMINEDLY at every $p$; a free pigeon has
+$Q_i^\rho = -\sum_{j \in R} b_{ij}$, a sum of $2d$ free-row design bits, which is uniform in $\mathbb{F}_p$
+(any single uniform coordinate suffices). Hence at general $p$ the two-phase certification
+tree generalizes verbatim, with hit probability $(p-1)/p$ replacing $1/2$:
 
-  Proposed Theorem T_p (ANALYSIS, unverified by computation). At characteristic p, the
-  tree that (phase 1) scans rows Q_i until the first NONZERO answer, then (phase 2) scans
-  the certified row's free-hole variables x_{i*,j} until the first NONZERO answer, labels
-  a CERTIFIED-FREE pair with success 1 - (1/p)^{2d+1} + fallback terms, error
-  p^{-(2d+1)}. Phase 2 never fails given certification: a nonzero row sum implies some
+  Proposed Theorem $T_p$ (ANALYSIS, unverified by computation). At characteristic $p$, the
+  tree that (phase 1) scans rows $Q_i$ until the first NONZERO answer, then (phase 2) scans
+  the certified row's free-hole variables $x_{i*,j}$ until the first NONZERO answer, labels
+  a CERTIFIED-FREE pair with success $1 - (1/p)^{2d+1}$ + fallback terms, error
+  $p^{-(2d+1)}$. Phase 2 never fails given certification: a nonzero row sum implies some
   free design bit in the row is nonzero, and the scan finds one deterministically (killed
-  holes answer 0 always). At p = 2 this is exactly Theorem T (error 2^{-(2d+1)},
+  holes answer $0$ always). At $p = 2$ this is exactly Theorem T (error $2^{-(2d+1)}$,
   measured 0.97 at (32,2), replicated in `thmT_verify.md`).
 
 So the determined-certification phenomenon ("answer certifies freeness because assigned
-objects cannot produce it") exists at ALL characteristics; what is genuinely p = 2-
-specific is that the determined set {0, 1} covers the whole alphabet, so at p = 2 NO
+objects cannot produce it") exists at ALL characteristics; what is genuinely $p = 2$-
+specific is that the determined set $\{0, 1\}$ covers the whole alphabet, so at $p = 2$ NO
 single-variable answer ever certifies and freeness leaks only through linear combinations
-(row sums), whereas at p > 2 single variables already leak (answers in {2, ..., p-1}).
-The two phases coincide at p = 2 (nonzero = 1) and separate for p > 2.
+(row sums), whereas at $p > 2$ single variables already leak (answers in $\{2, \dots, p-1\}$).
+The two phases coincide at $p = 2$ (nonzero $= 1$) and separate for $p > 2$.
 
-Do the new p > 2 channels break the chi-hypothesis? In the program's intended regime,
+Do the new $p > 2$ channels break the chi-hypothesis? In the program's intended regime,
 no, and for a characteristic-uniform reason: the binding constraint is the free-pair
-density f = (2d+1)2d/((n+1)n) ~ 4d^2/n^2, not the answer alphabet. A scan of e' = d log k
-single variables certifies with probability <= e' * f * (p-2)/p ~ 4d^3 log k/n^2, capped
-below 1 - k^{-O(1)} whenever d << n^{2/3}/(log k)^{1/3}, the same transition this corpus's
-Proposition D proved for the non-adaptive class at p = 2 (success <= (s+1) f, with the
-exact transition at d > Theta(n^{2/3}/(log k)^{1/3}), `proof_complexity.md` lines 446-453;
+density $f = (2d+1)2d/((n+1)n) \sim 4d^2/n^2$, not the answer alphabet. A scan of $e' = d \log k$
+single variables certifies with probability $\le e' \cdot f \cdot (p-2)/p \sim 4d^3 \log k/n^2$, capped
+below $1 - k^{-O(1)}$ whenever $d \ll n^{2/3}/(\log k)^{1/3}$, the same transition this corpus's
+Proposition D proved for the non-adaptive class at $p = 2$ (success $\le (s+1) f$, with the
+exact transition at $d > \Theta(n^{2/3}/(\log k)^{1/3})$, `proof_complexity.md` lines 446-453;
 that proof is characteristic-uniform since it only counts free mass). Per-hit posteriors
-are higher at p > 2 (more answer values are self-certifying), but hit probability is
-still f. And the p-generalized certification tree errs with probability p^{-Theta(d)},
-a CONSTANT, which is >= k^{-O(1)} = 2^{-O(log k)} for all d = (log k)^{omega(1)}: the
+are higher at $p > 2$ (more answer values are self-certifying), but hit probability is
+still $f$. And the $p$-generalized certification tree errs with probability $p^{-\Theta(d)}$,
+a CONSTANT, which is $\ge k^{-O(1)} = 2^{-O(\log k)}$ for all $d = (\log k)^{\omega(1)}$: the
 chi-hypothesis of Theorem 6.1 survives its strongest known attacker at every
-characteristic, exactly as at p = 2 (`two_phase_tree.md`, implications 1-3).
+characteristic, exactly as at $p = 2$ (`two_phase_tree.md`, implications 1-3).
 
-One more structural difference, from the Res(lin_Fp) literature rather than the chi-task:
-at p >= 5 the natural hard-instance family LinSys_Fp is coNP-complete, while at p = 2, 3
+One more structural difference, from the $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ literature rather than the chi-task:
+at $p \ge 5$ the natural hard-instance family $\mathrm{LinSys}_{\mathbb{F}_p}$ is coNP-complete, while at $p = 2, 3$
 it is in P (section 2, citations there). The chi-task is insensitive to this split (the
-system -PHP_n is CNF-derived at every p), but the adjacent Res(lin_p) lane at odd p >= 5
-can target an instance class with built-in worst-case hardness, which the p = 2 lane
-cannot. Also note p = 3 is the smallest characteristic where the direct single-variable
-certification channel exists at all ((p-2)/p = 1/3), making it the natural first target
-for any computational study of the p > 2 chi-task.
+system $\neg\mathrm{PHP}_n$ is CNF-derived at every $p$), but the adjacent $\mathrm{Res}(\mathrm{lin}_p)$ lane at odd $p \ge 5$
+can target an instance class with built-in worst-case hardness, which the $p = 2$ lane
+cannot. Also note $p = 3$ is the smallest characteristic where the direct single-variable
+certification channel exists at all ($(p-2)/p = 1/3$), making it the natural first target
+for any computational study of the $p > 2$ chi-task.
 
 ## 5. Verdict: Open Problem O6, the p > 2 analogue (2026-10-03)
 
 Verdict: YES, there is an unmapped open problem worth formalizing, and it is arguably the
 better sibling: the reduction chain of arXiv:2609.35927 is proved at every characteristic,
-the design foundation (Razborov) holds at every characteristic, the p > 2 case has a
-certification tree just as p = 2 does (section 4), and NOTHING in the literature treats
-the chi-task at p != 2 (the paper stops at the probability task; no follow-up exists, cf.
+the design foundation (Razborov) holds at every characteristic, the $p > 2$ case has a
+certification tree just as $p = 2$ does (section 4), and NOTHING in the literature treats
+the chi-task at $p \ne 2$ (the paper stops at the probability task; no follow-up exists, cf.
 `monitor_2026-10-03b.md` section 1: zero citations). Meanwhile the adjacent frontier at
-odd p is strictly less crowded than at p = 2: the Res(lin_Fp) PHP/BPHP program has no
-regular, no bounded-depth, and no unrestricted bound at any odd p (section 2).
+odd $p$ is strictly less crowded than at $p = 2$: the $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ PHP/BPHP program has no
+regular, no bounded-depth, and no unrestricted bound at any odd $p$ (section 2).
 
-O6 (formal statement). Fix an odd prime p (or any fixed prime p >= 3). Let Omega(n,d) be
-Definition 4.3 of arXiv:2609.35927 at characteristic p (restrictions with n_rho = 2d free
-holes, uniform degree-d designs L of the restricted system). Determine whether:
+O6 (formal statement). Fix an odd prime $p$ (or any fixed prime $p \ge 3$). Let $\Omega(n,d)$ be
+Definition 4.3 of arXiv:2609.35927 at characteristic $p$ (restrictions with $n_\rho = 2d$ free
+holes, uniform degree-$d$ designs $L$ of the restricted system). Determine whether:
 
-  for every (d, e')-tree T' with d = (log k)^{O(l)} and e' = O(log n) + O(d log n),
-  Prob_{rho,P}[chi(P, rho) = 1] >= k^{-O(1)} for all n >> 1,
+  for every ($d, e'$)-tree $T'$ with $d = (\log k)^{O(l)}$ and $e' = O(\log n) + O(d \log n)$,
+  $\mathrm{Prob}_{\rho,P}[\chi(P, \rho) = 1] \ge k^{-O(1)}$ for all $n \gg 1$,
 
-with rho uniform over restrictions and P a uniform root-to-leaf path (the hypothesis of
-Theorem 6.1 there, stated for the fixed arbitrary prime p). Equivalently: no shallow
-low-degree p-ary query tree certifies a free pair with probability 1 - k^{-O(1)} - the
-freeness-certification impossibility over F_p. A positive answer at any k(n) >= n^{omega(1)}
-(a fortiori k(n) = 2^{n^delta}), combined with the paper's Theorem 6.1 and the
+with $\rho$ uniform over restrictions and $P$ a uniform root-to-leaf path (the hypothesis of
+Theorem 6.1 there, stated for the fixed arbitrary prime $p$). Equivalently: no shallow
+low-degree $p$-ary query tree certifies a free pair with probability $1 - k^{-O(1)}$ - the
+freeness-certification impossibility over $\mathbb{F}_p$. A positive answer at any $k(n) \ge n^{\omega(1)}$
+(a fortiori $k(n) = 2^{n^\delta}$), combined with the paper's Theorem 6.1 and the
 BIKPRS96/BKZ ENS equivalence (Buss-Impagliazzo-Krajicek-Pudlak-Razborov-Sgall,
-Computational Complexity 6(3), 1996/97, pp. 256-298), yields k-step lower bounds for
-F_l(MOD_p)-Frege refutations of -PHP_n: the FIRST super-polynomial lower bound for the
+Computational Complexity 6(3), 1996/97, pp. 256-298), yields $k$-step lower bounds for
+$F_l(\mathrm{MOD}_p)$-Frege refutations of $\neg\mathrm{PHP}_n$: the FIRST super-polynomial lower bound for the
 full AC0[p]-Frege system at ANY characteristic, and the first lower bound of any kind for
-odd-p AC0[p]-Frege proofs of the pigeonhole principle. A negative answer (a tree with
-error < k^{-O(1)}) refutes Omega(n,d) as a pseudo-solution at that p and redirects the
-program, exactly as in the p = 2 statement of Open Problem O1 (`proof_complexity.md`).
+odd-$p$ AC0[p]-Frege proofs of the pigeonhole principle. A negative answer (a tree with
+error $< k^{-O(1)}$) refutes $\Omega(n,d)$ as a pseudo-solution at that $p$ and redirects the
+program, exactly as in the $p = 2$ statement of Open Problem O1 (`proof_complexity.md`).
 
 Why O6 is a distinct problem, not a corollary of O1. The proof tools are
-characteristic-specific in both directions. Any p = 2 impossibility proof must use the
-0/1-determinedness of killed answers, which fails at p > 2 (free answers range over F_p,
-and 1 - 1/p of free answers are self-certifying for single variables). Conversely, the
-p = 2 posterior audit (the exact per-pair Bayes computation giving posterior
-2d^2/(2d^2+n), `proof_complexity.md` lines 266-295) has no direct analogue: answers are
-p-valued, so the event algebra of the single-variable class must be redone (the p > 2
+characteristic-specific in both directions. Any $p = 2$ impossibility proof must use the
+0/1-determinedness of killed answers, which fails at $p > 2$ (free answers range over $\mathbb{F}_p$,
+and $1 - 1/p$ of free answers are self-certifying for single variables). Conversely, the
+$p = 2$ posterior audit (the exact per-pair Bayes computation giving posterior
+$2d^2/(2d^2+n)$, `proof_complexity.md` lines 266-295) has no direct analogue: answers are
+$p$-valued, so the event algebra of the single-variable class must be redone (the $p > 2$
 version should be EASIER - more answers are informative - but nothing is proved).
 The characteristic-uniform parts already in place: the reduction chain (the paper's own
 text, section 3 above), the design theorem (Razborov, every field), the non-adaptive cap
 arithmetic (free-density counting), and the certification tree's existence (section 4).
 
-What is open inside O6, in order: (1) the channel-law audit at p > 2 - verify uniformity
-and independence of free-region design values over F_p computationally with the existing
-harness (substitute the p-ary channel in chi_two_phase.py; check Proposed Theorem T_p's
-error p^{-(2d+1)} at toy scale, p = 3 and p = 5); (2) the single-variable posterior audit
-at p > 2; (3) the common core of O1 and O6: the all-degrees adaptive quantifier, open at
+What is open inside O6, in order: (1) the channel-law audit at $p > 2$ - verify uniformity
+and independence of free-region design values over $\mathbb{F}_p$ computationally with the existing
+harness (substitute the $p$-ary channel in chi_two_phase.py; check Proposed Theorem $T_p$'s
+error $p^{-(2d+1)}$ at toy scale, $p = 3$ and $p = 5$); (2) the single-variable posterior audit
+at $p > 2$; (3) the common core of O1 and O6: the all-degrees adaptive quantifier, open at
 every characteristic.
 
-Watch triggers (add to the rung's list): any paper analyzing Omega(n,d) or the chi-task
-at p != 2; any odd-p Res(lin_Fp) PHP or BPHP lower bound at regular, bounded-depth, or
-unrestricted level (the odd-p analogue of the TR23-187 / TR25-118 / Braun sequence); any
-verification or refutation of Proposed Theorem T_p; any claimed tree achieving error
-< k^{-O(1)} against Omega(n,d) at any characteristic.
+Watch triggers (add to the rung's list): any paper analyzing $\Omega(n,d)$ or the chi-task
+at $p \ne 2$; any odd-$p$ $\mathrm{Res}(\mathrm{lin}_{\mathbb{F}_p})$ PHP or BPHP lower bound at regular, bounded-depth, or
+unrestricted level (the odd-$p$ analogue of the TR23-187 / TR25-118 / Braun sequence); any
+verification or refutation of Proposed Theorem $T_p$; any claimed tree achieving error
+$< k^{-O(1)}$ against $\Omega(n,d)$ at any characteristic.
