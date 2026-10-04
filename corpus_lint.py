@@ -69,9 +69,7 @@ LINT_NAME = Path(__file__).resolve().name
 
 # Scripts registered by agents still writing their owning documents: skipped
 # until the document lands (then remove the entry; the lint will enforce it).
-PENDING_SCRIPTS: dict[str, str] = {
-    "chi_cls_cnt_check.py": "in-flight: docs/cls_cnt.md pending",
-}
+PENDING_SCRIPTS: dict[str, str] = {}
 
 # ---------------------------------------------------------------------------
 # Whitelists and needle tables (keep documented; extend only with a reason).
