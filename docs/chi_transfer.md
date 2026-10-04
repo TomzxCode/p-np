@@ -447,7 +447,7 @@ proper subclass of the printed degree-2 quantifier.
    route, not through printed (3).
 2. O2's open core (iii) (the $\chi$-transfer, "unchecked") is now checked,
    NEGATIVELY in the direction Theorem 6.1 needs: $(P_3) \le (P_2)$, gap
-   $\exp(\ln p \cdot \Delta)$, and (3) is falsified by trivial trees at growing $d$
+   $\exp(\ln p \cdot \Delta)$, and (3) is falsified by trivial trees at growing $d$ [under the corpus's quantifier reading - INFERENCE; downgraded per GUIDANCE 2026-10-04: the printed (3) is a hypothesis about the paper's own constructed tree, not a paper claim]
    (Theorem 3). The parenthetical in O2 ("Whether Definition 3.1's printed
    quantifier is budgeted is a reading check against the paper") is settled:
    BUDGETED, $e$ is a printed parameter (Sec 1.2 above).
@@ -485,7 +485,7 @@ conflicts, $\omega$-sampled, budgeted), the Sec 5 error of the reduced tree (the
 corpus's failure, design-sampled), and Theorem 6.1's (3) (uniform-path,
 $\mathrm{Span}$-conjunct). Lemma 5.2 makes (3) a LOWER bound on the corpus's failure, so
 the cap transfers to (3) only with a defect bound (Theorem 2: factor
-$2^{-\Delta}$), and (3) itself is falsified by a trivial determined-query tree at
+$2^{-\Delta}$), and (3) itself is falsified [under the corpus's quantifier reading - INFERENCE; downgraded per GUIDANCE 2026-10-04] by a trivial determined-query tree at
 growing $d$ (Theorem 3: $\chi = (1-f)\,2^{-e'} = k^{-\Theta(d)}$ while $\mathrm{err} \ge 1/2$),
 including via malicious padding. The budgeted $\chi$-hypothesis of the program is
 therefore alive exactly in the $\mathrm{err}$-form O2 states, and the lower-bound route

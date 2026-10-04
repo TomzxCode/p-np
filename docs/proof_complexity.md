@@ -929,6 +929,15 @@ residual: the degree-d cap for d > 2.
 ## ADDENDUM 4 (2026-10-04, chi-transfer agent; adjudicated: the TENTH correction-class
 ## event - the printed chi-route's hypothesis is FALSE as printed; the err-form route
 ## replaces it)
+##
+## [2026-10-04 DOWNGRADE PER GUIDANCE: the heading's "FALSE as printed" is retracted
+## as over-claim. The printed (3) is a hypothesis of Theorem 6.1 about the paper's own
+## constructed tree, not a paper claim, so it cannot be false as printed. What the
+## session showed: under the corpus's INFERENCE that the hypothesis quantifies over all
+## budgeted trees, a trivial row-sum tree violates it, making the printed conditional
+## unusable under that reading. Reading gap, not paper error; expert confirmation of
+## the quantifier is prerequisite to any claim. The assembly content below stands with
+## that relabeling.]
 
 Quote-anchored against the fetched arXiv:2609.35927v2 HTML (chi_transfer.md, 497
 lines; quotes verified against raw math alttext):

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""verify_corpus.py - one-shot, re-runnable consistency checker for the P vs NP corpus.
+"""corpus_lint.py - documentation consistency linter for the P vs NP corpus.
 
 Stdlib only (python3, no dependencies). Validates the whole corpus in one run and
 lives at the corpus root. The corpus layout it expects:
@@ -47,7 +47,7 @@ CORPUS = Path(__file__).resolve().parent
 # This checker is tooling, not a corpus artifact: exclude it from the corpus
 # script set (it is trivially self-compiled by running, and not documented in
 # the corpus documents).
-CHECKER_NAME = Path(__file__).resolve().name
+LINT_NAME = Path(__file__).resolve().name
 
 # ---------------------------------------------------------------------------
 # Whitelists and needle tables (keep documented; extend only with a reason).
@@ -55,7 +55,10 @@ CHECKER_NAME = Path(__file__).resolve().name
 
 # (source document, backtick target) -> reason the target is allowed to be absent.
 # Empty today: every backticked *.md / *.py reference in the corpus resolves.
-REFERENCE_WHITELIST: dict[tuple[str, str], str] = {}
+REFERENCE_WHITELIST: dict[tuple[str, str], str] = {
+    # GUIDANCE.md is a verbatim external review; it may cite the checker's old name.
+    ("GUIDANCE.md", "verify_corpus.py"): "quoted external review text",
+}
 
 # (document, required substring), matched after collapsing whitespace runs to a
 # single space, so strings that wrap across source lines still match.
@@ -109,8 +112,8 @@ KEY_CLAIMS: list[tuple[str, str, str]] = [
      "F6 defined"),
     ("failure_modes.md", "one-line field guide",
      "triage procedure"),
-    ("note_to_author.md", "with exact error law",
-     "corrected title/summary (rewritten note)"),
+    ("note_to_author.md", "Reading-check question",
+     "note is a question draft per GUIDANCE, not a claim"),
     ("cert_floor.md", "Theorem F (exact certification floor) - PROVED",
      "Theorem F present"),
     ("p_family.md", "characteristic-uniform",
@@ -410,7 +413,7 @@ def main() -> int:
         for detail in report.details:
             print(f"  - {detail}")
     print()
-    print("VERIFY_CORPUS: " + ("PASS (corpus clean)" if report.ok else "FAIL"))
+    print("CORPUS_LINT: " + ("PASS (corpus clean)" if report.ok else "FAIL"))
     return 0 if report.ok else 1
 
 

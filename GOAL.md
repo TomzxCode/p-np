@@ -11,19 +11,22 @@ periodically per section 9.
 
 Prove or disprove P != NP.
 
-Honest framing (owner-accepted, in force since the first session): a bounded
-session will not resolve a Millennium Problem. The operational goal is therefore
-dual-track and both tracks are mandatory:
+Status of that objective (GUIDANCE.md, 2026-10-04, supersedes earlier framing):
+the problem is open, and this corpus has made no progress toward resolving it.
+What the corpus is: (1) a careful, source-anchored reading of Krajicek's
+reduction (arXiv:2609.35927) toward AC0[p]-Frege PHP lower bounds, restricted to
+p=2, together with its open crux O2 (the all-degrees budgeted error floor);
+(2) toy-scale proved results about that p=2 restriction; (3) claim forensics on
+unrelated resolution preprints; (4) a formal open-problems catalog. It is not a
+P vs NP investigation, and no fractional confidence in P != NP is claimed
+anywhere in the corpus (the earlier "93%" line was a subjective prior, removed
+per guidance).
 
-(a) Keep a rigorous, verified research corpus around the problem: route maps with
-named walls and trigger conditions, claim forensics, original proved results,
-experiments, and precisely-stated open problems.
-(b) Make real mathematical progress on the most promising engaged program - the
-p=2 core of the Krajicek pseudo-solution program (arXiv:2609.35927), whose open
-core is the all-degrees budgeted err-floor (O2 in open_problems.md).
-
-The objective is never redefined as met by a smaller subtask. Never present the
-work as finished or blocked merely because it is hard, slow, or uncertain.
+Purpose of record (priority 2 of the guidance, adopted): a small contribution -
+a careful note on the p=2 restriction of Krajicek's reduction - CONTINGENT on an
+expert confirming the reading of Definitions 3.1 and 4.3 (see
+docs/note_to_author.md, rewritten as a reading-check question). Until that
+confirmation, everything here is a learning log and survey.
 
 ## 2. Operating mode: maximum parallel agents
 
@@ -60,15 +63,28 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
   LaTeX. Use it for math in presentation documents (theorem map prose, README,
   open problems, audits); plain ASCII math remains the norm inside Mermaid node
   labels (no TeX there) and inside LOG.md working entries. If a conversion would
-  alter a verify_corpus.py needle string, update the needle in the same change.
+  alter a corpus_lint.py needle string, update the needle in the same change.
 
 ## 4. Corpus conventions
 
 - LOG.md: timestamped audit trail, append-only, orchestrator-only. Every
   dispatch, finding, correction, screen, and incident gets an entry.
-- verify_corpus.py (corpus root) is the machine gate: run it before declaring
-  any turn's consolidation complete; it must PASS (the count grows with the
-  corpus; ~398 checks as of 2026-10-04).
+- corpus_lint.py (corpus root; renamed from verify_corpus.py per GUIDANCE) is a
+  DOCUMENTATION CONSISTENCY LINTER, not a verifier: it checks that required
+  substrings appear where expected, that scripts compile, and that LOG headings
+  are ordered. A PASS means the documentation agrees with itself. It is NOT
+  mathematical validation and must never be cited as such. The gate that means
+  something is lean_channel/: lake build with the sorry/axiom budget asserted
+  (see lean_channel/check_budget.sh), plus executed experiments regenerating
+  quoted numbers.
+- PROVED discipline (GUIDANCE, mechanical): a result may carry PROVED only with
+  a written line-by-line proof or a machine-checked statement of the same
+  proposition. Measured constants from simulations are MEASURED, never PROVED.
+  Reading-dependent statements (e.g. the quantifier on printed (3)) are
+  INFERRED and must say whose reading they depend on.
+- Monitoring reduction (GUIDANCE): crank-claim monitoring is reduced to a
+  one-line appendix per screen in docs/monitors/; no full audits of low-value
+  claims unless the owner asks.
 - Deliverables of record and their homes:
   * Route maps (docs/): williams_ladder.md, magnification_gap.md,
     algebraic_rung.md, proof_complexity.md (correction blocks and ADDENDA are
@@ -87,10 +103,11 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
   * Monitoring screens (docs/monitors/): one dated deliverable per screen.
   * Experiments (experiments/): every script, run-backed; mutual imports stay
     same-dir (razborov_check.py is the shared F_2 machinery).
-  * Machine gate: verify_corpus.py (corpus root); Lean artifacts: lean_channel/.
+  * Lint gate: corpus_lint.py (corpus root); Lean gate: lean_channel/check_budget.sh; Lean artifacts: lean_channel/.
 - Commit and push (owner instruction, 2026-10-04): whenever relevant - i.e.,
   after every consolidated turn (agent results integrated, corrections applied,
-  reorganizations, paper or doc updates), run verify_corpus.py first; commit
+  reorganizations, paper or doc updates), run corpus_lint.py (lint) and the
+  lean budget check first; commit
   only a PASSING state, with a descriptive message naming the substantive
   change; push to the remote immediately after committing. Exclusions live in
   .gitignore (the mathlib4 clone and .lake are multi-GB rebuildable toolchain
@@ -123,10 +140,14 @@ work as finished or blocked merely because it is hard, slow, or uncertain.
   exact exponent constants.
 - Second front: the odd-p analogue (O6, p_family.md; T_p needs the parity-locked
   recompute).
-- Route note of record: the PRINTED Theorem 6.1(3) is false as printed
-  (chi_transfer.md Theorem 3); the live route is Theorem R of
-  docs/err_form_route.md (the err-form assembly, complete and conditional: sole
-  mathematical premise is O2; supersedes the chi_transfer.md Theorem 4 sketch).
+- Route note of record (DOWNGRADED PER GUIDANCE): under the corpus's INFERENCE
+  that the printed Theorem 6.1(3) quantifies over all budgeted trees, that
+  hypothesis is violated by a trivial row-sum tree (chi_transfer.md Theorem 3),
+  making the printed conditional unusable under our reading. The printed text
+  quantifies over a tree T' from the paper's own construction, so this is a
+  READING GAP, not a paper error; expert confirmation of the quantifier is a
+  prerequisite for any claim. The err-form assembly (err_form_route.md Theorem R)
+  is the conditional route under our reading, with premise = O2.
 
 ## 7. Environment constraints (learned, still binding)
 

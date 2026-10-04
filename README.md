@@ -6,7 +6,8 @@
     README.md          this overview: verdict, artifact guide, session outcome
     LOG.md             timestamped audit trail (every step, correction, screen)
     bibliography.md    tracked, status-coded bibliography of record
-    verify_corpus.py   machine gate: run before trusting any consolidation
+    corpus_lint.py      documentation consistency linter (NOT mathematical
+                        verification; renamed from verify_corpus.py)
     docs/              route maps, theory, forensics, open problems, theorem map
       monitors/        dated monitoring screens (arXiv/ECCC/claim-wave)
     experiments/       all python scripts (standalone or same-dir imports)
@@ -17,17 +18,19 @@ References to files throughout the corpus are by basename; `verify_corpus.py`
 resolves them across the tree.
 
 Last updated: 2026-10-03 (session with 20-turn budget; turns used: 9).
-Objective: prove or disprove $\mathrm{P} \neq \mathrm{NP}$. Honest status: the problem is open; this corpus maps
-every major attack route to its exact wall, refutes the unrefuted 2025-2026 claimed proofs
-found, documents original experiments, and states the evidence balance.
+Objective: prove or disprove $\mathrm{P} \neq \mathrm{NP}$. Plain status (per
+GUIDANCE.md, 2026-10-04): the problem is open, and this corpus has made no
+progress toward resolving it. What the corpus contains: a source-anchored study
+of Krajicek's reduction (arXiv:2609.35927) toward $\mathrm{AC}^0[p]$-Frege PHP
+lower bounds at $p=2$, toy-scale proved results about that restriction, claim
+forensics on unrelated resolution preprints, and an open-problems catalog.
 
-## Verdict (with confidence type)
+## Status (no confidence claims)
 
-P != NP, confidence about 93%, inductive not deductive. Nothing found this session contradicts
-it; every claimed resolution found in 2025-2026 was refuted or is unvalidated; the technique
-walls (relativization, natural proofs now with an unconditional AC0 instantiation,
-algebrization, localization, sharp thresholds) all mark where attempts die, not that the
-separation is false.
+$\mathrm{P} \neq \mathrm{NP}$ remains open. No fractional confidence in it is
+claimed here; the earlier "about 93%" figure was a subjective prior, not a
+product of this work, and has been removed. The route-map and forensics content
+below is retained as a study and learning record.
 
 ## Artifact guide
 
@@ -88,13 +91,21 @@ separation is false.
 
 ## Session outcome (final state, 2026-10-03)
 
-The objective (prove or disprove $\mathrm{P} \neq \mathrm{NP}$) was not met - the problem is open. What this
-session established, in decreasing order of permanence:
+The objective (prove or disprove $\mathrm{P} \neq \mathrm{NP}$) was not met - the problem is open, and no
+progress toward resolving it was made. What this session produced, honestly
+labeled (per GUIDANCE.md):
 
-1. Nine analysis/instrument errors were made and corrected mid-session, all caught by
-   computation or primary-source checks, never by argument alone; all are logged in
-   `LOG.md` as prominently as the findings. The corpus is machine-verified consistent
-   (`verify_corpus.py`: 351 checks, all PASS).
+1. A source-anchored reading of the Krajicek reduction's Definitions 3.1/4.3 and
+   its open crux O2 - pending expert confirmation (see `docs/note_to_author.md`).
+2. Toy-scale proved results about the $p=2$ restriction (the channel law,
+   budgeted caps at degrees 2 and 3, certificate inventory), each with its own
+   written proof in the cited document. Nine analysis/instrument errors were
+   corrected mid-session, caught by computation or primary-source checks, and
+   logged in `LOG.md`.
+3. `corpus_lint.py` is a documentation consistency LINTER (renamed from
+   verify_corpus.py per guidance): its PASS means the documents agree with
+   themselves, not that any mathematics is correct. The meaningful checks are
+   the Lean budget gate and the registered experiment runs.
 2. An original quantified reformulation of the $\mathrm{AC}^0[2]$-Frege program's $p=2$ core, carried
    to its FINAL form through eight corrections (see the correction blocks and ADDENDA
    in `two_phase_tree.md` and `proof_complexity.md`):
@@ -145,7 +156,8 @@ session established, in decreasing order of permanence:
    `proof_complexity.md`), each with named walls, exact open trigger conditions, and
    monitored watch lists.
 
-The evidence balance remains: $\mathrm{P} \neq \mathrm{NP}$ with ~93% confidence, inductive not deductive.
+The evidence balance section is removed per GUIDANCE.md: no confidence in
+$\mathrm{P} \neq \mathrm{NP}$ is claimed or implied by this corpus.
 
 ## Top-line facts of the map
 

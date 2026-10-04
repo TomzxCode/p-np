@@ -13,7 +13,8 @@ this file should update the `correct-as-of` date per entry.
   problem for AC0[p]-Frege systems", arXiv:2609.35927 (v1 Sep 2026; v2 30 Sep 2026,
   spelling-only). THE engaged paper: Def 3.1, Def 4.3, Lemmas 4.4/5.1/5.2, Thms
   2.2/3.2/3.3, 6.1; the chi-task. Note (chi_transfer.md): printed Theorem 6.1(3) is
-  false as printed; the err-form route is the live replacement. Used in:
+  unusable under the corpus's quantifier reading [INFERENCE, downgraded per
+  GUIDANCE 2026-10-04]; the err-form route is the live replacement. Used in:
   proof_complexity.md, two_phase_tree.md, chi_transfer.md, note_to_author.md,
   paper/. correct-as-of: 2026-10-04.
 - [L] J. Krajicek, Proc. AMS (2024) - the predecessor; Problem 4.4; Defs 3.1/3.2

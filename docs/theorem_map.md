@@ -92,7 +92,7 @@ flowchart TD
 flowchart TD
     COR31["Cor 3.1: degree-2 slice proved"]:::proved
     GAPD3["GAP A: degree >= 4 extension<br/>degrees 2 AND 3 proved (Theorem 3',<br/>deg3_theory.md: same d^2 ~ n boundary;<br/>wedge + Z certificates; star sum rules)"]:::gap
-    GAPB["GAP B: RESOLVED (chi_transfer.md)<br/>printed Theorem 6.1(3) is FALSE as printed<br/>(trivial row-sum tree: err >= 1/2 but<br/>chi = (1-f) p^-e' = k^-Theta(d));<br/>transfer reversed: (P3) <= (P2)"]:::resolved
+    GAPB["GAP B: RESOLVED (chi_transfer.md)<br/>printed (3) unusable under our quantifier reading [INFERRED]<br/>(trivial row-sum tree: err >= 1/2 but<br/>chi = (1-f) p^-e' = k^-Theta(d));<br/>transfer reversed: (P3) <= (P2)"]:::resolved
     MIX["GAP B': Theorem 3's query classes are a<br/>proper subset of the printed degree-2 class<br/>(F_2 mixtures; likely shallow repair)"]:::gap
     GAPLM["GAP C: Lemma M (O5) degree-2<br/>monomial semantics transfer"]:::gap
     GAPJDP["GAP D: de-modularize JDP steps"]:::gap
