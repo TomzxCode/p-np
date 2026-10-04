@@ -81,7 +81,7 @@ Verdict: alive via multiplicity obstructions, debordering, and unknown technique
 sub-route now has a documented wall.
 
 ### Attack 4: Proof complexity (separate Frege, get NP != coNP)
-Idea: exhibit tautologies needing super-poly Frege proofs; NP != coNP follows, hence P != NP.
+Idea: exhibit tautologies needing super-poly Frege proofs; $\mathrm{NP} \neq \mathrm{coNP}$ follows, hence $\mathrm{P} \neq \mathrm{NP}$.
 What breaks: even $\mathrm{NC}^1$-Frege lower bounds are open; the known techniques hit natural proofs
 again at the truth-table level.
 Verdict: open; pigeonhole is settled only for resolution and constant-depth Frege.
