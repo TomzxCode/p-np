@@ -128,3 +128,24 @@ here when the corpus engages them substantively (audited, proved-against, or
 load-bearing in a proof). Every promotion carries a status code and a
 correct-as-of date; corrections update the entry in place and note the change in
 LOG.md.
+
+## Source pins
+
+Content-hash pins (GUIDANCE.md priority 4: pin the cited sources by content
+hash so citations cannot drift). Method: fetched each paper's arXiv HTML at the
+version-stamped URL (https://arXiv.org/html/IDvN) on the fetch date, and hashed
+the fetched bytes with SHA-256. The arXiv abs page was checked the same day to
+confirm the pinned version is the current one. The hash pins the bytes served
+that day at that URL; arXiv can re-serve an HTML rendering with formatting
+changes without a version bump, so a changed hash with an unchanged version
+number means the rendering moved, not necessarily the text.
+
+| source | version (current per abs page) | fetch date | sha256 of fetched HTML | bytes |
+|---|---|---|---|---|
+| arXiv:2609.35927 (Krajicek) | v2 (latest; history v1, v2) | 2026-10-04 | 49bf326d24943a5272a0dcd212e82b6d171a61297613c1a81c88a005f7e5dd4c | 251,655 |
+| arXiv:2510.08814 (Goertzel) | v2 (latest; history v1, v2) | 2026-10-04 | be39105deb76fc16f87a290e4ab3d049655bb2002d4eb4388607dda7bd55458a | 3,791,603 |
+| arXiv:2512.11820 (Edwards) | v5 (latest) | 2026-10-04 | 832145ac74a886ed8f5a415b5727bda7edcab4909132aa102dc8c996e5704ac8 | 5,638,887 |
+| arXiv:2609.23015 (Braun) | v1 (only version) | 2026-10-04 | 04724043a0807a7831e761ef0e50992f0dfaae655f51a585be393a958a59329e | 797,712 |
+
+All four fetches succeeded; no failures to record. Pin verification is a
+two-line re-hash of a fresh fetch against this table.
