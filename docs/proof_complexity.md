@@ -1095,3 +1095,27 @@ black-box citations.
    exponential constant is Theta(1)-optimistic vs the honest union form (cap
    shape unaffected). Theorem 3' discharges its distant-evidence flag; the
    deep-zero-run multi-class residue stays OPEN (pre-existing, deg3 item 3).
+
+## ADDENDUM 9 (2026-10-04, gap-e-constants agent; adjudicated: the FIFTEENTH
+## correction-class event - Theorem 4b's product form is invalid as a cap term)
+
+1. BRACKET SHARPENED (O2(ii)): at (128,2), e = 32: [0.06, 0.317] ->
+   [0.1264, 0.1864]; at (96,3), e = 48: [0.5499, 0.6803]. The witness side is
+   the exact adaptive optimum (backward induction over states (u, m, k, o, z);
+   model 0.1269 vs measured 0.1264, inside the 99% band at all three points;
+   end-to-end validated by full exact enumeration at (5,2), 983,040 configs).
+2. [CORRECTION] Theorem 4b's printed certificate term 2(1 - e^{-ed/4n}) charges
+   a CONJUNCTION (column certification AND found 1-entry) as a DISJUNCTION:
+   linear in x where the truth is quadratic. The valid K-term is the exact
+   chain supremum chi(e); split-product (Pi-form) caps are INVALID - violated
+   by the adaptive optimum (0.55 > 0.31 at (96,3)). Correct cap:
+   chi + (1 - chi)(q + A).
+3. Leading constants: witness exponent 1/4 -> c_w = rho/(1 + rho) = 0.554 at
+   d = 2; the adaptive optimum's small-x coefficient is rho x^2 / 2, twice the
+   printed split's rho x^2 / 4 (measured trend chi/x^2 = 0.512 at x = 0.125).
+4. O2's falsifiable-prediction line "split K_j-tree must land at 0.059" is
+   RELABELED: it is a statement about one policy design, not about the game's
+   optimum (which measures 0.126). Residual gap = the unharvested
+   (1 - chi)(q + A) mass, stated as Conjecture E5 with falsifiable
+   predictions; the (128,2) certification boundary moves e = 58 -> ~80
+   (sharpened, interpolated).

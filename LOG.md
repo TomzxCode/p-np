@@ -1836,3 +1836,18 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   deep-zero-run residue stays OPEN (deg3 item 3).
 - Consolidated: proof_complexity.md ADDENDUM 8; bibliography.md [DROPPED] entry;
   GOAL.md section 6 GAP D closed.
+
+### 2026-10-04 (cont.) - gap-e-constants agent: FIFTEENTH correction-class event; GAP E bracket tightened
+- Deliverables: docs/gap_e_constants.md + experiments/chi_gap_e_check.py
+  (registered run 0 FAIL, deterministic).
+- Bracket: [0.06, 0.317] -> [0.1264, 0.1864] at (128,2) e=32; [0.5499, 0.6803]
+  at (96,3) e=48. Witness = exact adaptive DP over (u,m,k,o,z) (model 0.1269 vs
+  measured 0.1264; validated end-to-end at (5,2), 983,040 configs).
+- [CORRECTION] Theorem 4b's certificate term charged a conjunction as a
+  disjunction; Pi-form caps invalid (violated by the adaptive optimum); correct
+  cap chi + (1-chi)(q+A). Leading constants: c_w = 0.554 at d=2; adaptive
+  small-x coefficient rho x^2/2 (2x the printed split).
+- O2's "split K_j-tree must land at 0.059" prediction RELABELED (one policy
+  design, not the game's optimum; optimum measures 0.126). Boundary e = 58 ->
+  ~80 at (128,2). Residual: Conjecture E5.
+- Consolidated: proof_complexity.md ADDENDUM 9; GOAL.md section 6 GAP E status.

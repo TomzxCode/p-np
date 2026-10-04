@@ -203,3 +203,8 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   its step (2) NA instance retracted as FALSE (exact counterexample). The
   Dubhashi-Ranjan anchor dropped (mis-anchored). Fourteenth correction-class
   event (proof_complexity.md ADDENDUM 8).
+- GAP E status (2026-10-04): O2(ii) bracket tightened to [0.1264, 0.1864] at
+  (128,2) e=32 ([0.5499, 0.6803] at (96,3) e=48); witness = exact adaptive DP;
+  cap form corrected (chain supremum chi(e); Pi-form caps invalid -
+  proof_complexity.md ADDENDUM 9). Residual: the unharvested (1-chi)(q+A) mass
+  (Conjecture E5, falsifiable predictions).
