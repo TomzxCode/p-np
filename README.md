@@ -14,7 +14,7 @@
     paper/             the LaTeX write-up (p2_results.tex/pdf) + CHANGES.md
     lean_channel/      Lean 4 formalization project (CoreChannel.lean: zero sorry)
 
-References to files throughout the corpus are by basename; `verify_corpus.py`
+References to files throughout the corpus are by basename; `corpus_lint.py`
 resolves them across the tree.
 
 Last updated: 2026-10-03 (session with 20-turn budget; turns used: 9).
