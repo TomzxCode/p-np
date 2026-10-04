@@ -130,10 +130,12 @@ confirmation, everything here is a learning log and survey.
 
 ## 6. Current open core (what to attack next)
 
-- The all-degrees budgeted err-floor (O2): degrees 2 and 3 are PROVED (Theorem 3
-  and Theorem 3'; same d^2 ~ n chi-boundary). The open quantifier is degree >= 4;
-  the degree-3 template (star sum rules, alias classes via Boolean identities,
-  wedge/Z certificate inventory) is the stated consumption target.
+- The all-degrees budgeted err-floor (O2): degrees 2, 3, and 4 are PROVED
+  (Theorem 3, Theorem 3', Theorem 3''; the SAME d^2 ~ n chi-boundary at every
+  degree, degree-independent through 4). Theorem A (deg4_theory.md: matching-k
+  columns vary at every d) is the general-d tool; the open quantifier is
+  degree >= 5, consuming the degree-4 template (star classes, alias identities,
+  mass monotonicity).
 - Theorem 3's query-class coverage is a proper subset of the printed degree-2
   class (F_2 mixtures; likely shallow repair - GAP B').
 - Rigor gaps: Lemma M (O5 degree-2 transfer), de-modularizing the JDP steps,
