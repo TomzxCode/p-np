@@ -208,3 +208,7 @@ Owner instruction (2026-10-04): read GUIDANCE.md from time to time.
   cap form corrected (chain supremum chi(e); Pi-form caps invalid -
   proof_complexity.md ADDENDUM 9). Residual: the unharvested (1-chi)(q+A) mass
   (Conjecture E5, falsifiable predictions).
+- GAP B' CLOSED (2026-10-04, docs/mixture_cap.md): Theorem 3 (M-D) covers the
+  FULL printed degree-2 class (F_2 mixtures) with the same aliveness condition;
+  new monomial-star mixture mechanism (Theorem M-A) folds into the constant.
+  All wave-1 research agents have reported.

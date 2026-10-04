@@ -1119,3 +1119,27 @@ black-box citations.
    (1 - chi)(q + A) mass, stated as Conjecture E5 with falsifiable
    predictions; the (128,2) certification boundary moves e = 58 -> ~80
    (sharpened, interpolated).
+
+## ADDENDUM 10 (2026-10-04, mixture-cap agent): GAP B' CLOSED
+
+Theorem 3's cap structure survives over the FULL printed degree-2 class
+(arbitrary F_2 mixtures), with a repaired constant:
+   success <= min(1, q2*_mix + P_adj,mix + P_K + O(e/n) + o(1)),
+same aliveness condition d^2 log k = o(1)-style (M-D). Findings:
+1. [NEW MECHANISM, Theorem M-A, PROVED by complete enumeration] monomial-star
+   mixtures through the output pair (e.g. x_ab x_cd + x_ab x_ef + x_ab x_gh,
+   output ab) self-exclude the entire killed branch on the hit event:
+   posterior 787/934 = 0.8426 at (7,2) vs covered q_and_exact = 0.8065. The
+   excess decays (3.6e-2 at (7,2) -> 5.4e-4 at (63,2); q2*/q_and -> 1).
+2. [Theorem M-B, PROVED] zero single-query certificates in 7172 enumerated
+   queries; the degree-2 Z-certificate is budget-equivalent as a folded
+   mixture (Proposition M-E).
+3. [Toy-scale V5] no mixture strategy beats the covered champions at any
+   budget; K_j dominates everything. INSTRUMENT NOTE: a fixed scan order biases
+   toward early pigeons' matched pairs - the corpus q-baseline requires
+   exchangeable (shuffled) query order.
+4. Dual-engine validation (exact design cosets vs status calculus with a new
+   inclusion-exclusion pattern-weight lemma): digit-exact agreement on all
+   7172 queries x 2 answers at (7,2).
+Effect on Theorem 3's constant: q2* extends to max(q, q_and_exact, q_mix) with
+q_mix -> q_and_exact; the ADDENDUM 7 repair is the e -> infinity limit of this.

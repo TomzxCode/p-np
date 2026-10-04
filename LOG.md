@@ -1865,3 +1865,17 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   * REMAINING AFTER THOSE: single-current-statement consolidation (deferred
     until mixture_cap lands); mechanical PROVED enforcement is recorded as
     convention + lint-adjacent, not fully mechanical (honest gap).
+- channel_spec.md DONE (GUIDANCE item 4, part 1): the frozen single-statement
+  channel semantics - 615 lines, conformance checklist (12 determinism rows, 9
+  independence statements, 4 locks, 2 implementation routes, 5 non-conforming
+  patterns), supersession ledger (9 notes), zero SPEC-AMBIGUOUS flags, two
+  [SPEC-DERIVED] points marked. Lint PASS (451 checks). Committed and pushed.
+- mixture-cap agent: GAP B' CLOSED. Cap structure survives the full printed
+  degree-2 class (Theorem M-D, same aliveness condition); new monomial-star
+  mixture mechanism (Theorem M-A, PROVED by complete enumeration, posterior
+  0.8426 vs 0.8065 at (7,2), decaying to q_and_exact); no new certificates
+  (M-B); K_j dominates at tree scale (V5). Dual-engine validation digit-exact.
+  INSTRUMENT NOTE adopted: corpus q-baseline requires exchangeable (shuffled)
+  scan order - fixed order is biased.
+- ALL WAVE-1 RESEARCH AGENTS HAVE REPORTED. The deferred single-statement
+  consolidation (one current statement of the proved results) is now unblocked.
