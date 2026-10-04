@@ -51,9 +51,7 @@ LINT_NAME = Path(__file__).resolve().name
 
 # Scripts registered by agents still writing their owning documents: skipped
 # until the document lands (then remove the entry; the lint will enforce it).
-PENDING_SCRIPTS: dict[str, str] = {
-    "chi_odd_p_check.py": "in-flight: docs/odd_p_theory.md pending",
-}
+PENDING_SCRIPTS: dict[str, str] = {}
 
 # ---------------------------------------------------------------------------
 # Whitelists and needle tables (keep documented; extend only with a reason).
@@ -64,8 +62,8 @@ PENDING_SCRIPTS: dict[str, str] = {
 REFERENCE_WHITELIST: dict[tuple[str, str], str] = {
     # GUIDANCE.md is a verbatim external review; it may cite the checker's old name.
     ("GUIDANCE.md", "verify_corpus.py"): "quoted external review text",
-    # odd-p agent's script landed before its owning document (in flight).
-    ("__any__", "chi_odd_p_check.py"): "in-flight: docs/odd_p_theory.md pending",
+    # odd-p deliverable landed; keep the wildcard mechanism for future in-flight files.
+    ("__any__", "chi_odd_p_check.py"): "document landed 2026-10-04",
 }
 
 # (document, required substring), matched after collapsing whitespace runs to a
