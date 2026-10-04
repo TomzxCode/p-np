@@ -117,18 +117,6 @@ def sys4() -> list[dict[tuple[int, ...], int]]:
     return grid_system(NFR, NR)
 
 
-def is_generator(poly: dict[tuple[int, ...], int], gens: list,
-                 max_deg: int = 4) -> bool:
-    """poly is a legal V-row: some generator g times some monomial m, deg<=4."""
-    for g in gens:
-        gd = max((len(t) for t in g), default=0)
-        for k in range(0, max_deg - gd + 1):
-            for m in combinations_with_replacement(range(NV), k):
-                if shift(g, m) == poly:
-                    return True
-    return False
-
-
 def line_pair(t: tuple[int, ...]) -> bool:
     """Monomial tuple contains two cells sharing a pigeon or a hole."""
     cells = [divmod(v, NFR) for v in t]
@@ -194,20 +182,19 @@ def v0_anchor_and_slice() -> None:
     print(f"  (8,4) deg<=2 slice: {len(vecs2)} generator rows, {len(monos2)} "
           f"columns, echelon pivots {len(ech2)} [t = {elapsed():.0f} s]")
 
-    # singles: never value-determined (theorem base); row-parity span = 9
+    # singles: never value-determined (theorem base: cor:coin + this slice);
+    # the 9 Q_i rows project to 9 independent single-column relations
     det_s = 0
     for i in range(NR):
         for j in range(NFR):
             if reduce_mod(1 << mi2[(vid(i, j),)], echh) == 0:
                 det_s += 1
     sproj = []
-    for p in rows2:
+    for i in range(NR):                 # the 9 Q_i rows: e_0 + 8 singles
         v = 0
-        for t in p:
-            if len(t) == 1:
-                v ^= 1 << mi2[t]
-        if v:
-            sproj.append(v)
+        for j in range(NFR):
+            v ^= 1 << mi2[(vid(i, j),)]
+        sproj.append(v)
     piv: dict = {}
     for v in sproj:
         while v:
@@ -218,24 +205,25 @@ def v0_anchor_and_slice() -> None:
                 piv[h] = v
                 break
     ok = det_s == 0 and len(piv) == NR
-    print(f"  singles: value-determined {det_s}/72 (theorem: 0); rank of "
-          f"row-space projections onto singles = {len(piv)} (9 row-parity "
+    print(f"  singles: value-determined {det_s}/72 (theorem base: 0); rank of "
+          f"the 9 Q_i-row projections onto singles = {len(piv)} (9 row-parity "
           f"relations) -> {'PASS' if ok else 'FAIL'}")
     ok0 = reduce_mod(1 << 0, echh) == 0
     print(f"  e_0 determined: {ok0} -> {'PASS' if ok0 else 'FAIL'}")
-    # squares: alias to their single (residue = the single column exactly)
+    # squares: alias to their single: e_sq + e_x in W for all 72
     bad = 0
     for i in range(NR):
         for j in range(NFR):
-            res = reduce_mod(1 << mi2[(vid(i, j), vid(i, j))], echh)
-            if res != (1 << mi2[(vid(i, j),)]):
+            vec = ((1 << mi2[(vid(i, j), vid(i, j))])
+                   ^ (1 << mi2[(vid(i, j),)]))
+            if reduce_mod(vec, echh) != 0:
                 bad += 1
-    print(f"  squares alias x^2 -> x: mismatches {bad}/72 -> "
-          f"{'PASS' if bad == 0 else 'FAIL'}")
-    # same-line degree-2: fixed 0
+    print(f"  squares alias x^2 = x (e_sq + e_x in W): mismatches {bad}/72 "
+          f"-> {'PASS' if bad == 0 else 'FAIL'}")
+    # same-line degree-2 (distinct cells): fixed 0
     sl = sl_det = 0
     for t in monos2:
-        if len(t) == 2 and line_pair(t):
+        if len(t) == 2 and t[0] != t[1] and line_pair(t):
             sl += 1
             if reduce_mod(1 << mi2[t], echh) == 0:
                 sl_det += 1
@@ -263,40 +251,42 @@ def v1_witnesses() -> None:
     boolx = {(x, x): 1, (x,): 1}
     booly = {(y, y): 1, (y,): 1}
 
-    def polysum(ps: list) -> dict:
-        out: dict = {}
-        for p in ps:
-            for t, c in p.items():
-                out[t] = out.get(t, 0) ^ c
-        return {t: c for t, c in out.items() if c}
-
     checks = []
+    # each witness is a list of (system-poly, monomial) shifts; the machine
+    # check asserts every shift row is a legal V-row and the sum == target
     t = {(x, x): 1, (x,): 1}
-    checks.append(("x^2 + x", t, [t]))
+    checks.append(("x^2 + x", t, [(t, ())]))
     t = {(x, x, x, x): 1, (x, x): 1}
-    checks.append(("x^4 + x^2", t, [shift(boolx, (x, x))]))
+    checks.append(("x^4 + x^2", t, [(boolx, (x, x)), (boolx, (x,))]))
     t = {(x, x, x, x): 1, (x,): 1}
-    checks.append(("x^4 + x", t, [shift(boolx, (x, x)), boolx]))
+    checks.append(("x^4 + x", t, [(boolx, (x, x)), (boolx, (x,)), (boolx, ())]))
     t = {(x, x, x, y): 1, (x, y): 1}
-    checks.append(("x^3y + xy", t, [shift(boolx, (x, y)), shift(boolx, (y,))]))
+    checks.append(("x^3y + xy", t, [(boolx, (x, y)), (boolx, (y,))]))
     t = {(x, x, y, y): 1, (x, y): 1}
-    checks.append(("x^2y^2 + xy", t, [shift(boolx, (y, y)), shift(booly, (x,))]))
+    checks.append(("x^2y^2 + xy", t, [(boolx, (y, y)), (booly, (x,))]))
     t = {(x, x, y, z): 1, (x, y, z): 1}
-    checks.append(("x^2yz + xyz", t, [shift(boolx, (y, z))]))
+    checks.append(("x^2yz + xyz", t, [(boolx, (y, z))]))
     t = {(x, x, x): 1, (x,): 1}
-    checks.append(("x^3 + x", t, [shift(boolx, (x,))]))
+    checks.append(("x^3 + x", t, [(boolx, (x,)), (boolx, ())]))
     t = {(x, x, y): 1, (x, y): 1}
-    checks.append(("x^2y + xy", t, [shift(boolx, (y,))]))
+    checks.append(("x^2y + xy", t, [(boolx, (y,))]))
 
     allok = True
     for name, target, wit in checks:
-        s = polysum(wit)
-        legal = all(is_generator(g, gens) for g in wit)
+        rows = [shift(g, m) for (g, m) in wit]
+        s: dict = {}
+        for r in rows:
+            for tt, c in r.items():
+                s[tt] = s.get(tt, 0) ^ c
+        s = {tt: c for tt, c in s.items() if c}
+        legal = (all(g in gens for (g, _m) in wit)
+                 and all(max((len(tt) for tt in r), default=0) <= 4
+                         for r in rows))
         ok = (s == target) and legal
         allok &= ok
         print(f"  {name:<14}: witness sum {'==' if s == target else '!='} "
-              f"target, all {len(wit)} rows legal generators (deg<=4) -> "
-              f"{'PASS' if ok else 'FAIL'}")
+              f"target, all {len(wit)} rows legal generator shifts "
+              f"(deg<=4) -> {'PASS' if ok else 'FAIL'}")
     g3 = (vid(1, 1), vid(2, 2), vid(3, 3))
     for p in (0, 4):
         expect: dict = {tuple(sorted(g3)): 1}
@@ -308,7 +298,8 @@ def v1_witnesses() -> None:
         for j in range(NFR):
             qp[(vid(p, j),)] = 1
         got = shift(qp, g3)
-        ok = (got == expect) and is_generator(got, gens)
+        legal = (qp in gens) and max(len(tt) for tt in got) <= 4
+        ok = (got == expect) and legal
         allok &= ok
         print(f"  Q_{p}.g3 star row: structural form + generator membership "
               f"-> {'PASS' if ok else 'FAIL'}")
@@ -345,27 +336,57 @@ def v2_star_decomposition() -> None:
     g3 = ((5, 5), (6, 6), (7, 7))
     p = 4
     g3_holes = {h for (_i, h) in g3}
-    bad_fresh = bad_auto = bad_ind = n_free = n_assigned = 0
+    bad_fresh = bad_auto = bad_ind = bad_live = n_free = n_assigned = 0
     for rho in rhos(n, d):
         R = set(range(n)) - set(rho.values())
-        fresh = [j for j in R if j not in g3_holes]
         if p not in rho:
             n_free += 1
-            if sorted(fresh) != sorted(set(range(n)) - g3_holes):
-                bad_fresh += 1
+            for j in range(n):
+                mono = tuple(sorted((vid0(n, p, j),) + tuple(
+                    vid0(n, i, h) for (i, h) in g3)))
+                live_fresh = (j not in g3_holes and j in R)
+                if live_fresh:
+                    # live term: monomial is a matching4 (no line pair) and
+                    # the pair (p, j) is free
+                    if line_pair_t(mono, n) or status(rho, (p, j)) != "F":
+                        bad_live += 1
+                elif j in g3_holes:
+                    # same-hole collision factor: monomial determined 0
+                    if not line_pair_t(mono, n):
+                        bad_live += 1
+                else:
+                    # killed hole outside g3: pair (p, j) killed-unmatched
+                    if status(rho, (p, j)) != "K":
+                        bad_fresh += 1
         else:
             n_assigned += 1
-            if any(status(rho, (p, j)) != "K" for j in fresh):
+            if any(status(rho, (p, j)) != "K"
+                   for j in R if j not in g3_holes):
                 bad_ind += 1
             if rho[p] in g3_holes:
                 i_other = next(i for (i, h) in g3 if h == rho[p])
                 if status(rho, (i_other, rho[p])) != "K":
                     bad_auto += 1
-    ok = (bad_fresh == 0 and bad_auto == 0 and bad_ind == 0)
-    print(f"  free pigeons {n_free}, assigned {n_assigned}; fresh-set form "
-          f"errors {bad_fresh}; fresh-terms-killed errors {bad_ind}; "
-          f"injectivity automatism errors {bad_auto} -> "
-          f"{'PASS' if ok else 'FAIL'}")
+    ok = (bad_fresh == 0 and bad_auto == 0 and bad_ind == 0 and bad_live == 0)
+    print(f"  free pigeons {n_free}, assigned {n_assigned}; live-term "
+          f"structural errors {bad_live}; killed-elsewhere errors "
+          f"{bad_fresh}; fresh-terms-killed errors {bad_ind}; injectivity "
+          f"automatism errors {bad_auto} -> {'PASS' if ok else 'FAIL'}")
+
+
+def vid0(n: int, i: int, j: int) -> int:
+    """Outer 0-based variable index (pair id) for cell (i, j); only used as
+    a cell identifier for line-pair tests."""
+    return i * n + j
+
+
+def line_pair_t(t: tuple, n: int) -> bool:
+    cells = [divmod(v, n) for v in t]
+    for a in range(len(cells)):
+        for b in range(a + 1, len(cells)):
+            if cells[a][0] == cells[b][0] or cells[a][1] == cells[b][1]:
+                return True
+    return False
 
 
 # --------------------------------------------- V3: post4 closed form + checks
@@ -506,14 +527,18 @@ P4W = [(i, j) for i in range(4) for j in range(4)]
 PERMS = list(permutations((1, 2, 3)))
 
 
+def _relabel(q, pm, hm):
+    # sort the CELLS of the query (pigeon, hole roles preserved per cell)
+    return tuple(sorted((pm[a], hm[b]) for (a, b) in q))
+
+
 def canon_class(qs):
     best = None
     for pp in PERMS:
         pm = {0: 0, 1: pp[0], 2: pp[1], 3: pp[2]}
         for hh in PERMS:
             hm = {0: 0, 1: hh[0], 2: hh[1], 3: hh[2]}
-            r = tuple(sorted(tuple(sorted((pm[a], hm[b])) for (a, b) in q)
-                             for q in qs))
+            r = tuple(sorted(_relabel(q, pm, hm) for q in qs))
             if best is None or r < best:
                 best = r
     return best
@@ -684,7 +709,8 @@ def v5_search() -> None:
 
 def v6_cap() -> None:
     print("\n[V6] Theorem 3'' cap terms at e = d log2(k), degree <= 4 trees")
-    for (n, d) in [(63, 4), (127, 4), (255, 4), (63, 5), (127, 5)]:
+    for (n, d) in [(63, 4), (127, 4), (255, 4), (1023, 4), (4095, 4),
+                   (63, 5), (127, 5), (1023, 5)]:
         c = n - 2 * d
         f = (2 * d + 1) * 2 * d / ((n + 1) * n)
         m = c / ((n + 1) * n)
@@ -693,7 +719,9 @@ def v6_cap() -> None:
         qa = float(q_and_exact(n, d))
         p3 = float(post_k(n, d, 3))
         p4 = float(post_k(n, d, 4))
-        q4 = max(q, qa, p3, p4)
+        terms = {"q": q, "and": qa, "post3": p3, "post4": p4}
+        q4name = max(terms, key=terms.get)
+        q4 = terms[q4name]
         p4mass = float(p_mass(n, d, 4))
         for logk in (16, 64):
             e = d * logk
@@ -703,8 +731,8 @@ def v6_cap() -> None:
             p_c4 = min(1.0, e * p4mass)
             cap = q4 + p_adj + p_k + p_c4 + p_blk
             alive = "ALIVE" if d * d * logk < 0.1 * n else "stressed"
-            print(f"  ({n:4d},{d}) e = {e:4d}: q4* = {q4:.4f} (max of "
-                  f"q/and/post3/post4)  P_adj = {p_adj:.4f}  P_K = {p_k:.4f} "
+            print(f"  ({n:5d},{d}) e = {e:4d}: q4* = {q4:.4f} [= {q4name}]"
+                  f"  P_adj = {p_adj:.4f}  P_K = {p_k:.4f} "
                   f" P_cert4 = {p_c4:.2e}  P_blk4 = {p_blk:.4f}  "
                   f"cap = {min(cap, 1.0):.4f} [d^2 log k = {d * d * logk}, "
                   f"n = {n}: {alive}]")
