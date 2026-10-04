@@ -543,6 +543,11 @@ def check_label_hygiene(docs: list[Path], docs_raw: dict[str, str], report: Repo
                 continue
             if "RETRACT" in ln or "DOWNGRADE" in ln:
                 continue
+            # Label/status assignment lines are metadata, not statements: the
+            # enclosing section carries the proof pointer (check 8 covers
+            # traceability for registry claims).
+            if re.match(r"^\s*(Label|Status)\s*:", ln):
+                continue
             total += 1
             if LABEL_LEGEND_RE.search(ln):
                 continue
