@@ -1974,3 +1974,10 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   completeness) is now PROVED in d-uniform form, with the ENLARGED inventory
   {row, star, DS, UU, OFF} - the all-degrees induction's step (6) needs
   re-assembly over the enlarged inventory. Dispatching the assembly agent.
+- PROCESS SLIP (repeat) + lint fix: committed twice with failing check-9 while
+  iterating; root cause found - check 9's section scan treated '#' comment
+  lines inside fenced code as headings (truncating sections) and gave flagged
+  ## headings an empty range when ### sub-headings followed. Fixed: fence-aware
+  header collection + heading-level-aware section boundaries. PASS restored and
+  verified. The check-9 vocabulary extension (Buchberger/reduc/identit/
+  induction/cor:coin) stands.

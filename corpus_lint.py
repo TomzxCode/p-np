@@ -519,7 +519,25 @@ def check_label_hygiene(docs: list[Path], docs_raw: dict[str, str], report: Repo
             continue  # scope: docs/*.md top level
         lines = docs_raw[doc.name].splitlines()
         total_lines = len(lines)
-        headers = [i for i, ln in enumerate(lines) if ln.startswith("#")]
+        # Headers are markdown headings only: lines starting with '#' OUTSIDE
+        # fenced code blocks (a '#'-comment inside a fence is not a heading,
+        # and treating it as one truncates the section scan).
+        headers = []
+        in_fence = False
+        for i, ln in enumerate(lines):
+            if ln.lstrip().startswith("```"):
+                in_fence = not in_fence
+                continue
+            if not in_fence and ln.startswith("#"):
+                headers.append(i)
+        def heading_level(ln: str) -> int:
+            n = 0
+            for ch in ln:
+                if ch == '#':
+                    n += 1
+                else:
+                    break
+            return n
         for i, ln in enumerate(lines):
             if not re.search(r"\bPROVED\b", ln):
                 continue
@@ -528,8 +546,19 @@ def check_label_hygiene(docs: list[Path], docs_raw: dict[str, str], report: Repo
             total += 1
             if LABEL_LEGEND_RE.search(ln):
                 continue
-            section_start = max((j for j in headers if j <= i), default=-1)
-            section_end = min((j for j in headers if j > i), default=total_lines)
+            # A flagged HEADING line owns its whole section including nested
+            # subsections: the section ends at the next heading of the same or
+            # higher level. A flagged body line uses the enclosing subsection.
+            if i in headers:
+                lvl = heading_level(ln)
+                section_start = i
+                section_end = min(
+                    (j for j in headers if j > i and heading_level(lines[j]) <= lvl),
+                    default=total_lines,
+                )
+            else:
+                section_start = max((j for j in headers if j <= i), default=-1)
+                section_end = min((j for j in headers if j > i), default=total_lines)
             context = norm("\n".join(lines[section_start:section_end])) \
                 if section_start >= 0 else norm(ln)
             if PROOF_KIND_RE.search(context):
