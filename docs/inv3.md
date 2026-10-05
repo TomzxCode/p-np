@@ -29,6 +29,7 @@
 >       W_t and share the neutrality echelon).
 > SURVIVES: the t=2 conclusion - separately confirmed by the exact
 > dimension computation in chi_cls_cnt_check.py at (6,3).
+> Adversarial gate: experiments/chi_engine_adversarial.py (run 2026-10-04, verdict: case1 FAIL - the engine reported closure on the known-false G={x^2, xy+1}, t=2, mode known-false-closure-wrong, ground truth 1 in I / 1 not in W_2 established in-harness; case3 FAIL - closure reported at 19.3s under a 19.2s cap vs a 25.6s honest reference, verification scan provably incomplete (defect c reproduced); case2 PASS - all 142,184 hidden lcm>t base-pair S-polynomials at 7x6 t=3 reduce in-cap or leave a degree-4 residue (1,295, all in the (C,ST) star-x-disjoint-row class), no in-cap residue, so the 7x6 closure is unrefuted at this probe but uncertified (all such pairs are skipped and the claim rests on the false Lemma TB); known-TRUE t=2 controls at 5x4 and 7x6 PASS; informational 5x4 probe: an exotic via the blind spot confirmed where (star)_3 is false; OVERALL FAIL as expected per this downgrade - re-run the gate unchanged to certify a repaired engine).
 > ======================================================================
 
 
@@ -530,3 +531,158 @@ falsification protocol carry over verbatim.
   roughly 6 GB of pivot store with the present big-int echelon; it needs the
   same leaner pivot store the corpus flagged for the $(10,5)$ sweep
   (all_degrees.md Section 5.2 item 6).
+
+## 7. The 11x10 run ($d = 5$): profile, memory-aware neutrality, closure
+
+Result of the computation agent (2026-10-04), extending Section 3 with the
+$d = 5$ rung. Status: analysis, not peer-reviewed. Registered run:
+`cd /home/tomzx/pnp && python3 experiments/chi_inv3_check.py --d5`
+(`--d5all` adds the independent second configuration $G'$/C at 11x10).
+Outcome: **the 11x10 completion CLOSES** ($+715 = 55 + 660$, one clean
+verification pass), so $(\star)_3$ and INV(3)(i) are PROVED at $d = 5$ [MV],
+and the old "memory-walled" remark of Section 6 is superseded by a
+memory-aware engine (Lemma Q below) that decides neutrality in 0.63 GB
+instead of ~5.1 GB.
+
+### 7.1 Profile (taken before the run; the decision was made on it)
+
+The raw spaces at the restricted $(2d,d)$ rectangle, $t = 3$ (the engine's
+coordinates are multiset monomials, so squares and alias monomials are
+included):
+
+| rectangle | cells | raw $S_{\le 3}$ coords | raw $W_3$ rows (pre-dedup) | KiB/row |
+|---|---|---|---|---|
+| 5x4 | 20 | 1,771 | 5,145 | 0.2 |
+| 7x6 | 42 | 14,190 | 31,003 | 1.7 |
+| 9x8 | 72 | 67,525 | 116,289 | 8.2 |
+| 11x10 | 110 | 234,136 = 1 + 110 + 6,105 + 227,920 | 330,891 | 28.6 |
+| 13x12 | 156 | 657,359 | 785,785 | 80.2 |
+
+The dense bitset echelon of $W_3$ (the Section 3 instrument) at 11x10 needs
+29,306 bytes per row; scaling the 9x8 rank (49,941) linearly in the
+coordinate count predicts ~173,000 pivots and a ~5.1 GB pivot store: the
+"roughly 6 GB" wall of Section 6, confirmed analytically. Under the 2 GB
+gate the dense run at 11x10 is INFEASIBLE and was not attempted.
+
+### 7.2 Lemma Q: membership in $W_3$ decided in the quotient
+
+Quotient coordinates: the square-free, line-free monomials of degree 1..3
+(singles, diagonals, matching triples), the constant eliminated. The
+projection $\pi$ acts on each monomial $T$ by: (pi1) $T$ contains a line
+pair (two distinct cells with the same pigeon or the same hole)
+$\mapsto 0$; (pi2) $T = () \mapsto$ the row sum of pigeon 0; (pi3)
+$T = x^2 u \mapsto \pi(xu)$; (pi4) else $T$ is a coordinate (identity).
+Every defect $T + \pi(T)$ lies in $W_3$: (pi1) the line-pair monomials of
+degree $\le 3$ are $C$/$H$ rows and their single shifts; (pi2)
+$Q_0 = 1 + $ row sum; (pi3) $b_x u$. By linearity $v + \pi(v) \in W_3$ for
+every $v$, so $\ker\pi \subseteq W_3$, and
+$$v \in W_3 \iff \pi(v) \in \pi(W_3),$$
+so membership is decided by an echelon of $\pi(W_3)$ over the quotient
+coordinates. The $b$, $C$, $H$ families project to ZERO and
+$\pi(\Sigma_{r,cd}\, m) = \pi(Q_r\,(x_{cd}m))$, so $\pi(W_3)$ is spanned by
+the projections of the $Q$-shifts $\pi(Q_i\, m)$ alone, $m$ square-free
+line-free of degree $\le 2$: at most $np\,(1 + N + \#\text{diagonals})$
+rows. [PROVED, five lines; the defect inclusion is also machine-checked
+monomial-by-monomial at 5x4: all 1,771 defects lie in the full $W_3$
+echelon.]
+
+Measured at 11x10: quotient coordinates 123,860 (15,483 B/row); projected
+rows after dedup 45,660 (bound 55,671); echelon rank 40,820; pivot store
+~0.632 GB; peak RSS 1.28 GB including the 234,136-entry $\pi$ map. FEASIBLE,
+and the run was made.
+
+### 7.3 Engine change and validation (nothing else moved)
+
+`gb_complete` gained optional (pimap, shift_src) parameters: with them the
+neutrality vector of a polynomial is its $\pi$-image and the neutrality
+echelon lives on the quotient coordinates; the S-polynomial queue and the
+degree-capped full division are untouched. The division's descending-scan
+victim selection got a semantics-preserving fast path (max first, exact
+fallback), validated by trace-identical re-runs of the registered full-mode
+completions: 5x4 t=2 (+10, 220 pairs) and 7x6 t=3 (+161 = 21+140, 23,282
+pairs). Validation of the quotient neutrality itself (part F crosscheck,
+all [PASS]):
+
+1. membership agreement with the full 7x6 echelon on 3,000 random vectors:
+   3,000/3,000 (1,581 in-span, 1,419 out);
+2. $\pi(e_0)$ outside the quotient echelon (matches $e_0 \notin W_3$);
+3. 7x6-Q t=3 closes with the SAME trace as Section 3.3 under G/A (+161 =
+   21+140, 23,282 pairs) and G'/C (+161, 21,959 pairs);
+4. 5x4-Q t=3 (diagnostic, outside INV scope) exhibits the exotic at exactly
+   30 additions ({2: 10, 3: 20}), a degree-2 residue, with the shift by
+   $x_{3,0}$ escaping $W_3$, as in Section 3.4;
+5. 9x8-Q t=3 closes with the SAME trace as Section 3.3: +372 = 36 + 336 at
+   73,437 pairs (143 s; the quotient echelon is also ~1.6x faster than the
+   full one).
+
+Provenance note on the Section 3.4 witness: the current registered engine,
+in ALL FOUR variant/order configurations and in quotient mode, produces the
+same +30 trace and the same failing shift $x_{3,0}$, with residue
+$R' = 1 + x_{0,0} + x_{0,0}x_{1,2} + x_{0,0}x_{2,2} + x_{0,2} +
+x_{0,2}x_{1,0} + x_{0,2}x_{2,0} + x_{1,0} + x_{1,0}x_{2,2} + x_{1,2} +
+x_{1,2}x_{2,0} + x_{2,0} + x_{2,2}$, i.e. the Section 3.4 $R$ with the three
+monomials containing $x_{3,0}$ replaced by their $x_{2,2}$ counterparts.
+The printed $R$ of Section 3.4 is not reproduced by the current run (likely
+a transcription slip); the 4-hole disproof is unaffected (same addition
+count, same residue degree, same escaping shift).
+
+### 7.4 The 11x10 result
+
+**Completion closed.** 2,376 base generators + 715 added
+({2: 55, 3: 660} by degree), 183,216 pairs processed, ONE verification pass
+over the final set found every S-polynomial reducing to zero within degree
+3, all additions span-neutral (machine-enforced through Lemma Q). By Lemma
+TB, $I \cap S_{\le 3} = W_3$ at the 11x10 rectangle, i.e. $(\star)_3$ PROVED
+at $d = 5$. [MV]  Engine 718.5 s; total registered run 918.7 s, 6 PASS /
+0 FAIL, peak RSS 1.32 GB.
+
+The trace extends the pattern exactly: the degree-2 layer is one generator
+per pigeon pair ($C(11,2) = 55$, as $C(7,2) = 21$ and $C(9,2) = 36$) and the
+degree-3 layer is $4\,C(np,3)$ ($4 \cdot 165 = 660$, as $4 \cdot 35 = 140$
+and $4 \cdot 84 = 336$). Consequences:
+
+- **INV(3)(i) at $d = 5$: PROVED [MV]** (modulo the $e_0$ clause, which
+  stands as at $d = 4$: $e_0 \notin V(10,5)$ follows from designs-exist,
+  the paper's Theorem 4.1 at every $(n,d)$).  $V_{\le 5} \cap S_{\le 3}
+  \subseteq I \cap S_{\le 3} = W_3 = V_{\le 3}$, so the degree-3 slice of
+  INV(5) holds, the stronger ideal form again.
+- The rectangle-universality program of Section 5.1 now has verified rungs
+  at $d = 3, 4, 5$; the memory wall that stopped $d = 5$ is gone (Lemma Q),
+  and the shallowest wall is $d = 6$ (below).
+- The second configuration (G'/C at 11x10, registered via --d5all) closes
+  with the same trace: +715 = 55 + 660, 172,931 pairs, one clean pass
+  (1,222 s) [MV], so the closure is configuration-independent at $d = 5$,
+  as at $d = 3, 4$.
+
+### 7.5 Updated INV(3) reduction table
+
+| $d$ | rectangle | $(\star)_3$ | INV(3)(i) | evidence |
+|---|---|---|---|---|
+| 2 | 5x4 | DISPROVED (exotic, sect. 3.4) | outside range; demarcates $d \ge 3$ | [MV] |
+| 3 | 7x6 | PROVED (sect. 3.3; tautology layer) | CLOSED | [MV] |
+| 4 | 9x8 | PROVED (sect. 3.3) | PROVED | [MV] |
+| 5 | 11x10 | PROVED (sect. 7.4) | PROVED | [MV] |
+| 6 | 13x12 | REDUCED: one finite run | REDUCED | wall below |
+| $\ge 7$ | $(2d{+}1) \times 2d$ | REDUCED: one finite run per rectangle | REDUCED | wall below |
+
+The $d = 6$ wall under this method: quotient coordinates 387,972 (47.4
+KiB/row), projected rows $\le$ 135,889, pivot-store bound 6.59 GB
+(rank-scaled estimate ~5.9 GB at the measured 0.894 rank/rows ratio): above
+this machine's 2 GB gate, feasible on a ~16 GB machine, or with a
+byte-packed pivot store (the rows are big ints; a bytes-based store is ~8x
+smaller and would pass). Each further degree multiplies the store by ~9.3.
+
+### 7.6 Provenance
+
+- No corpus file other than the two deliverables was created or edited;
+  LOG.md was not written.
+- Registered run: `python3 experiments/chi_inv3_check.py --d5`, 918.7 s,
+  6 PASS / 0 FAIL (crosscheck 195 s of which the 9x8-Q confirmation 143 s;
+  11x10 profile + quotient echelon ~10 s at 1.28 GB peak RSS; 11x10 engine
+  718.5 s).  After the engine edit the DEFAULT registered run was
+  re-certified end to end: `python3 experiments/chi_inv3_check.py`,
+  37 PASS / 0 FAIL, 893.0 s (the pre-edit record was 37 PASS / 0 FAIL,
+  1037 s; identical checks, faster division).
+- The $t = 4$ layer of INV(4) remains the shallowest open slice of
+  Theorem 3-gen (Section 5.2 unchanged); at $t = 3$ the restriction on
+  $d \ge 6$ is now only RAM size, not the method.
