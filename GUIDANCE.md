@@ -1,153 +1,136 @@
 # Guidance on the P vs NP corpus
 
-Rewritten 2026-10-04 (second review) after the corpus grew from a study of one
-reduction into a large formal program. Reviewed: layout, README, GOAL, LOG
-tail, bibliography, current_results.md, all_degrees.md, cls_cnt.md, inv3.md,
-mixture3.md, deg5_theory.md, open_problems.md, theorem_map.md, the Lean gate,
-paper currency, and the uncommitted working tree. The prior review's content is
-superseded here; items it raised that are now addressed are dropped.
+Rewritten 2026-10-05 (third review) after the second review's adoption wave.
+Reviewed: layout, README, GOAL, LOG tail, current_results.md, theorem_map.md,
+inv3.md (the new section 3 engine, the section 7 d=5 run, the DOWNGRADE block,
+and the closing label correction), the adversarial gate
+(chi_engine_adversarial.py, committed run), chi_mixture4.py (in flight), the
+PROVED registry and corpus_lint checks 8-9, and the working tree. I re-derived
+the Lemma TB counterexample independently (G = {x^2, xy+1}, t = 2: the only pair
+has lcm-degree 3, its S-polynomial is x, so 1 is in the ideal, while
+W_2 = span{x^2, xy+1} does not contain 1). The second review's content is
+superseded; items it raised that are now addressed are dropped. Its priorities
+1-4 and 6 are done (inv3 downgraded and relabeled, the Lemma TB counterexample
+logged, the adversarial gate built and run, the corpus re-reconciled, the study
+framing and stop rules adopted). Its priorities 5 (the external reading-check)
+and 7 (vocabulary and drift) remain and are carried below. References elsewhere
+to "GUIDANCE priority N" point at the second review.
 
 ## What this is now
 
-Still not a P vs NP investigation. It has become a serious, well-organized
-attempt to prove one conditional step: the all-degrees budgeted error floor
-(O2) for Krajicek's pseudo-solution pipeline (arXiv:2609.35927), which would
-feed Theorem 6.1 and yield AC^0[2]-Frege PHP lower bounds. That is a legitimate
-research target. The headline ("prove or disprove P != NP") still oversells it,
-but the corpus now says so plainly, and the earlier "93% confidence" is gone.
+Still not a P vs NP investigation. It is a source-anchored study of one finite
+algebraic obstruction, INV(d) (the degree-truncated Buchberger completion on
+increasing rectangles) for Krajicek's pseudo-solution pipeline, plus a survey and
+a claim-forensics record. Even a complete proof of INV(d) yields only a
+conditional lower bound (Theorem R, premise O2), and the corpus now says so
+plainly.
 
 ## What is genuinely good
 
-- Framing discipline is fixed. README, GOAL, and current_results.md all state
-  the problem is open and that no progress toward resolving it was made, and
-  the PROVED / MEASURED / INFERRED distinction is now a written convention with
-  a mechanical registry (`proved_registry.py`) and lint checks 8-9.
-- The corpus converged on ONE current statement (`docs/current_results.md`),
-  with retractions and falsification conditions in the same document. That is
-  the single best structural change since the last review.
-- The channel semantics are frozen (`docs/channel_spec.md`), which is exactly
-  what the last review asked for (freeze semantics before coding).
-- Verification culture is real: registered runs with deterministic seeds, a
-  Lean sorry-budget gate, and content-hash pins on the four cited sources.
-- The self-correction ledger is candid and now large (sixteen plus
-  correction-class events), each logged with provenance.
+- The adversarial gate is the right structural answer and it works. It fed a
+  known-false identity through the completion engine and the engine reported a
+  wrong closure (case 1 FAIL), it reproduced the timeout dishonesty live (case 3
+  FAIL), and it showed the hidden-pair scan leaves the 7x6 closure unrefuted but
+  uncertified (case 2). An engine that has been shown to reject something is
+  finally in place, and the gate was committed with a pinned engine hash.
+- The candor machinery is real and was used: the second review's findings were
+  adopted rather than argued away, and the newest over-claim (the d=5 result) was
+  caught and relabeled inside the same work session.
+- current_results.md remains a strong single current statement (it folds the
+  newest wave and correctly excludes the uncertified d=5 work), the channel
+  semantics stay frozen, the Lean sorry/axiom budget gate stays meaningful, and
+  the self-correction ledger is large and dated.
 
-## The problems, most important first
+## Problems, most important first
 
-1. **The newest load-bearing claim does not hold up (verified).** `docs/inv3.md`
-   claims "INV(3)(i) PROVED at d = 4 [MV]" via a "degree-truncated Buchberger
-   completion" engine. I verified this independently and it is unsound:
-   (a) the engine's inference to the ideal identity `I cap S_<=t = W_t` rests on
-   "Lemma TB" (`docs/cls_cnt.md:124-145`), which is FALSE as stated. Explicit
-   counterexample: `G = {x^2, xy+1}` over F_2[x,y], `t = 2`. The only pair has
-   lcm-degree 3 > 2, so the hypothesis is vacuous, yet `1 in I cap S_<=2` and
-   `1 not in W_2` (the `xy`-coefficient argument in the doc is correct, and
-   proves the negation). The proof sketch needs the canceling pair's S-poly to
-   be reducible, which fails whenever the representation's top degree exceeds
-   `t`.
-   (b) The engine never examines pairs with lcm-degree > t
-   (`experiments/chi_inv3_check.py:412-415, 484-486`), but their S-polynomials
-   can have degree <= t (e.g. a star row paired with a disjoint degree-2 row
-   leaves a degree-3 residue). Those residues are invisible to the run, so it
-   cannot detect the exotics that would refute the claim.
-   (c) The verification pass can time out mid-scan and still report closure
-   (`:481, 495-496, 507`).
-   (d) The doc says the pass checks "all pairs" (`inv3.md:270`) but the code
-   checks only lcm <= t pairs. The "four independent configurations" are also
-   overstated: orders A and C are conjugate by a variable relabeling, and
-   variants G/G' span the same `W_t` and share the neutrality echelon.
-   The `t = 2` conclusion survives (it is separately confirmed by an exact
-   dimension computation in `chi_cls_cnt_check.py` at (6,3)), but the `t = 3`,
-   `d = 4` claim is not established. This is the fourth review-worthy case of
-   promoting a computational artifact to a proof; it must be downgraded now,
-   before anything consumes it.
+1. **The engine is still unsound, and the corpus is extending it.** The "repair"
+   in inv3.md section 3 (degree-capped completion plus span neutrality) does not
+   address the root defect: it still infers the ideal identity from a closure via
+   Lemma TB, which is false as stated, and it still processes only pairs with
+   lcm-degree <= t, while the refuting elements come from pairs with lcm-degree
+   > t. The adversarial gate proves this on the known-false G, and the 4-hole
+   exotic shows the blind spot has real bite. Section 7 (added 2026-10-04) extends
+   the same engine to the 11x10 rectangle, and its body still labels the result
+   "INV(3)(i) at d = 5 PROVED [MV]"; a closing note now relabels it "engine
+   output, uncertified", and current_results.md and the theorem map correctly
+   exclude it, so the document asserts two tiers and only the appended note
+   carries the boundary. GOAL section 1 also states that no new rectangle is
+   attempted before the engine passes the adversarial gate; the gate FAILs and
+   the 11x10 run was made and committed (it was in flight when the gate landed,
+   but the rule and the record currently disagree).
+   Two specifics on the planned certification scan: it must cover all pairs of
+   the final G* (the gate's case 2 enumerates only base pairs with two disjoint
+   degree-2 heads, and the completion adds generators), and it must be shown
+   equivalent to the ideal identity, not merely sample it. If that cannot be
+   shown, the sound route is the direct, independently audited computation at a
+   feasible rectangle that the second review asked for, which the new quotient
+   reduction (Lemma Q) may now make feasible. Pick one route and say which.
 
-2. **The tooling gate does not test the thing that matters.** `corpus_lint.py`
-   PASSes ("784 CLEAN") while the load-bearing claim above is unsound. It checks
-   that files contain expected substrings, scripts compile, and LOG headings are
-   ordered. `proved_registry.py` checks that a PROVED claim points at a proof
-   anchor; it does not check that the anchor is valid. The gate is now better
-   labeled (a "linter"), which is good, but the corpus still leans on "PASS" as
-   if it meant something. The only gates that mean anything are the Lean budget
-   check and re-running experiments, and neither touches the algebraic claims.
+2. **The block is documentary, not mechanical.** The PROVED registry (check 8)
+   covers only docs/current_results.md section 2, and the label-hygiene tripwire
+   (check 9) only requires proof-kind words in the enclosing section. That is why
+   the unsound d=5 PROVED label in inv3.md passed lint: the side documents where
+   the algebra actually lives are outside enforcement. Extend it: any document
+   whose PROVED claims feed current_results.md must be registered, or an
+   engine-derived PROVED label must carry a required gate-verdict token
+   (CERTIFIED / UNCERTIFIED). The gate cannot be a pass/fail commit gate while it
+   correctly FAILs, but its verdict must gate every engine-derived PROVED label.
 
-3. **Consolidation lag.** `current_results.md` and `theorem_map.md` stop before
-   the newest wave (all_degrees, cls_cnt, inv3, mixture3, deg5). So the "one
-   current statement" is already stale, and the newest claims (including the
-   unsound one) live only in un-reconciled side documents. By its own
-   maintenance rule, current_results.md must be updated when a result lands or
-   dies; that rule is being broken at exactly the moment it matters.
+3. **The external reading-check is still unsent, and it is still the highest-value
+   action.** Every result here rests on a reading of Krajicek's Definition 3.1
+   and 4.3 and on the p=2 restriction that no expert has confirmed.
+   note_to_author.md is a draft reading-check question; sending (or explicitly
+   parking) it is the owner's call. Until it is answered the whole frame is
+   contingent, and no amount of algebra removes that dependency.
 
-4. **Scope is narrowing while the framing still points at a Millennium
-   Problem.** Even a complete proof of O2 gives only a conditional lower bound.
-   The real work is now a self-referential algebra program (truncated
-   Buchberger completions on an increasing family of rectangles), where each new
-   rung is memory-walled (`9x8` at t=3, `11x10` next) and each claim is exactly
-   as strong as its weakest engine. This is worth doing, but it should be
-   presented as "a study of a finite algebraic obstruction", not as a path to
-   P != NP, and the effort should be sized accordingly.
+4. **The program still has no finite endpoint; the wall moved rather than
+   vanished.** The 11x10 memory wall was bypassed (Lemma Q, 1.32 GB peak), so the
+   adopted stop rule ("if 11x10 is memory-walled, write it up and stop") no longer
+   fires. But the certification wall replaced the memory wall, the pivot store
+   still grows about 9.3x per degree (d=6 needs about 16 GB dense or a byte-packed
+   store), and at d >= 4 each new degree also needs a new MIXTURE family
+   (chi_mixture4.py is in flight). This is the open-ended per-rung trajectory the
+   second review flagged. Replace the moot stop rule with a decision point: name
+   the single result that would justify continuing past d=5, and the condition
+   under which the study is written up as a bounded result (the certified
+   low-degree facts, the 4-hole exotic, the false Lemma TB, and the uncertified
+   engine), then stop.
 
-5. **Hygiene drift has returned in the working tree.** Uncommitted:
-   `experiments/chi_mixture_cap.py` modified, and `docs/inv3.md` +
-   `experiments/chi_inv3_check.py` untracked. GOAL section 4 requires committing
-   "only a PASSING state" after every consolidated turn; the new inv3 work was
-   never committed and never reconciled, which is how an unverified claim ends
-   up load-bearing. Related: `lean_channel/FEASIBILITY.md:146` still says elan
-   lives under `/tmp/opencode`, contradicting GOAL section 7 and the file's own
-   later section, and the paper dates to 2026-10-03 while current_results is
-   2026-10-04.
-
-6. **Label vocabulary is overloaded.** "Theorem B", "Theorem R", "Theorem 3''",
-   and "Lemma CNT" each name two distinct objects; the corpus disambiguates by
-   citation, which is fragile. The use of "PROVED" as a bare marker inside
-   side documents (deg5_theory.md, mixture3.md) blurs the formal label
-   definition in current_results.md. Pick one naming scheme and one label set.
+5. **Consolidation and vocabulary, cheap but open.** Keep the tier boundary
+   explicit (certified in current_results.md and the theorem map; engine output
+   only in inv3.md section 7), and soften the inline labels in 7.4 and the 7.5
+   table, not just the appended note. The duplicated names (Theorem B,
+   Theorem R, Theorem 3'', Lemma CNT) are still disambiguated only by citation;
+   pick one naming scheme. README and GOAL still date 2026-10-03/04 while the
+   newest work is 2026-10-05, and the untracked chi_mixture4.py is in-flight
+   drift.
 
 ## What to do next, in priority order
 
-1. **Downgrade the inv3 claim now.** Reclassify `docs/inv3.md`'s t=3 results as
-   "engine output, unverified" until the completion argument either (a) is
-   re-proved on a correct lemma (the truncated-Buchberger argument needs the
-   genuine multivariate-division/Groebner theory for the *dehomogenized*
-   problem, not the naive reduction), or (b) is replaced by a direct,
-   independently-audited computation at a feasible rectangle. Do not consume it
-   in current_results.md or the theorem map until then.
-
-2. **Report the Lemma TB counterexample as a correction.** It is a clean,
-   checkable disproof of a lemma the corpus relies on. Log it with the same
-   prominence as the other correction-class events, and fix `cls_cnt.md`'s
-   Section 3 label (the t=2 *conclusion* is fine; the *engine* is not).
-
-3. **Make the gate adversarial.** Add a negative test that feeds a *known-false*
-   identity through the completion engine and asserts it is flagged. An engine
-   that has never been shown to reject anything has not been validated.
-
-4. **Re-reconcile the corpus.** Fold all_degrees, cls_cnt, mixture3, deg5, and
-   (corrected) inv3 into current_results.md and theorem_map.md, then commit and
-   push the working tree. Update the paper's date or freeze it explicitly.
-
-5. **Highest-value external action, unchanged:** turn `note_to_author.md` into a
-   reading-check question to Krajicek or a proof-complexity person ("is my
-   reading of Def 3.1/4.3 correct, and is the p=2 restriction the right place
-   to look?"). Sending is the owner's call. Everything here is contingent on a
-   reading that no expert has confirmed.
-
-6. **Right-size the effort.** Set explicit stop rules for the algebra program:
-   if the next rung (11x10) is memory-walled and no cheaper certificate appears,
-   write it up as a bounded negative result. The current trajectory (each degree
-   a new rectangle, each verified at one machine point) has no finite endpoint.
-
-7. **Clean the vocabulary and the drift.** Disambiguate the duplicated theorem
-   names, fix the FEASIBILITY.md elan note, and stop using "PROVED" in side
-   documents without the anchor link the registry requires.
+1. Commit to one certification route for the engine, and promote nothing
+   engine-derived (including d=5) until it passes. Either a full all-pairs
+   hidden-residue scan shown equivalent to the ideal identity, or the direct
+   audited computation. Meanwhile soften the inline PROVED labels in inv3.md
+   sections 3-7 under the existing DOWNGRADE banner, so the body no longer
+   contradicts the banner.
+2. Make the block mechanical: extend the registry and lint so an engine-derived
+   PROVED label cannot be committed without a CERTIFIED gate line, and add the
+   gate verdict to the "passing state" check in GOAL section 4.
+3. Send or explicitly park the reading-check note to a proof-complexity person,
+   and record the decision either way.
+4. Replace the moot stop rule with the concrete decision point of problem 4, and
+   reconcile GOAL section 1 with what actually happened at 11x10.
+5. Do the cheap hygiene: one naming scheme, date updates, and either commit the
+   in-flight mixture4 deliverable with its document or drop it from the tree.
 
 ## Bottom line
 
-The infrastructure and the honesty culture are genuinely good, and the corpus
-correctly located the true open crux. The recurring failure is unchanged in
-kind: a computational or fortunate artifact is promoted to a labeled proof
-before it is verified, and the surrounding "PASS" gate does not catch it. The
-newest such artifact (inv3) is load-bearing and I have shown it unsound, so the
-immediate priority is to downgrade it and re-verify the engine adversarially.
-After that, the work is worth continuing, but as a bounded study of a finite
-algebraic obstruction, not as a run at P vs NP.
+The infrastructure, the self-correction culture, and now the adversarial gate are
+genuinely good, and the second review's findings were adopted rather than
+defended. The recurring failure (a computational artifact promoted to a labeled
+proof before verification) has not gone away; it just recurred at d=5, and the
+mechanical gates still do not block it because they cover only
+current_results.md. The fix is to make the engine's certification a precondition
+for any PROVED label, not a follow-up note, and to stop extending an uncertified
+engine. The work is worth continuing only as a bounded study with a declared
+endpoint, and only once the reading is confirmed.
