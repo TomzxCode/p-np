@@ -2105,3 +2105,28 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   uncertified until the hidden-pair scan is run at its parameters. That scan is
   the certification step for INV(3) at d = 5.
 - Gate status line added to docs/inv3.md's downgrade block. Lint PASS.
+
+### 2026-10-05 - inv3-11x10 agent: CLOSURE at d=5; label corrected to engine-output-uncertified; certification scan dispatched
+- Deliverables: docs/inv3.md section 7 + chi_inv3_check.py part F (--d5/--d5all
+  registered; re-certified end to end after a semantics-preserving fast path:
+  37 PASS / 0 FAIL, 893 s).
+- The memory wall fell analytically and practically: dense = 5.1 GB (confirmed
+  infeasible, not attempted); the quotient method (Lemma Q: ker pi <= W_3,
+  pi(W_3) spanned by pi(Q_i m) alone) bounded the store at 0.632 GB (peak RSS
+  1.32 GB). Validation before trusting: membership agreement with the 7x6 full
+  echelon on 3,000 random vectors; pi(e_0) outside; 7x6-Q, 5x4-Q, 9x8-Q all
+  reproduce the recorded counts exactly (+161; +30 with the same escaping
+  shift; +372 = 36+336 at 73,437 pairs).
+- RESULT: 11x10 closure in two independent configurations (+715 added =
+  C(11,2) + 4 C(11,3), extending the d=3,4 pattern).
+- LABEL CORRECTED per the standing rule: "PROVED [MV]" -> CLOSURE [MV, engine
+  output, uncertified] - the inference rests on the false Lemma TB and the
+  hidden-pair blind spot is unexamined at this rectangle. Certification
+  REQUIREMENT: the exhaustive hidden-pair residue scan at 11x10 (adversarial
+  gate case-2 pattern; profile first, the structurally dangerous (C,ST) subset
+  if the full count exceeds ~50M). Certification agent dispatched
+  (ses_ef6a1f5e5ffeg8LkDCHqqEFJCP).
+- Updated table: d=2 DISPROVED (boundary) | d=3,4,5 closure [MV; d=5
+  uncertified] | d=6 REDUCED, wall ~5.9-6.6 GB | d>=7 REDUCED, one finite run
+  per rectangle. Section 3.4 transcription slip noted by the agent (the 4-hole
+  disproof unaffected).
