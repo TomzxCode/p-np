@@ -686,3 +686,16 @@ smaller and would pass). Each further degree multiplies the store by ~9.3.
 - The $t = 4$ layer of INV(4) remains the shallowest open slice of
   Theorem 3-gen (Section 5.2 unchanged); at $t = 3$ the restriction on
   $d \ge 6$ is now only RAM size, not the method.
+
+### 7.6 ORCHESTRATION LABEL CORRECTION (2026-10-05)
+
+Section 7.4's "INV(3)(i) at d = 5 PROVED [MV]" is RELABELED per the standing
+rule (LOG, adversarial-gate entry) and GUIDANCE item 5: the completion closure
+is ENGINE OUTPUT [MV for the machine-checked traces], and its inference to the
+ideal identity rests on Lemma TB - FALSE as stated (the 4-hole exotic and the
+G = {x^2, xy+1} counterexample) - with the engine's hidden-pair blind spot
+(lcm > t pairs whose S-polys land in degree <= t) unexamined at this
+rectangle. CERTIFICATION REQUIREMENT: the exhaustive hidden-pair residue scan
+(adversarial gate case 2 pattern, all lcm > 3 pairs at 11x10) must return zero
+in-cap residues before the d = 5 claim carries PROVED. Until then the correct
+label is: CLOSURE [MV], engine output, certification scan dispatched.

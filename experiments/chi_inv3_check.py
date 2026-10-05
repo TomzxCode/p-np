@@ -39,18 +39,39 @@ Parts:
      degree-3 unit vectors e_m lie in V_<=3; measured against the 9x8
      degree-<=3 echelon (which part B also needs).
 
+   F  the 11x10 (d = 5) run behind --d5 (docs/inv3.md sect. 7): the same
+      completion engine with MEMORY-AWARE span-neutrality.  Membership in
+      W_t is decided in the QUOTIENT by the subspace spanned by the
+      line-pair monomials (C/H shifts), the Boolean defects x^2 + x, and
+      Q_i0 (pi(1) = row sum of pigeon i0): pi maps each monomial to the
+      square-free line-free degree-<=3 coordinates, every defect T + pi(T)
+      lies in W_t, so ker pi <= W_t and v in W_t <=> pi(v) in pi(W_t).
+      pi(W_t) is spanned by pi(Q_i * m) alone (b, C, H rows project to
+      zero), which shrinks the neutrality echelon from 234,136 coordinates
+      (28.6 KiB/row, ~5.1 GB pivot store: the recorded wall) to 123,860
+      coordinates with <= 55,671 rows (<= 0.87 GB).  Cross-validated against
+      the full-echelon completions: 7x6 t=3 (161 added, two configs),
+      5x4 t=3 exotic (30 additions, same residue), membership agreement on
+      random vectors.
+
 Run:  python3 experiments/chi_inv3_check.py [--fast]
       --fast skips the 9x8 completion round and part E.
+      python3 experiments/chi_inv3_check.py --d5
+      runs part F only: cross-validation of the quotient-projected
+      neutrality, then the 11x10 (d = 5) completion (variant G, order A;
+      --d5all adds G'/C).
 """
 import sys, math, time
 from collections import Counter, defaultdict
-from itertools import combinations_with_replacement
+from itertools import combinations_with_replacement, combinations
 
 sys.setrecursionlimit(100000)
 
 PASS = 0
 FAIL = 0
 FAST = "--fast" in sys.argv
+D5 = "--d5" in sys.argv
+D5ALL = "--d5all" in sys.argv
 
 def check(name, ok, info=""):
     global PASS, FAIL
@@ -353,17 +374,38 @@ def part_I(np_, nh, tag):
 def nf_full(state, gens, heads, by_head, key):
     """full division within the degree cap (states only ever contain monomials
     of degree <= t): kill any monomial divisible by some head; each kill adds
-    only strictly smaller monomials, so this terminates."""
+    only strictly smaller monomials, so this terminates.
+
+    Selection semantics (unchanged from the first registered version): the
+    victim is the FIRST monomial in descending key order that carries a
+    divisible submultiset.  The max() fast path returns exactly that victim
+    when the largest monomial is reducible; otherwise the full descending
+    scan runs (the largest monomial is known irreducible and is skipped)."""
     state = set(state)
-    while True:
+    sub_cache = {}
+    while state:
+        T = max(state, key=key)
         hit = None
-        for T in sorted(state, key=key, reverse=True):
-            for D in submultisets(T):
-                lst = by_head.get(D)
-                if lst:
-                    hit = (T, lst[0], mquo(T, D))
-                    break
-            if hit: break
+        subs = sub_cache.get(T)
+        if subs is None:
+            subs = list(submultisets(T)); sub_cache[T] = subs
+        for D in subs:
+            lst = by_head.get(D)
+            if lst:
+                hit = (T, lst[0], mquo(T, D))
+                break
+        if hit is None:
+            for T2 in sorted(state, key=key, reverse=True):
+                if T2 == T: continue
+                subs2 = sub_cache.get(T2)
+                if subs2 is None:
+                    subs2 = list(submultisets(T2)); sub_cache[T2] = subs2
+                for D in subs2:
+                    lst = by_head.get(D)
+                    if lst:
+                        hit = (T2, lst[0], mquo(T2, D))
+                        break
+                if hit: break
         if hit is None:
             return frozenset(state)
         T, gi, m = hit
@@ -371,14 +413,20 @@ def nf_full(state, gens, heads, by_head, key):
             mm = tuple(sorted(m + u))
             if mm in state: state.remove(mm)
             else: state.add(mm)
-        if not state:
-            return frozenset(state)
+    return frozenset(state)
 
 def gb_complete(np_, nh, t, variant, kind, wt_piv, midx, tag,
-                time_cap=420.0, max_added=5000, scope="target"):
+                time_cap=420.0, max_added=5000, scope="target",
+                pimap=None, shift_src=None):
     """One-shot pair queue (standard incremental Buchberger): each pair is
     processed once; a zero-reduction stays a zero-reduction as the set grows,
-    so an empty queue certifies the TB hypothesis for the final G*."""
+    so an empty queue certifies the TB hypothesis for the final G*.
+
+    Neutrality mode: with pimap=None (default) membership in W_t is decided
+    on the raw degree-<=t coordinates indexed by midx.  With pimap given,
+    membership is decided in the QUOTIENT (part F): vec_of projects every
+    monomial through pimap and wt_piv/midx are the quotient echelon/index;
+    shift_src lists the raw shift monomials (all of degree <= t)."""
     from collections import deque
     t0 = time.time()
     key = order_key(kind, np_, nh)
@@ -391,7 +439,11 @@ def gb_complete(np_, nh, t, variant, kind, wt_piv, midx, tag,
 
     def vec_of(p):
         vv = 0
-        for m in p: vv |= 1 << midx[m]
+        for m in p:
+            if pimap is None:
+                vv |= 1 << midx[m]
+            else:
+                for c in pimap[m]: vv ^= 1 << c
         return vv
 
     shift_monos_cache = {}
@@ -401,7 +453,8 @@ def gb_complete(np_, nh, t, variant, kind, wt_piv, midx, tag,
         dg = max(len(m) for m in R)
         sms = shift_monos_cache.get(dg)
         if sms is None:
-            sms = [m for m in midx if len(m) <= t - dg]
+            src = midx if shift_src is None else shift_src
+            sms = [m for m in src if len(m) <= t - dg]
             shift_monos_cache[dg] = sms
         for m in sms:
             sh = frozenset(tuple(sorted(m + u)) for u in R)
@@ -629,11 +682,243 @@ def part_E(monos8, midx8, piv8):
     note(f"part E done in {time.time()-t0:.1f}s")
 
 # ---------------------------------------------------------------------------
+# Part F: the 11x10 (d = 5) run -- memory-aware neutrality via the quotient
+# ---------------------------------------------------------------------------
+
+def build_pimap(np_, nh, cap=3, i0=0):
+    """pi: monomial -> tuple of quotient coordinate ids (empty tuple = 0).
+
+    Quotient coordinates: the square-free line-free monomials of degree
+    1..cap (singles, diagonals, matching triples; the constant is gone).
+    pi kills (i) every monomial containing a line pair -- two distinct cells
+    with the same pigeon or the same hole -- whose monomial is a C/H shift
+    in W_cap; (ii) the constant, pi(1) = row sum of pigeon i0 (Q_i0 is in
+    W_cap); (iii) squares, pi(m x x) = pi(m x) (the Boolean row b_x is in
+    W_cap).  Every defect T + pi(T) lies in W_cap, so for any v:
+    v + pi(v) in W_cap by linearity, hence ker pi <= W_cap and
+    v in W_cap  <=>  pi(v) in pi(W_cap):  membership in the quotient
+    echelon of pi(W_cap) decides membership in W_cap."""
+    N = np_ * nh
+    qcoords = []
+    for k in range(1, cap + 1):
+        for m in combinations(range(N), k):
+            cs = m
+            ok = True
+            for a in range(len(cs)):
+                pa, ha = cs[a] // nh, cs[a] % nh
+                for b in range(a + 1, len(cs)):
+                    if pa == cs[b] // nh or ha == cs[b] % nh:
+                        ok = False; break
+                if not ok: break
+            if ok: qcoords.append(m)
+    qidx = {m: k for k, m in enumerate(qcoords)}
+    rowsum = tuple(i0 * nh + h for h in range(nh))
+    pimap = {}
+
+    def pi(T):
+        r = pimap.get(T)
+        if r is not None: return r
+        if not T:
+            r = tuple(qidx[(c,)] for c in rowsum)
+        else:
+            cs = sorted(set(T))
+            lp = any(cs[a] // nh == cs[b] // nh or cs[a] % nh == cs[b] % nh
+                     for a in range(len(cs)) for b in range(a + 1, len(cs)))
+            if lp:
+                r = ()
+            elif len(cs) < len(T):
+                rep = next(c for c in cs if T.count(c) > 1)
+                T2 = list(T); T2.remove(rep)
+                r = pi(tuple(sorted(T2)))
+            else:
+                r = (qidx[T],)
+        pimap[T] = r
+        return r
+
+    for T in rect_monomials(np_, nh, cap):
+        pi(T)
+    return qcoords, qidx, pimap
+
+def vec_proj(poly, pimap):
+    vv = 0
+    for m in poly:
+        for c in pimap[m]: vv ^= 1 << c
+    return vv
+
+def rect_rows_proj(np_, nh, cap, pimap, variant="G"):
+    """the pi-projections of ALL W_cap rows m*h (h in G, deg(mh) <= cap):
+    zero rows dropped, duplicates removed.  The b, C, H families project to
+    zero; the surviving content is pi(Q_i * m), m square-free line-free of
+    degree <= cap-1, so the row count is <= np * (1+N+diag) and the quotient
+    echelon rank is bounded by that too (the memory win)."""
+    out = []
+    for nm, g in build_gens(np_, nh, variant):
+        dg = max(len(t) for t in g)
+        for m in rect_monomials(np_, nh, cap - dg):
+            vv = 0
+            for t in g:
+                for c in pimap[tuple(sorted(m + t))]: vv ^= 1 << c
+            if vv: out.append(vv)
+    return list(dict.fromkeys(out))
+
+def echelon_prog(rows, tag, every=4000):
+    """echelon() with progress + peak-RSS notes (same reduction rule)."""
+    import resource
+    t0 = time.time()
+    piv = {}
+    n = 0
+    for vv in rows:
+        n += 1
+        while vv:
+            h = vv.bit_length() - 1
+            q = piv.get(h)
+            if q is None:
+                piv[h] = vv; break
+            vv ^= q
+        if n % every == 0:
+            rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6
+            note(f"  ... {tag} echelon {n}/{len(rows)} rows, rank {len(piv)}, "
+                 f"peak RSS {rss:.2f} GB, {time.time()-t0:.0f}s")
+    return piv
+
+def rss_gb():
+    import resource
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6
+
+def part_F_crosscheck(piv63, midx63, monos63):
+    """the quotient-projected neutrality must reproduce the documented
+    full-echelon completions before it is trusted at 11x10:
+    (a) membership agreement with the full 7x6 echelon on random vectors
+        (members and non-members must be classified identically);
+    (b) pi(e0) outside the quotient echelon (matches e0 not in W_3);
+    (c) the 7x6 t=3 completion closes with the SAME trace (161 = 21+140)
+        under G/A and G'/C;
+    (d) the 5x4 t=3 diagnostic still exhibits the exotic at 30 additions;
+    (e) the 9x8 t=3 completion closes with the SAME trace (372 = 36+336)
+        under G/A."""
+    import random
+    rng = random.Random(20261004)
+    np_, nh = 7, 6
+    t0 = time.time()
+    qcoords, qidx, pimap = build_pimap(np_, nh, 3)
+    note(f"crosscheck: 7x6 quotient {len(qcoords)} coords, "
+         f"{len(pimap)} pi-entries, {time.time()-t0:.1f}s")
+    # (a) rebuild the full 7x6 W_3 rows for random member vectors
+    rows63 = rect_rows(np_, nh, 3, monos63, midx63)
+    pivq = echelon_prog(rect_rows_proj(np_, nh, 3, pimap), "7x6-Q", every=2000)
+    note(f"crosscheck: 7x6 quotient rank {len(pivq)} of {len(qcoords)} coords")
+    agree = 0; nmem = 0; nnon = 0
+    for _ in range(1500):
+        # a random W_3 combination is a MEMBER: both echelons must say in
+        vv = 0
+        for r in rng.sample(rows63, rng.randint(1, 4)): vv ^= r
+        poly = []
+        w = vv
+        while w:
+            h = w.bit_length() - 1
+            poly.append(monos63[h]); w ^= 1 << h
+        a = in_span(vv, piv63)
+        bq = in_span(vec_proj(poly, pimap), pivq)
+        agree += int(a == bq); nmem += int(bq); nnon += int(not bq)
+    for _ in range(1500):
+        # a random sparse vector: the two verdicts must simply AGREE
+        poly = frozenset(tuple(sorted(rng.sample(range(np_ * nh),
+                                                  rng.randint(1, 3))))
+                         for _ in range(rng.randint(1, 7)))
+        vv = 0
+        for m in poly: vv |= 1 << midx63[m]
+        a = in_span(vv, piv63)
+        bq = in_span(vec_proj(poly, pimap), pivq)
+        agree += int(a == bq); nmem += int(bq); nnon += int(not bq)
+    check("crosscheck 7x6: quotient membership agrees with full echelon on "
+          "3000 random vectors", agree == 3000,
+          f"{agree}/3000 agree ({nmem} in-span, {nnon} out)")
+    # (b) pi(e0) = row sum of pigeon 0 must be OUTSIDE pi(W_3)
+    check("crosscheck 7x6: pi(e0) not in quotient echelon (e0 not in W_3)",
+          not in_span(vec_proj([()], pimap), pivq))
+    # (c) the 7x6 completions under quotient neutrality
+    gb_complete(np_, nh, 3, "G", "A", pivq, qidx, "7x6-Q",
+                time_cap=600.0, pimap=pimap, shift_src=monos63)
+    gb_complete(np_, nh, 3, "G'", "C", pivq, qidx, "7x6-Q",
+                time_cap=600.0, pimap=pimap, shift_src=monos63)
+    # (d) the 5x4 exotic under quotient neutrality (diagnostic, outside scope)
+    qcoords5, qidx5, pimap5 = build_pimap(5, 4, 3)
+    pivq5 = echelon(rect_rows_proj(5, 4, 3, pimap5))
+    monos54 = rect_monomials(5, 4, 3)
+    gb_complete(5, 4, 3, "G", "A", pivq5, qidx5, "5x4-Q",
+                time_cap=300.0, scope="diagnostic",
+                pimap=pimap5, shift_src=monos54)
+    # (e) the 9x8 (d = 4) point under quotient neutrality: the documented
+    # full-echelon trace +372 = 36 + 336 (sect. 3.3) must reproduce exactly
+    qcoords8, qidx8, pimap8 = build_pimap(9, 8, 3)
+    t8 = time.time()
+    pivq8 = echelon_prog(rect_rows_proj(9, 8, 3, pimap8), "9x8-Q", every=8000)
+    note(f"crosscheck: 9x8-Q quotient rank {len(pivq8)} of {len(qcoords8)} "
+         f"coords, peak RSS {rss_gb():.2f} GB, echelon {time.time()-t8:.0f}s")
+    monos98 = rect_monomials(9, 8, 3)
+    gb_complete(9, 8, 3, "G", "A", pivq8, qidx8, "9x8-Q",
+                time_cap=900.0, pimap=pimap8, shift_src=monos98)
+    note(f"crosscheck done in {time.time()-t0:.1f}s, peak RSS {rss_gb():.2f} GB")
+
+def part_F_d5(variants):
+    """the 11x10 (d = 5) INV(3) completion run: profile first (memory gate),
+    then the quotient echelon, then the completion per (variant, order)."""
+    np_, nh, t = 11, 10, 3
+    t00 = time.time()
+    N = np_ * nh
+    raw_by_deg = [1, N, math.comb(N + 1, 2), math.comb(N + 2, 3)]
+    raw = sum(raw_by_deg)
+    qcoords, qidx, pimap = build_pimap(np_, nh, t)
+    note(f"11x10 profile: raw S_<=3 coords {raw} {raw_by_deg} (multisets); "
+         f"quotient coords {len(qcoords)} (sqfree line-free, e0 eliminated); "
+         f"build {time.time()-t00:.0f}s")
+    qrows = rect_rows_proj(np_, nh, t, pimap)
+    bytes_per = (len(qcoords) + 7) // 8
+    bound = len(qrows) * bytes_per
+    note(f"11x10 profile: quotient rows {len(qrows)} (rank <= rows), "
+         f"{bytes_per} B/row -> pivot-store bound {bound/1e9:.3f} GB; "
+         f"dense (unprojected) pivot-store estimate ~5.1 GB: the recorded wall")
+    if bound > 1.9e9:
+        print(f"[INFO] 11x10 INFEASIBLE under the 2 GB gate: bound "
+              f"{bound/1e9:.3f} GB; reporting the profile as the finding",
+              flush=True)
+        return
+    t0 = time.time()
+    pivq = echelon_prog(qrows, "11x10", every=4000)
+    rank = len(pivq)
+    note(f"11x10 quotient echelon: rank {rank} of {len(qcoords)} coords, "
+         f"pivot store ~{rank * bytes_per/1e9:.3f} GB, peak RSS "
+         f"{rss_gb():.2f} GB, {time.time()-t0:.0f}s")
+    if rank * bytes_per > 1.9e9:
+        print(f"[INFO] 11x10 echelon exceeds the 2 GB gate at rank {rank}; "
+              f"stopping before the engine", flush=True)
+        return
+    monos_raw = rect_monomials(np_, nh, t)
+    for variant, kind in variants:
+        gb_complete(np_, nh, t, variant, kind, pivq, qidx, "11x10",
+                    time_cap=2700.0, pimap=pimap, shift_src=monos_raw)
+    note(f"part F d5 done in {time.time()-t00:.0f}s, peak RSS {rss_gb():.2f} GB")
+
+# ---------------------------------------------------------------------------
 
 def main():
     t00 = time.time()
     print("== chi_inv3_check: INV(3), the t=3 degree-truncated Buchberger ==")
-    print(f"--fast={FAST}")
+    print(f"--fast={FAST} --d5={D5} --d5all={D5ALL}")
+
+    if D5:
+        print("== Part F: cross-validation of the quotient neutrality ==",
+              flush=True)
+        monos63 = rect_monomials(7, 6, 3)
+        midx63 = {t: k for k, t in enumerate(monos63)}
+        piv63 = echelon(dedupe(rect_rows(7, 6, 3, monos63, midx63)))
+        part_F_crosscheck(piv63, midx63, monos63)
+        print("== Part F: the 11x10 (d = 5) run ==", flush=True)
+        variants = [("G", "A")] + ([("G'", "C")] if D5ALL else [])
+        part_F_d5(variants)
+        print(f"\n== summary: {PASS} PASS / {FAIL} FAIL, "
+              f"{time.time()-t00:.1f}s total ==")
+        return 0 if FAIL == 0 else 1
 
     print("== Part I: master identities ==", flush=True)
     part_I(5, 4, "5x4")
