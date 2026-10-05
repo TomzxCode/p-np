@@ -923,6 +923,35 @@ layers.
 Label: PROVED (written assembly at $d = 2$); INFERRED at general $d$ (the
 premise INV(d) is open at $t \ge 3$).
 
+### 2.22 Theorem M4-D (MIXTURE-d closed at d <= 4; Theorem 3''' cap constant repaired)
+
+Label: PROVED (Theorem M4-1 self-exclusion: written proof + machine check,
+2.49M (config, rho) pairs, killed-branch mass exactly 0; winner posterior
+MEASURED by exact DP, rho-exhaustive at (9,4)/(10,4)).
+
+Statement. Over the FULL printed degree-<=4 class (arbitrary F_2 mixtures of
+degree-<=4 monomials and variables), Theorem 3''' as printed is false as a cap
+constant at finite n and repairs to: success <= min(1, q4^mix + P terms + o(1))
+with q4^mix = (2d^2 + d)/c (1 + o(1)), the SAME aliveness condition
+d^2 log k = o(n). The per-hit winner is NEW at degree 4: the four-diagonal
+star-4M x_ab (x_cd + x_ef + x_gh + x_ij) (support 4), beating q4* at every
+measured point (excess +0.0153 at (15,4), decaying to 9.4e-12 at (1023,4);
+max/post4 -> 1.000000) and beating the degree-3 class maximum by +0.0040 at
+(15,4). Theorem M4-1: the killed-branch self-exclusion extends VERBATIM (a
+killed x_c factor zeroes each term before any linear algebra; no star
+completion can leak).
+
+Verification. Registered run experiments/chi_mixture4.py (~30 s,
+deterministic; only cross-run differences are two wall-clock fields).
+Support-attribution correction to mixture3.md section 2.2: the first per-rho
+law breakdown at degree <= 4 is the free-base degree-(d-1) star at support
+2d - 2 >= 6 (support 5 at d = 3, not 4); verified by design-exact controls
+(support-4 negative at (7,3)/(8,3), support-5 positive at (8,3), support-6
+positive at (11,4)). Simulator soundness: the registered run's own assert
+caught and fixed a coin-keying non-conformance before any number was trusted.
+
+MIXTURE-d status: closed at d <= 4, open at d >= 5.
+
 ## 3. Retracted and superseded statements
 
 - Theorem T's artifact law (the two-phase tree's error exactly $2^{-(2d+1)}$,

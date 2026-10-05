@@ -236,6 +236,14 @@ PROVED_CLAIMS: list[tuple[str, str, str, str, str]] = [
         "Theorem 3-gen (all-degrees budgeted cap)",
         WRITTEN_PROOF,
     ),
+    (
+        "CR-2.22",
+        r"Theorem M4-D (MIXTURE-d closed at d <= 4; Theorem 3''' cap constant"
+        r" repaired to q4^mix - the star-4M winner, support 4)",
+        "mixture4.md",
+        "Repaired cap (Theorem M4-D)",
+        WRITTEN_PROOF,
+    ),
 ]
 
 # (section number, entry title) mirroring the section-2 entry headers of
@@ -263,4 +271,5 @@ REQUIRED_CLAIMS: list[tuple[str, str]] = [
     ("2.19", r"Theorem M3-D (MIXTURE-3; MIXTURE-d closed at $d \le 3$)"),
     ("2.20", r"Theorem 3''' (the degree-5 budgeted cap; assembly at the machine points)"),
     ("2.21", r"Theorem 3-gen (the all-degrees budgeted cap; conditional) and the INV(d) premise"),
+    ("2.22", r"Theorem M4-D (MIXTURE-d closed at d <= 4; Theorem 3''' cap constant repaired)"),
 ]

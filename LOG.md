@@ -2130,3 +2130,29 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   uncertified] | d=6 REDUCED, wall ~5.9-6.6 GB | d>=7 REDUCED, one finite run
   per rectangle. Section 3.4 transcription slip noted by the agent (the 4-hole
   disproof unaffected).
+- monitor 2026-10-05 DONE (delta screen): all six items CLEAN; one-line appendix
+  (GitHub P!=NP attempt repo, no uptake, not corpus-worthy). Timing note: the
+  true 5-Oct submission wave posts ~Tue 6 Oct 00:00 UTC - tomorrow's screen is
+  the material one. Committed and pushed.
+
+### 2026-10-05 (cont.) - mixture4 agent: MIXTURE-d closed at d <= 4 (NINETEENTH correction-class event)
+- Deliverables: docs/mixture4.md + experiments/chi_mixture4.py (registered ~30 s,
+  deterministic). Theorem M4-D: Theorem 3''' as printed is false as a cap
+  constant at finite n; repaired constant q4^mix = (2d^2 + d)/c (1 + o(1)), SAME
+  aliveness condition. Winner: the four-diagonal star-4M (support 4), NEW at
+  degree 4 (+0.0153 at (15,4) decaying to 9.4e-12; beats the degree-3 class max
+  by +0.0040). Theorem M4-1: killed-branch self-exclusion extends VERBATIM
+  (PROVED + machine, 2.49M pairs, killed-branch mass exactly 0) - the support-4
+  {0,1/2} breakdown does NOT leak.
+- [CORRECTION] mixture3.md section 2.2's support-4 attribution corrected: the
+  first per-rho law breakdown at degree <= 4 is the free-base degree-(d-1) star
+  at support 2d - 2 >= 6 (support 5 at d = 3, not 4); design-exact controls
+  verify (support-4 negative at (7,3)/(8,3), support-5 positive at (8,3),
+  support-6 positive at (11,4)).
+- Soundness note: the registered run's own assert caught and fixed a
+  coin-keying non-conformance before any number was trusted.
+- MIXTURE-d: closed at d <= 4, open at d >= 5. Consolidated: ADDENDUM 12
+  extended conceptually by mixture4.md; current_results.md entry 2.22 added
+  with registry CR-2.22 (both lists, title parity); lint PASS.
+- In flight: chi_inv3_certify.py (the d=5 hidden-pair certification scan) -
+  pending-registered in the linter until its doc update lands.
