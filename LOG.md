@@ -2085,3 +2085,23 @@ Working set: this file (log), `clues.md` (final dossier), `sat_scaling.py` (empi
   the point: the second review's bottom line (artifact promoted to proof before
   verification; PASS gate blind to it) is adopted as the standing critique, and
   the adversarial gate is the structural response.
+
+### 2026-10-04 (cont.) - adversarial engine gate: OVERALL FAIL (the documented finding)
+- Deliverable: experiments/chi_engine_adversarial.py (registered 376 s run;
+  deterministic across two full runs; sha256-pinned to chi_inv3_check.py;
+  certification path validated - a simulated repaired engine certifies through
+  the UNCHANGED script).
+- Per-case: (1) TB counterexample closure-wrong - blindness STRUCTURAL (the only
+  pair has lcm-degree 3 > 2, so the queue starts empty); (2) at 7x6 t=3: ALL
+  142,184 hidden base pairs exhaustively scanned - 140,889 reduce in-cap,
+  1,295 leave degree-4 residues ALL in the (C, ST) class, 0 in-cap residues:
+  the closure is unrefuted at this probe but rests on the false Lemma TB
+  (uncertified); (3) timeout dishonesty REPRODUCED LIVE (closure reported at
+  19.3 s under a 19.2 s cap while the honest run needs 25.6 s).
+- New evidence: at the 5x4 rectangle where the identity fails, the hidden-pair
+  scan independently finds exotics through the blind spot (110 distinct in-cap
+  residues) - defect (b) has real bite exactly where it matters.
+- STANDING RULE for the in-flight 11x10 run: its result is engine output,
+  uncertified until the hidden-pair scan is run at its parameters. That scan is
+  the certification step for INV(3) at d = 5.
+- Gate status line added to docs/inv3.md's downgrade block. Lint PASS.
